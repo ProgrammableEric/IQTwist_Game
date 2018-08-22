@@ -23,6 +23,10 @@ public class TwistGame {
    */
   public static boolean isPlacementWellFormed(String piecePlacement) {
     // FIXME Task 2: determine whether a piece or peg placement is well-formed
+    if (piecePlacement.length() != 4) return false;
+    else {
+
+    }
     return false;
   }
 
