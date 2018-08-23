@@ -1,6 +1,8 @@
 package comp1110.ass2;
 
-// this class represent
+// this class represent each pieces from the game. It contains the
+// characteristics of the pieces, and some relevant implementation.
+
 public class Pieces {
 
     char piecesID;         // type of the piece, denoted by letters a,b, ... h

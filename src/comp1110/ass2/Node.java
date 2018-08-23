@@ -11,13 +11,19 @@ public class Node {
 
     int column;            // column location of the node, denoted as 1, 2, ... 8
     char row;              // row location of the node, denoted as A, B, C, or D
-    Pieces pieces;         // the piece associated with this board location, if any
+    Pieces[] pieces;       // the piece associated with this board location, if any.
     Pegs pegs;             // the peg associated with this board location, if any
 
 
 
     // constructor of a node
-    Node () {
+    Node (int column, char row, Pieces[] pieces, Pegs pegs) {
+
+        this.column = column;
+        this.row = row;
+        this.pieces = pieces;
+        this.pegs = pegs;
+
         // ...
     }
 
