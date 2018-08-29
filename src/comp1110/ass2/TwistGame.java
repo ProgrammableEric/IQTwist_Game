@@ -45,14 +45,12 @@ public class TwistGame {
                 if (second.indexOf(piecePlacement.charAt(i)) == -1) {
                     return false;
                 }
-
             }
             //check if the third character is in the range A .. D (rows)
             else if (i == 2) {
                 if (third.indexOf(piecePlacement.charAt(i)) == -1) {
                     return false;
                 }
-
             }
             //check if the fourth character is in the range 0 .. 7 (if a piece) or is 0 (if a peg)
             else {
@@ -61,23 +59,17 @@ public class TwistGame {
                     if (piecePlacement.charAt(3) != '0') {
                         return false;
                     }
-
                 }
                 //check pieces
                 else {
                     if (fourth.indexOf(piecePlacement.charAt(3)) == -1) {
                         return false;
                     }
-
                 }
-
             }
-
         }
-
         return true;
     }
-
   }
 
   /**
@@ -103,7 +95,6 @@ public class TwistGame {
           if (isPlacementWellFormed(placement.substring(4 * j, 4 * j + 4)) == false) {
               return false;
           }
-
       }
 
       // check if each piece or peg placement occurs in the correct alphabetical order

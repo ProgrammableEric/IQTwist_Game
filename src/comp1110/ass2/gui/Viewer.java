@@ -95,7 +95,7 @@ public class Viewer extends Application {
                     setEffect(dropShadow);break;
             }
 
-            // rotation of the image ?????????????????
+            // ???????????????? rotation of the image ?????????????????
             if ( orientation<='3'){
                 setRotate((orientation - '0')*90);
             }else if ( orientation<='7'){
@@ -107,11 +107,36 @@ public class Viewer extends Application {
             posX = offsetX(column);
             posY = offsetY(row);
 
-            setLayoutX(posX);
-            setLayoutY(posY);
+            switch (piece){
+                case 'e': case 'g':
+                    setLayoutX(posX);
+                    setLayoutY(posY);
+                    break;
+                case 'a': case 'b': case 'd': case 'f':
+                    if (Integer.parseInt(String.valueOf(orientation))%2 == 1){
+                        setLayoutX(posX - SQUARE_SIZE/2);
+                        setLayoutY(posY + SQUARE_SIZE/2);break;
+                    }else {
+                        setLayoutX(posX);
+                        setLayoutY(posY);break;}
+                case 'c':
+                    if (Integer.parseInt(String.valueOf(orientation))%2 == 1){
+                        setLayoutX(posX - SQUARE_SIZE*1.5);
+                        setLayoutY(posY + SQUARE_SIZE*1.5);break;
+                    }else {
+                        setLayoutX(posX);
+                        setLayoutY(posY);break;}
+                case 'h':
+                    if (Integer.parseInt(String.valueOf(orientation))%2 == 1){
+                        setLayoutX(posX - SQUARE_SIZE);
+                        setLayoutY(posY + SQUARE_SIZE);break;
+                    }else {
+                        setLayoutX(posX);
+                        setLayoutY(posY);break;}
+            }
+
         }
     }
-
 
 
     class Peg extends ImageView{
@@ -142,21 +167,19 @@ public class Viewer extends Application {
 
 
     // calculate offset in Y direction
-    int offsetY (char row){
-//        int sceneOffsetY = 150;
-        return sceneOffsetY + (row - 'A')*SQUARE_SIZE; // - SQUARE_SIZE/2;
+    private int offsetY (char row){
+        return sceneOffsetY + (row - 'A')*SQUARE_SIZE;
     }
     // calculate offset in X direction
-    int offsetX (char column){
-//        int sceneOffsetX = 135;
-        return sceneOffsetX + (column - '1')*SQUARE_SIZE; // - SQUARE_SIZE/2;
+    private int offsetX (char column){
+        return sceneOffsetX + (column - '1')*SQUARE_SIZE;
     }
     /**
      * Draw a placement in the window, removing any previously drawn one
      *
      * @param placement  A valid placement string
      */
-    void makePlacement(String placement) {
+    private void makePlacement(String placement) {
 
         char pieceType;
         char column;
