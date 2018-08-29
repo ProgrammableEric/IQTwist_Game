@@ -99,7 +99,7 @@ public class Viewer extends Application {
             if ( orientation<='3'){
                 setRotate((orientation - '0')*90);
             }else if ( orientation<='7'){
-                setScaleX(-1);
+                setScaleY(-1);
                 setRotate((orientation - '4')*90);
             }
 
@@ -174,6 +174,7 @@ public class Viewer extends Application {
 
             if (pieceType >= 'a' && pieceType <= 'h'){
                 pieces.getChildren().add(new Piece(pieceType,column,row,orientation));
+
             } else if (pieceType >= 'i' && pieceType <= 'l'){
                 pegs.getChildren().add(new Peg(pieceType,column,row));
             }
