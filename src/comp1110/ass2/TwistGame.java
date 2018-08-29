@@ -1,6 +1,8 @@
 package comp1110.ass2;
 
 import java.util.Set;
+import java.util.HashMap;
+import java.lang.String;
 
 /**
  * This class provides the text interface for the Twist Game
@@ -23,11 +25,59 @@ public class TwistGame {
    */
   public static boolean isPlacementWellFormed(String piecePlacement) {
     // FIXME Task 2: determine whether a piece or peg placement is well-formed
+      String first = "abcdefghijkl";
+      String second = "12345678";
+      String third = "ABCD";
+      String fourth = "01234567";
+      //check if it consists of exactly four characters
     if (piecePlacement.length() != 4) return false;
     else {
+        for (int i = 0; i < 4; i++) {
+            //check if the first character is in the range a .. l (pieces and pegs)
+            if (i == 0) {
+                if (first.indexOf(piecePlacement.charAt(i)) == -1) {
+                    return false;
+                }
 
+            }
+            //check if the second character is in the range 1 .. 8 (columns)
+            else if (i == 1) {
+                if (second.indexOf(piecePlacement.charAt(i)) == -1) {
+                    return false;
+                }
+
+            }
+            //check if the third character is in the range A .. D (rows)
+            else if (i == 2) {
+                if (third.indexOf(piecePlacement.charAt(i)) == -1) {
+                    return false;
+                }
+
+            }
+            //check if the fourth character is in the range 0 .. 7 (if a piece) or is 0 (if a peg)
+            else {
+                //check peg
+                if (piecePlacement.charAt(0) == 'i' || piecePlacement.charAt(0) == 'j' || piecePlacement.charAt(0) == 'k' || piecePlacement.charAt(0) == 'l') {
+                    if (piecePlacement.charAt(3) != '0') {
+                        return false;
+                    }
+
+                }
+                //check pieces
+                else {
+                    if (fourth.indexOf(piecePlacement.charAt(3)) == -1) {
+                        return false;
+                    }
+
+                }
+
+            }
+
+        }
+
+        return true;
     }
-    return false;
+
   }
 
   /**
@@ -42,8 +92,64 @@ public class TwistGame {
    * @return True if the placement is well-formed
    */
   public static boolean isPlacementStringWellFormed(String placement) {
+
+      //check if the placement string consists of exactly N four-character piece placements (where N = 1 .. 15);
+      if (placement.length() % 4 != 0 || placement.length() / 4 > 15 || placement.length() / 4 < 1) {
+          return false;
+      }
+
+      // check if each 4-character placement string is valid
+      for (int j = 0; j < placement.length() / 4; j++) {
+          if (isPlacementWellFormed(placement.substring(4 * j, 4 * j + 4)) == false) {
+              return false;
+          }
+
+      }
+
+      // check if each piece or peg placement occurs in the correct alphabetical order
+      for (int k = 0; k < placement.length() / 4 - 1; k++) {
+          if (placement.charAt(4 * k) > placement.charAt(4 * k + 4)) {
+              return false;
+          }
+      }
+
+      // check duplicates
+      // find a string of the first letter of every four-letter
+      String s = "";
+      for (int m = 0; m < placement.length() / 4; m++) {
+          s = s + placement.charAt(4 * m);
+      }
+
+      //establish a map of the first letter of every four-letter
+      HashMap<String, Integer> map = new HashMap<String, Integer>();
+
+      for (int i = 0; i < s.length(); i++) {
+          char c = s.charAt(i);
+          String key = String.valueOf(c);
+          if (map.containsKey(key)) {
+              map.put(key, map.get(key) + 1);
+          } else {
+              map.put(key, 1);
+          }
+      }
+
+      //check the duplications of pegs and pieces
+      // no piece or red peg can appear more than once in the placement
+      //no green, blue or yellow peg appears more than twice in the placement
+
+      for (String keys : map.keySet()) {
+          if (keys.equals("j") || keys.equals("k") || keys.equals("l")) {
+              if (map.get(keys) > 2) {
+                  return false;
+              }
+
+          } else if (map.get(keys) > 1) {
+              return false;
+          }
+
+      }
     // FIXME Task 3: determine whether a placement is well-formed
-    return false;
+      return true;
   }
 
   /**
