@@ -93,7 +93,7 @@ public class TwistGame {
    */
   public static boolean isPlacementStringWellFormed(String placement) {
 
-      // //check if the placement string consists of exactly N four-character piece placements (where N = 1 .. 15);
+      //check if the placement string consists of exactly N four-character piece placements (where N = 1 .. 15);
       if (placement.length() % 4 != 0 || placement.length() / 4 > 15 || placement.length() / 4 < 1) {
           return false;
       }
@@ -114,7 +114,7 @@ public class TwistGame {
       }
 
       // check duplicates
-      //find a string of the first letter of every four-letter
+      // find a string of the first letter of every four-letter
       String s = "";
       for (int m = 0; m < placement.length() / 4; m++) {
           s = s + placement.charAt(4 * m);
