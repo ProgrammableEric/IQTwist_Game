@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -15,6 +16,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.scene.transform.Rotate;
+
 
 /**
  * A very simple viewer for piece placements in the twist game.
@@ -29,6 +32,9 @@ public class Viewer extends Application {
     private static final int SQUARE_SIZE = 60;
     private static final int VIEWER_WIDTH = 750;
     private static final int VIEWER_HEIGHT = 500;
+
+    private static int sceneOffsetX = 135;
+    private static int sceneOffsetY = 150;
 
     private static final String URI_BASE = "assets/";
 
@@ -59,47 +65,47 @@ public class Viewer extends Application {
         Piece (char piece, char column, char row, char orientation){
 
             int posX;  int posY;
+            double recHeight = 0;  double recWidth = 0;
 
             if (piece >= 'i') {
-                throw new IllegalArgumentException("Bad tile: \"" + piece + "\"");
+                throw new IllegalArgumentException("Bad piece: \"" + piece + "\"");
             }
             setImage(new Image(Viewer.class.getResource(URI_BASE + piece + ".png").toString()));
             this.piece = piece - 'a';
             switch (piece){
                 case 'a': case 'b': case 'd': case 'f':
-                    setFitHeight(2*SQUARE_SIZE);
-                    setFitWidth(3*SQUARE_SIZE);
+                    setFitHeight(2*SQUARE_SIZE); recHeight = 2*SQUARE_SIZE;
+                    setFitWidth(3*SQUARE_SIZE);  recWidth = 3*SQUARE_SIZE;
                     setEffect(dropShadow); break;
                 case 'c':
-                    setFitHeight(SQUARE_SIZE);
-                    setFitWidth(4*SQUARE_SIZE);
-                    setEffect(dropShadow);
+                    setFitHeight(SQUARE_SIZE); recHeight = SQUARE_SIZE;
+                    setFitWidth(4*SQUARE_SIZE); recWidth = 4*SQUARE_SIZE;
+                    setEffect(dropShadow); break;
                 case 'e':
-                    setFitHeight(2*SQUARE_SIZE);
-                    setFitWidth(2*SQUARE_SIZE);
-                    setEffect(dropShadow);
+                    setFitHeight(2*SQUARE_SIZE); recHeight = 2*SQUARE_SIZE;
+                    setFitWidth(2*SQUARE_SIZE); recWidth = 2*SQUARE_SIZE;
+                    setEffect(dropShadow); break;
                 case 'g':
-                    setFitHeight(3*SQUARE_SIZE);
-                    setFitWidth(3*SQUARE_SIZE);
-                    setEffect(dropShadow);
+                    setFitHeight(3*SQUARE_SIZE); recHeight = 3*SQUARE_SIZE;
+                    setFitWidth(3*SQUARE_SIZE); recWidth = 3*SQUARE_SIZE;
+                    setEffect(dropShadow); break;
                 case 'h':
-                    setFitHeight(SQUARE_SIZE);
-                    setFitWidth(3*SQUARE_SIZE);
-                    setEffect(dropShadow);
+                    setFitHeight(SQUARE_SIZE); recHeight = SQUARE_SIZE;
+                    setFitWidth(3*SQUARE_SIZE); recWidth = 3*SQUARE_SIZE;
+                    setEffect(dropShadow);break;
             }
 
-            // rotation of the image
-            if ( orientation<=3){
-                setRotate(orientation*90);
-            }else if ( orientation<=7){
-                setScaleY(-1);
-                setRotate((orientation-4) * 90);
+            // rotation of the image ?????????????????
+            if ( orientation<='3'){
+                setRotate((orientation - '0')*90);
+            }else if ( orientation<='7'){
+                setScaleX(-1);
+                setRotate((orientation - '4')*90);
             }
 
             // offsetting the piece
             posX = offsetX(column);
             posY = offsetY(row);
-
 
             setLayoutX(posX);
             setLayoutY(posY);
@@ -135,14 +141,15 @@ public class Viewer extends Application {
     }
 
 
+    // calculate offset in Y direction
     int offsetY (char row){
-        int sceneOffsetY = 150;
-        return sceneOffsetY + (row - 'A')*SQUARE_SIZE + SQUARE_SIZE/2;
+//        int sceneOffsetY = 150;
+        return sceneOffsetY + (row - 'A')*SQUARE_SIZE; // - SQUARE_SIZE/2;
     }
-
+    // calculate offset in X direction
     int offsetX (char column){
-        int sceneOffsetX = 135;
-        return sceneOffsetX + (column - '0')*SQUARE_SIZE + SQUARE_SIZE/2;
+//        int sceneOffsetX = 135;
+        return sceneOffsetX + (column - '1')*SQUARE_SIZE; // - SQUARE_SIZE/2;
     }
     /**
      * Draw a placement in the window, removing any previously drawn one
@@ -155,6 +162,9 @@ public class Viewer extends Application {
         char column;
         char row;
         char orientation;
+
+        pieces.getChildren().clear();
+        pegs.getChildren().clear();
 
         for (int i = 0; i < placement.length();i += 4){
             pieceType = placement.charAt(i);
@@ -171,7 +181,6 @@ public class Viewer extends Application {
         }
         // FIXME Task 4: implement the simple placement viewer
     }
-
 
 
     /**
@@ -202,7 +211,11 @@ public class Viewer extends Application {
         primaryStage.setTitle("TwistGame Viewer");
         Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
 
+        Rectangle background = new Rectangle(sceneOffsetX,sceneOffsetY,480,240);
+        background.setFill(Color.GRAY);
+
         root.getChildren().add(controls);
+        root.getChildren().add(background);
         root.getChildren().add(pieces);
         root.getChildren().add(pegs);
 
