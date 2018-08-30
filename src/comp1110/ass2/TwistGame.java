@@ -125,7 +125,7 @@ public class TwistGame {
       }
 
       //check the duplications of pegs and pieces
-      // no piece or red peg can appear more than once in the placement
+      //no piece or red peg can appear more than once in the placement
       //no green, blue or yellow peg appears more than twice in the placement
 
       for (String keys : map.keySet()) {

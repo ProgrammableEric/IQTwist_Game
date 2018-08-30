@@ -103,7 +103,7 @@ public class Viewer extends Application {
                 setRotate((orientation - '4')*90);
             }
 
-            // offsetting the piece
+            // put each piece in place by offsetting
             posX = offsetX(column);
             posY = offsetY(row);
 
