@@ -12,6 +12,9 @@ import java.lang.String;
  */
 public class TwistGame {
 
+
+    Node[] nodes = new Node[32];
+
   /**
    * Determine whether a piece or peg placement is well-formed according to the following:
    * - it consists of exactly four characters
@@ -156,8 +159,31 @@ public class TwistGame {
    * @return True if the placement sequence is valid
    */
   public static boolean isPlacementStringValid(String placement) {
+
+      if (!isPlacementStringWellFormed(placement)) return false;
+
+      for (int j = 0; j < placement.length() / 4; j++){
+
+          String temp = placement.substring(j,j+3);
+
+          if (isPiece(temp)){
+
+
+          }
+      }
+
+
+
+
+
+
     // FIXME Task 5: determine whether a placement string is valid
     return false;
+  }
+
+
+  public static int posDecode (char col, char row){
+      return (row - 'A')*8 + (int) col - 1;
   }
 
   /**
@@ -200,4 +226,11 @@ public class TwistGame {
     // FIXME Task 9: determine all solutions to the game, given a particular starting placement
     return null;
   }
+
+
+  // check if a 4-character placement string represents a piece or a peg
+  public static boolean isPiece (String piecePlacement){
+      return (piecePlacement.charAt(0) >= 'a' && piecePlacement.charAt(0) <= 'h');
+  }
+
 }

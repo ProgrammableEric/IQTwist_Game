@@ -39,7 +39,7 @@ public class Pieces {
     int orientation;       // the orientation of the piece, denoted by int 0, 1, ... 7
     int keyPosition;       // the characteristic location of the peg's Squareboard (the top left corner position ID of the Squareboard)
     ArrayList<Integer>[][] Squareboard;       // Squareboard representation of the piece
-    Colour color;
+    Colour colour;
 
     // constructor for a new piece
     public Pieces (char piecesID, int orientation, int keyPosition, ArrayList<Integer>[][] Squareboard){

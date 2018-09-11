@@ -24,17 +24,19 @@ import java.util.ArrayList;
 public class Node {
 
     int value;             // value (0,1,2 according to Class Pieces) associated with the node,
-    int PositionID;        // Location of each note.
-    Pieces[] pieces;       // the piece associated with this board location, if any.
-    Pegs pegs;             // the peg associated with this board location, if any.
+    // int PositionID;        // Location of each note.
+    Pieces[] piece;       // the piece associated with this board location, if any.
+    Pegs peg;             // the peg associated with this board location, if any.
+
+
 
 
 
     // constructor of a node
     Node (int PositionID, Pieces[] pieces, Pegs pegs) {
-        this.PositionID = PositionID;
-        this.pieces = pieces;
-        this.pegs = pegs;
+        // this.PositionID = PositionID;
+        this.piece = pieces;
+        this.peg = pegs;
         // ...
     }
 
