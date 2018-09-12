@@ -24,8 +24,8 @@ import java.util.ArrayList;
 public class Node {
 
     int pieceValue;       // value (0,1,2 according to Class Pieces) associated with the node,
-    Pieces piece;         // the piece associated with this board location, if any.
-    Pegs peg;             // the peg associated with this board location, if any.
+    Piece piece;         // the piece associated with this board location, if any.
+    Peg peg;             // the peg associated with this board location, if any.
 
 
 
@@ -35,17 +35,17 @@ public class Node {
         this.pieceValue = pieceValue;
     }
 
-    Node (int pieceValue, Pieces piece) {
+    Node (int pieceValue, Piece piece) {
         this.pieceValue = pieceValue;
         this.piece = piece;
     }
 
-    Node (int pieceValue, Pegs peg) {
+    Node (int pieceValue, Peg peg) {
         this.pieceValue = pieceValue;
         this.peg = peg;
     }
 
-    Node (int pieceValue, Pieces piece, Pegs pegs) {
+    Node (int pieceValue, Piece piece, Peg pegs) {
         this.pieceValue = pieceValue;
         this.piece = piece;
         this.peg = pegs;
@@ -79,13 +79,13 @@ public class Node {
 
 
     // update the board information when a new piece is placed or moved on the board
-    public void placePiece (Pieces pieces){
+    public void placePiece (Piece piece){
         //...
     }
 
 
     // update the board information when a new peg is placed or moved on the board
-    public void placePeg (Pegs pegs){
+    public void placePeg (Peg peg){
         //...
     }
 

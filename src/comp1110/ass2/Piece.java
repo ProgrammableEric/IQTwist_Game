@@ -36,16 +36,16 @@ import java.util.ArrayList;
 // ?????????  might create another enum named pieceType that stores Squareboard placement, given pieceID and orientation ?????????
 
 
-public class Pieces {
+public class Piece {
 
-    private char pieceID;                // type of the piece, denoted by letters a,b, ... h
-    private Direction orientation;       // the orientation of the piece, denoted by int 0, 1, ... 7
-    private int keyPosition;             // the characteristic location of the peg's Squareboard (the top left corner position ID of the Squareboard)
-    private int[] squareBoard;           // Squareboard representation of the piece
-    private Colour colour;               // colour of this piece
+    char pieceID;                // type of the piece, denoted by letters a,b, ... h
+    Direction orientation;       // the orientation of the piece, denoted by int 0, 1, ... 7
+    int keyPosition;             // the characteristic location of the peg's Squareboard (the top left corner position ID of the Squareboard)
+    int[] squareBoard;           // Squareboard representation of the piece
+    Colour colour;               // colour of this piece
 
     // constructor for a new piece
-    public Pieces (String placement){
+    public Piece (String placement){
 
         this.pieceID = placement.charAt(0);
         this.orientation = orientationDecode(placement.charAt(3));
@@ -240,13 +240,11 @@ public class Pieces {
                 return Colour.GREEN;
             case 'g': case 'h':
                 return Colour.YELLOW;
+            default: return null;
         }
     }
 
-
-
-
-
+    public boolean isOnBoard ()
 
 
 

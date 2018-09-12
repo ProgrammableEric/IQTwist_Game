@@ -1,6 +1,6 @@
 package comp1110.ass2;
 
-public class Pegs {
+public class Peg {
 
     private char pegID;           // used to uniquely identify each peg, denoted as P1,P2 ... P7, each with its own colour
     private int position;          // position of the peg, denoted by integer 0,1,... 31. position = -1
@@ -9,7 +9,7 @@ public class Pegs {
 
 
     // constructor for a new peg
-    Pegs (String placement){
+    Peg (String placement){
 
         this.pegID = placement.charAt(0);
         this.position = posDecode(placement.charAt(1), placement.charAt(2));

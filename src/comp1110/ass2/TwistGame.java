@@ -13,15 +13,15 @@ import java.lang.String;
 public class TwistGame {
 
 
-    Node[] nodes = new Node[32];
-
-    public static void initializeNodes (Node[] nodes){
-        for (int i =0; i < nodes.length; i++){
-            nodes[i].pieceValue = 0;             // all nodes are set to be empty at the start of the game
-            nodes[i].piece = null;
-            nodes[i].peg = null;
-        }
-    }
+//    Node[] nodes = new Node[32];
+//
+//    public static void initializeNodes (Node[] nodes){
+//        for (int i =0; i < nodes.length; i++){
+//            nodes[i].pieceValue = 0;             // all nodes are set to be empty at the start of the game
+//            nodes[i].piece = null;
+//            nodes[i].peg = null;
+//        }
+//    }
 
   /**
    * Determine whether a piece or peg placement is well-formed according to the following:
@@ -168,6 +168,15 @@ public class TwistGame {
    */
   public static boolean isPlacementStringValid(String placement) {
 
+      Node[] nodes = new Node[32];
+
+      for (int i =0; i < nodes.length; i++){
+          nodes[i].pieceValue = 0;             // all nodes are set to be empty at the start of the game
+          nodes[i].piece = null;
+          nodes[i].peg = null;
+          }
+
+
       if (!isPlacementStringWellFormed(placement)) return false;
 
       for (int j = 0; j < placement.length() / 4; j++){
@@ -176,7 +185,32 @@ public class TwistGame {
 
           if (isPiece(temp)){
 
+              // initialize a new piece
+            Piece newPiece = new Piece(temp);
+            int keyPos = newPiece.keyPosition;
+            int[] squareboard = newPiece.squareBoard;
 
+            // put the piece onto the game board
+            switch (squareboard.length) {
+                case 4:
+                    if (nodes[keyPos].pieceHere() || nodes[keyPos+1].pieceHere() || nodes[keyPos+8].pieceHere() || nodes[keyPos+9].pieceHere()) return false;
+                    else {
+                        nodes[keyPos].piece = newPiece;
+                        nodes[keyPos+1].piece = newPiece;
+                        nodes[keyPos+8].piece = newPiece;
+                        nodes[keyPos+9].piece = newPiece;
+                        nodes[keyPos].pieceValue = squareboard[0];
+                        nodes[keyPos+1].pieceValue = squareboard[1];
+                        nodes[keyPos+8].pieceValue = squareboard[2];
+                        nodes[keyPos+9].pieceValue = squareboard[3];
+                    }
+
+
+                case 9:
+
+
+                case 16:
+            }
           }
       }
 
@@ -237,6 +271,10 @@ public class TwistGame {
   // check if a 4-character placement string represents a piece or a peg
   public static boolean isPiece (String piecePlacement){
       return (piecePlacement.charAt(0) >= 'a' && piecePlacement.charAt(0) <= 'h');
+  }
+
+  public static boolean isOnBoard (int keyPos){
+
   }
 
 }
