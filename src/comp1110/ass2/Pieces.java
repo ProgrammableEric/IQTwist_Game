@@ -86,7 +86,143 @@ public class Pieces {
                         return new int[]{2, 1, 2, 0, 0, 1, 0, 0, 0};
                     case '1':
                         return new int[]{0, 2, 0, 0, 1, 0, 1, 2, 0};
-                    // ......
+                    case '2':
+                        return new int[]{1, 0, 0, 2, 1, 2, 0, 0, 0};
+                    case '3':
+                        return new int[]{2, 1, 0, 1, 0, 0, 2, 0, 0};
+                    case '4':
+                        return new int[]{0, 0, 1, 2, 1, 2, 0, 0, 0};
+                    case '5':
+                        return new int[]{2, 0, 0, 1, 0, 0, 2, 1, 0};
+                    case '6':
+                        return new int[]{2, 1, 2, 1, 0, 0, 0, 0, 0};
+                    case '7':
+                        return new int[]{1, 2, 0, 0, 1, 0, 0, 2, 0};
+                }
+            case 'b':
+                switch (dir) {
+                    case '0':
+                        return new int[]{1, 1, 0, 0, 2, 1, 0, 0, 0};
+                    case '1':
+                        return new int[]{0, 1, 0, 2, 1, 0, 1, 0, 0};
+                    case '2':
+                        return new int[]{1, 2, 0, 0, 1, 1, 0, 0, 0};
+                    case '3':
+                        return new int[]{0, 1, 0, 1, 2, 0, 1, 0, 0};
+                    case '4':
+                        return new int[]{0, 2, 1, 1, 1, 0, 0, 0, 0};
+                    case '5':
+                        return new int[]{1, 0, 0, 1, 2, 0, 0, 1, 0};
+                    case '6':
+                        return new int[]{0, 1, 1, 1, 2, 0, 0, 0, 0};
+                    case '7':
+                        return new int[]{1, 0, 0, 2, 1, 0, 0, 1, 0};
+                }
+            case 'c':
+                switch (dir){
+                    case '0':
+                    case '4':
+                        return new int[]{1, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+                    case '1':
+                    case '5':
+                        return new int[]{1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0};
+                    case '2':
+                    case '6':
+                        return new int[]{1, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+                    case '3':
+                    case '7':
+                        return new int[]{1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0};
+                }
+            case 'd':
+                switch (dir){
+                    case '0':
+                        return new int[]{1, 1, 1, 0, 2, 2, 0, 0, 0};
+                    case '1':
+                        return new int[]{0, 1, 0, 2, 1, 0, 2, 1, 0};
+                    case '2':
+                        return new int[]{2, 2, 0, 1, 1, 1, 0, 0, 0};
+                    case '3':
+                        return new int[]{1, 2, 0, 1, 2, 0, 1, 0, 0};
+                    case '4':
+                        return new int[]{0, 2, 2, 1, 1, 1, 0, 0, 0};
+                    case '5':
+                        return new int[]{1, 0, 0, 1, 2, 0, 1, 2, 0};
+                    case '6':
+                        return new int[]{1, 1, 1, 2, 2, 0, 0, 0, 0};
+                    case '7':
+                        return new int[]{2, 1, 0, 2, 1, 0, 0, 1, 0};
+                }
+            case 'e':
+                switch (dir){
+                    case '0':
+                        return new int[]{1, 2, 0, 2};
+                    case '1':
+                        return new int[]{0, 1, 2, 2};
+                    case '2':
+                        return new int[]{2, 0, 2, 1};
+                    case '3':
+                        return new int[]{2, 2, 1, 0};
+                    case '4':
+                        return new int[]{0, 2, 1, 2};
+                    case '5':
+                        return new int[]{1, 0, 2, 2};
+                    case '6':
+                        return new int[]{2, 1, 2, 0};
+                    case '7':
+                        return new int[]{2, 2, 0, 1};
+                }
+            case 'f':
+                switch (dir){
+                    case '0':
+                        return new int[]{1, 1, 2, 0, 2, 0, 0, 0, 0};
+                    case '1':
+                        return new int[]{0, 1, 0, 2, 1, 0, 0, 2, 0};
+                    case '2':
+                        return new int[]{0, 2, 0, 2, 1, 1, 0, 0, 0};
+                    case '3':
+                        return new int[]{2, 0, 0, 1, 2, 0, 1, 0, 0};
+                    case '4':
+                        return new int[]{0, 2, 0, 1, 1, 2, 0, 0, 0};
+                    case '5':
+                        return new int[]{1, 0, 0, 1, 2, 0, 2, 0, 0};
+                    case '6':
+                        return new int[]{2, 1, 1, 0, 2, 0, 0, 0, 0};
+                    case '7':
+                        return new int[]{0, 2, 0, 2, 1, 0, 0, 1, 0};
+                }
+            case 'g':
+                switch (dir){
+                    case '0':
+                        return new int[]{2, 0, 0, 2, 1, 1, 0, 2, 0};
+                    case '1':
+                        return new int[]{0, 2, 2, 2, 1, 0, 0, 1, 0};
+                    case '2':
+                        return new int[]{0, 2, 0, 1, 1, 2, 0, 0, 2};
+                    case '3':
+                        return new int[]{0, 1, 0, 0, 1, 2, 2, 2, 0};
+                    case '4':
+                        return new int[]{0, 2, 0, 2, 1, 1, 2, 0, 0};
+                    case '5':
+                        return new int[]{2, 2, 0, 0, 1, 2, 0, 1, 0};
+                    case '6':
+                        return new int[]{0, 0, 2, 1, 1, 2, 0, 2, 0};
+                    case '7':
+                        return new int[]{0, 1, 0, 2, 1, 0, 0, 2, 2};
+                }
+            case 'h':
+                switch (dir){
+                    case '0':
+                    case '4':
+                        return new int[]{2, 1, 1, 0, 0, 0, 0, 0, 0};
+                    case '1':
+                    case '5':
+                        return new int[]{2, 0, 0 ,1, 0, 0, 1, 0, 0};
+                    case '2':
+                    case '6':
+                        return new int[]{1, 1, 2, 0, 0, 0, 0, 0, 0};
+                    case '3':
+                    case '7':
+                        return new int[]{1, 0, 0, 1, 0, 0, 2, 0, 0};
                 }
 
             default: return null;
