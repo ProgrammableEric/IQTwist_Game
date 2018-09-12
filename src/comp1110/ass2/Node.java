@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class Node {
 
-    int pieceValue;       // value (0,1,2 according to Class Pieces) associated with the node,
+    int pieceValue;      // value (0,1,2 according to Class Pieces) associated with the node,
     Piece piece;         // the piece associated with this board location, if any.
     Peg peg;             // the peg associated with this board location, if any.
 

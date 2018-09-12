@@ -176,44 +176,55 @@ public class TwistGame {
           nodes[i].peg = null;
           }
 
-
-      if (!isPlacementStringWellFormed(placement)) return false;
+      // check if the placement string is well formed
+      if (!isPlacementStringWellFormed(placement)) {
+          System.out.println("This is not a valid placement string !");
+          return false;
+      }
 
       for (int j = 0; j < placement.length() / 4; j++){
 
           String temp = placement.substring(j,j+3);
 
+          // if the given string represents a piece
           if (isPiece(temp)){
 
               // initialize a new piece
             Piece newPiece = new Piece(temp);
             int keyPos = newPiece.keyPosition;
-            int[] squareboard = newPiece.squareBoard;
-
-            // put the piece onto the game board
-            switch (squareboard.length) {
-                case 4:
-                    if (nodes[keyPos].pieceHere() || nodes[keyPos+1].pieceHere() || nodes[keyPos+8].pieceHere() || nodes[keyPos+9].pieceHere()) return false;
-                    else {
-                        nodes[keyPos].piece = newPiece;
-                        nodes[keyPos+1].piece = newPiece;
-                        nodes[keyPos+8].piece = newPiece;
-                        nodes[keyPos+9].piece = newPiece;
-                        nodes[keyPos].pieceValue = squareboard[0];
-                        nodes[keyPos+1].pieceValue = squareboard[1];
-                        nodes[keyPos+8].pieceValue = squareboard[2];
-                        nodes[keyPos+9].pieceValue = squareboard[3];
-                    }
+            int[] positions = newPiece.positions;
+            int[] pieceValues = newPiece.pieceValues;
 
 
-                case 9:
-
-
-                case 16:
+            // check if the piece is entirely on board
+            if ( !newPiece.isOnBoard() ) {
+                System.out.println("A piece has been put outside the game board boundary");
+                return false;
             }
-          }
+
+
+            // put the piece onto the game board, check if there's clash between pieces
+            for (int i = 0; i < newPiece.positions.length; i++){
+                int id = newPiece.keyPosition + newPiece.positions[i];
+                if (nodes[id].pieceHere()) {
+                    nodes[id].piece = newPiece;
+                    nodes[id].pieceValue = newPiece.pieceValues[i];
+                } else{
+                    System.out.println("Pieces clash! ");
+                    return false;
+                }
+            }
+
+          } else if (isPeg(temp)){
+              Peg newPeg = new Peg(temp);
+              int id2 = newPeg.position;
+              nodes[id2].peg = newPeg;
+
+          } else return false;
+
       }
 
+      // check if each Piece and Peg matches according to the game rule
 
 
 
@@ -273,8 +284,10 @@ public class TwistGame {
       return (piecePlacement.charAt(0) >= 'a' && piecePlacement.charAt(0) <= 'h');
   }
 
-  public static boolean isOnBoard (int keyPos){
-
+  public static boolean isPeg (String piecePlacement){
+      return (piecePlacement.charAt(0) >= 'i' && piecePlacement.charAt(0) <= 'l');
   }
+
+
 
 }

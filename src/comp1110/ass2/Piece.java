@@ -41,7 +41,8 @@ public class Piece {
     char pieceID;                // type of the piece, denoted by letters a,b, ... h
     Direction orientation;       // the orientation of the piece, denoted by int 0, 1, ... 7
     int keyPosition;             // the characteristic location of the peg's Squareboard (the top left corner position ID of the Squareboard)
-    int[] squareBoard;           // Squareboard representation of the piece
+    int[] positions;
+    int[] pieceValues;
     Colour colour;               // colour of this piece
 
     // constructor for a new piece
@@ -50,7 +51,8 @@ public class Piece {
         this.pieceID = placement.charAt(0);
         this.orientation = orientationDecode(placement.charAt(3));
         this.keyPosition = posDecode(placement.charAt(1), placement.charAt(2));
-        this.squareBoard = squareboardDecode(placement.charAt(0), placement.charAt(3));
+        this.positions = positionsDecode(placement.charAt(0), placement.charAt(3));
+        this.pieceValues = pieceValuesDecode(placement.charAt(0), placement.charAt(3));
         this.colour = colourDecode(placement.charAt(0));
 
     }
@@ -78,156 +80,287 @@ public class Piece {
 
 
     // given a piece placement string, decode piece squareboard representation as a 1-dimensional array.
-    public static int[] squareboardDecode (char pieceID, char dir){
+    public static int[] pieceValuesDecode (char pieceID, char dir){
         switch (pieceID) {
             case 'a':
                 switch (dir) {
                     case '0':
-                        return new int[]{2, 1, 2, 0, 0, 1, 0, 0, 0};
+                        return new int[]{2, 1, 2, 1};
                     case '1':
-                        return new int[]{0, 2, 0, 0, 1, 0, 1, 2, 0};
+                        return new int[]{2, 1, 1, 2};
                     case '2':
-                        return new int[]{1, 0, 0, 2, 1, 2, 0, 0, 0};
+                        return new int[]{1, 2, 1, 2};
                     case '3':
-                        return new int[]{2, 1, 0, 1, 0, 0, 2, 0, 0};
+                        return new int[]{2, 1, 1, 2};
                     case '4':
-                        return new int[]{0, 0, 1, 2, 1, 2, 0, 0, 0};
+                        return new int[]{1, 2, 1, 2};
                     case '5':
-                        return new int[]{2, 0, 0, 1, 0, 0, 2, 1, 0};
+                        return new int[]{2, 1, 2, 1};
                     case '6':
-                        return new int[]{2, 1, 2, 1, 0, 0, 0, 0, 0};
+                        return new int[]{2, 1, 2, 1};
                     case '7':
-                        return new int[]{1, 2, 0, 0, 1, 0, 0, 2, 0};
+                        return new int[]{1, 2, 1, 2};
                 }
             case 'b':
                 switch (dir) {
                     case '0':
-                        return new int[]{1, 1, 0, 0, 2, 1, 0, 0, 0};
+                        return new int[]{1, 1, 2, 1};
                     case '1':
-                        return new int[]{0, 1, 0, 2, 1, 0, 1, 0, 0};
+                        return new int[]{1, 2, 1, 1};
                     case '2':
-                        return new int[]{1, 2, 0, 0, 1, 1, 0, 0, 0};
+                        return new int[]{1, 2, 1, 1};
                     case '3':
-                        return new int[]{0, 1, 0, 1, 2, 0, 1, 0, 0};
+                        return new int[]{1, 1, 2, 1};
                     case '4':
-                        return new int[]{0, 2, 1, 1, 1, 0, 0, 0, 0};
+                        return new int[]{2, 1, 1, 1};
                     case '5':
-                        return new int[]{1, 0, 0, 1, 2, 0, 0, 1, 0};
+                        return new int[]{1, 1, 2, 1};
                     case '6':
-                        return new int[]{0, 1, 1, 1, 2, 0, 0, 0, 0};
+                        return new int[]{1, 1, 1, 2};
                     case '7':
-                        return new int[]{1, 0, 0, 2, 1, 0, 0, 1, 0};
+                        return new int[]{1, 2, 1, 1};
                 }
             case 'c':
                 switch (dir){
                     case '0':
                     case '4':
-                        return new int[]{1, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+                        return new int[]{1, 2, 1, 1};
                     case '1':
                     case '5':
-                        return new int[]{1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0};
+                        return new int[]{1, 2, 1, 1};
                     case '2':
                     case '6':
-                        return new int[]{1, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+                        return new int[]{1, 1, 2, 1};
                     case '3':
                     case '7':
-                        return new int[]{1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0};
+                        return new int[]{1, 1, 2, 1};
                 }
             case 'd':
                 switch (dir){
                     case '0':
-                        return new int[]{1, 1, 1, 0, 2, 2, 0, 0, 0};
+                        return new int[]{1, 1, 1, 2, 2};
                     case '1':
-                        return new int[]{0, 1, 0, 2, 1, 0, 2, 1, 0};
+                        return new int[]{1, 2, 1, 2, 1};
                     case '2':
-                        return new int[]{2, 2, 0, 1, 1, 1, 0, 0, 0};
+                        return new int[]{2, 2, 1, 1, 1};
                     case '3':
-                        return new int[]{1, 2, 0, 1, 2, 0, 1, 0, 0};
+                        return new int[]{1, 2, 1, 2, 1};
                     case '4':
-                        return new int[]{0, 2, 2, 1, 1, 1, 0, 0, 0};
+                        return new int[]{2, 2, 1, 1, 1};
                     case '5':
-                        return new int[]{1, 0, 0, 1, 2, 0, 1, 2, 0};
+                        return new int[]{1, 1, 2, 1, 2};
                     case '6':
-                        return new int[]{1, 1, 1, 2, 2, 0, 0, 0, 0};
+                        return new int[]{1, 1, 1, 2, 2};
                     case '7':
-                        return new int[]{2, 1, 0, 2, 1, 0, 0, 1, 0};
+                        return new int[]{2, 1, 2, 1, 1};
                 }
             case 'e':
                 switch (dir){
                     case '0':
-                        return new int[]{1, 2, 0, 2};
+                        return new int[]{1, 2, 2};
                     case '1':
-                        return new int[]{0, 1, 2, 2};
+                        return new int[]{1, 2, 2};
                     case '2':
-                        return new int[]{2, 0, 2, 1};
+                        return new int[]{2, 2, 1};
                     case '3':
-                        return new int[]{2, 2, 1, 0};
+                        return new int[]{2, 2, 1};
                     case '4':
-                        return new int[]{0, 2, 1, 2};
+                        return new int[]{2, 1, 2};
                     case '5':
-                        return new int[]{1, 0, 2, 2};
+                        return new int[]{1, 2, 2};
                     case '6':
-                        return new int[]{2, 1, 2, 0};
+                        return new int[]{2, 1, 2};
                     case '7':
-                        return new int[]{2, 2, 0, 1};
+                        return new int[]{2, 2, 1};
                 }
             case 'f':
                 switch (dir){
                     case '0':
-                        return new int[]{1, 1, 2, 0, 2, 0, 0, 0, 0};
+                        return new int[]{1, 1, 2, 2};
                     case '1':
-                        return new int[]{0, 1, 0, 2, 1, 0, 0, 2, 0};
+                        return new int[]{1, 2, 1, 2};
                     case '2':
-                        return new int[]{0, 2, 0, 2, 1, 1, 0, 0, 0};
+                        return new int[]{2, 2, 1, 1};
                     case '3':
-                        return new int[]{2, 0, 0, 1, 2, 0, 1, 0, 0};
+                        return new int[]{2, 1, 2, 1};
                     case '4':
-                        return new int[]{0, 2, 0, 1, 1, 2, 0, 0, 0};
+                        return new int[]{2, 1, 1, 2};
                     case '5':
-                        return new int[]{1, 0, 0, 1, 2, 0, 2, 0, 0};
+                        return new int[]{1, 1, 2, 2};
                     case '6':
-                        return new int[]{2, 1, 1, 0, 2, 0, 0, 0, 0};
+                        return new int[]{2, 1, 1, 2};
                     case '7':
-                        return new int[]{0, 2, 0, 2, 1, 0, 0, 1, 0};
+                        return new int[]{2, 2, 1, 1};
                 }
             case 'g':
                 switch (dir){
                     case '0':
-                        return new int[]{2, 0, 0, 2, 1, 1, 0, 2, 0};
+                        return new int[]{2, 2, 1, 1, 2};
                     case '1':
-                        return new int[]{0, 2, 2, 2, 1, 0, 0, 1, 0};
+                        return new int[]{2, 2, 2, 1, 1};
                     case '2':
-                        return new int[]{0, 2, 0, 1, 1, 2, 0, 0, 2};
+                        return new int[]{2, 1, 1, 2, 2};
                     case '3':
-                        return new int[]{0, 1, 0, 0, 1, 2, 2, 2, 0};
+                        return new int[]{1, 1, 2, 2, 2};
                     case '4':
-                        return new int[]{0, 2, 0, 2, 1, 1, 2, 0, 0};
+                        return new int[]{2, 2, 1, 1, 2};
                     case '5':
-                        return new int[]{2, 2, 0, 0, 1, 2, 0, 1, 0};
+                        return new int[]{2, 2, 1, 2, 1};
                     case '6':
-                        return new int[]{0, 0, 2, 1, 1, 2, 0, 2, 0};
+                        return new int[]{2, 1, 1, 2, 2};
                     case '7':
-                        return new int[]{0, 1, 0, 2, 1, 0, 0, 2, 2};
+                        return new int[]{1, 2, 1, 2, 2};
                 }
             case 'h':
                 switch (dir){
-                    case '0':
-                    case '4':
-                        return new int[]{2, 1, 1, 0, 0, 0, 0, 0, 0};
-                    case '1':
-                    case '5':
-                        return new int[]{2, 0, 0 ,1, 0, 0, 1, 0, 0};
-                    case '2':
-                    case '6':
-                        return new int[]{1, 1, 2, 0, 0, 0, 0, 0, 0};
-                    case '3':
-                    case '7':
-                        return new int[]{1, 0, 0, 1, 0, 0, 2, 0, 0};
+                    case '0': case '1':
+                    case '4': case '5':
+                        return new int[]{2, 1, 1};
+
+                    case '2': case '3':
+                    case '6': case '7':
+                        return new int[]{1, 1, 2};
+
                 }
 
             default: return null;
         }
     }
+
+
+    public static int[] positionsDecode (char pieceID, char dir){
+        switch (pieceID) {
+            case 'a':
+                switch (dir) {
+                    case '0':
+                        return new int[]{0, 1, 2, 10};
+                    case '1':
+                        return new int[]{1, 9, 16, 17};
+                    case '2':
+                        return new int[]{1, 8, 9, 10};
+                    case '3':
+                        return new int[]{1, 2, 8, 16};
+                    case '4':
+                        return new int[]{2, 8, 9, 10};
+                    case '5':
+                        return new int[]{0, 8, 16, 17};
+                    case '6':
+                        return new int[]{0, 1, 2, 8};
+                    case '7':
+                        return new int[]{0, 1, 9, 17};
+                }
+            case 'b':
+                switch (dir) {
+                    case '0': case '2':
+                        return new int[]{0, 1, 9, 10};
+
+                    case '1': case '3':
+                        return new int[]{1, 8, 9, 16};
+
+                    case '4': case '6':
+                        return new int[]{1, 2, 8, 9};
+
+                    case '5': case '7':
+                        return new int[]{0, 8, 9, 17};
+
+                }
+            case 'c':
+                switch (dir){
+                    case '0': case '2':
+                    case '4': case '6':
+                        return new int[]{0, 1, 2, 3};
+                    case '1': case '3':
+                    case '5': case '7':
+                        return new int[]{0, 8, 16, 24};
+                }
+
+            case 'd':
+                switch (dir){
+                    case '0':
+                        return new int[]{0, 1, 2, 9, 10};
+                    case '1':
+                        return new int[]{1, 8, 9, 16, 17};
+                    case '2':
+                        return new int[]{0, 1, 8, 9, 10};
+                    case '3':
+                        return new int[]{0, 1, 8, 9, 16};
+                    case '4':
+                        return new int[]{1, 2, 8, 9, 10};
+                    case '5':
+                        return new int[]{0, 8, 9, 16, 17};
+                    case '6':
+                        return new int[]{0, 1, 2, 8, 9};
+                    case '7':
+                        return new int[]{0, 1, 8, 9, 17};
+                }
+
+            case 'e':
+                switch (dir){
+                    case '0': case '7':
+                        return new int[]{0, 1, 9};
+
+                    case '1': case '4':
+                        return new int[]{1, 8, 9};
+
+                    case '2': case '5':
+                        return new int[]{0, 8, 9};
+
+                    case '3': case '6':
+                        return new int[]{0, 1, 8};
+
+                }
+            case 'f':
+                switch (dir){
+                    case '0': case '6':
+                        return new int[]{0, 1, 2, 9};
+
+                    case '1': case '7':
+                        return new int[]{1, 8, 9, 17};
+
+                    case '2': case '4':
+                        return new int[]{1, 8, 9, 10};
+
+                    case '3': case '5':
+                        return new int[]{0, 8, 9, 16};
+
+                }
+
+            case 'g':
+                switch (dir){
+                    case '0':
+                        return new int[]{0, 8, 9, 10, 17};
+                    case '1':
+                        return new int[]{1, 2, 8, 9, 17};
+                    case '2':
+                        return new int[]{1, 8, 9, 10, 18};
+                    case '3':
+                        return new int[]{1, 9, 10, 16, 17};
+                    case '4':
+                        return new int[]{1, 8, 9, 10, 16};
+                    case '5':
+                        return new int[]{0, 1, 9, 10, 17};
+                    case '6':
+                        return new int[]{2, 8, 9, 10, 17};
+                    case '7':
+                        return new int[]{1, 8, 9, 17, 18};
+                }
+
+            case 'h':
+                switch (dir){
+                    case '0': case '2':
+                    case '4': case '6':
+                        return new int[]{0, 1, 2};
+
+                    case '1': case '3':
+                    case '5': case '7':
+                        return new int[]{0, 8, 16};
+
+                }
+
+            default: return null;
+        }
+    }
+
 
 
     public static Colour colourDecode (char pieceID){
@@ -244,7 +377,59 @@ public class Piece {
         }
     }
 
-    public boolean isOnBoard ()
+
+    // given a new piece, and its placement string, tell if the piece is entirely on the game board.
+    public boolean isOnBoard (){
+        boolean test = true;
+
+        switch (this.pieceID) {
+
+
+            case 'a': case 'b': case 'd': case 'f':
+                switch (this.orientation) {
+                    case NORTH: case SOUTH: case FNORTH: case FSOUTH:
+                        if (this.keyPosition % 8 > 5  || this.keyPosition / 8 > 2) test =  false;
+                        break;
+                    case EAST: case WEST: case FEAST: case FWEST:
+                        if (this.keyPosition % 8 > 6  || this.keyPosition / 8 > 1) test =  false;
+                        break;
+                }
+
+
+            case 'c':
+                switch (this.orientation) {
+                    case NORTH: case SOUTH: case FNORTH: case FSOUTH:
+                        if (this.keyPosition % 8 > 4  || this.keyPosition / 8 > 3) test =  false;
+                        break;
+                    case EAST: case WEST: case FEAST: case FWEST:
+                        if (this.keyPosition  > 7 ) test =  false;
+                        break;
+                }
+
+
+            case 'e':
+                if (this.keyPosition % 8 > 6  || this.keyPosition / 8 > 2) test =  false;
+                break;
+
+
+            case 'g':
+                if (this.keyPosition % 8 > 5  || this.keyPosition / 8 > 1) test =  false;
+                break;
+
+
+            case 'h':
+                switch (this.orientation) {
+                    case NORTH: case SOUTH: case FNORTH: case FSOUTH:
+                        if (this.keyPosition % 8 > 5  || this.keyPosition / 8 > 3) test =  false;
+                        break;
+                    case EAST: case WEST: case FEAST: case FWEST:
+                        if (this.keyPosition / 8 > 1 ) test =  false;
+                        break;
+                }
+        }
+
+        return test;
+    }
 
 
 
