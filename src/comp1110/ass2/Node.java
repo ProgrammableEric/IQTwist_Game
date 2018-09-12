@@ -23,69 +23,76 @@ import java.util.ArrayList;
 
 public class Node {
 
-    int value;             // value (0,1,2 according to Class Pieces) associated with the node,
-    // int PositionID;        // Location of each note.
-    Pieces[] piece;       // the piece associated with this board location, if any.
+    int pieceValue;       // value (0,1,2 according to Class Pieces) associated with the node,
+    Pieces piece;         // the piece associated with this board location, if any.
     Pegs peg;             // the peg associated with this board location, if any.
 
 
 
-
-
     // constructor of a node
-    Node (int PositionID, Pieces[] pieces, Pegs pegs) {
-        // this.PositionID = PositionID;
-        this.piece = pieces;
+
+    Node (int pieceValue) {
+        this.pieceValue = pieceValue;
+    }
+
+    Node (int pieceValue, Pieces piece) {
+        this.pieceValue = pieceValue;
+        this.piece = piece;
+    }
+
+    Node (int pieceValue, Pegs peg) {
+        this.pieceValue = pieceValue;
+        this.peg = peg;
+    }
+
+    Node (int pieceValue, Pieces piece, Pegs pegs) {
+        this.pieceValue = pieceValue;
+        this.piece = piece;
         this.peg = pegs;
-        // ...
     }
 
 
-    // Decoding placement string into position ID.
-    public static int getPositionID (String placementString){
-        // ...
-        return -1 ;
-    }
+//    // Decoding placement string into position ID.
+//    public static int getPositionID (String placementString){
+//        // ...
+//        return -1 ;
+//    }
 
 
     // method determine if there's either a peg or piece occupying this node
-    boolean isEmpty (){
+    public boolean isEmpty (){
         // ...
-        return true;
+        return pieceValue == 0 && peg == null;
     }
 
 
     // method tells if a piece is placed on the node
-    boolean pieceHere (){
-        //...
-        return false;
+    public boolean pieceHere (){
+        return pieceValue != 0;
     }
 
 
     // method tells if a peg is placed on the node
-    boolean pegHere (){
-        //...
-        return false;
+    public boolean pegHere (){
+        return peg != null;
     }
 
 
     // update the board information when a new piece is placed or moved on the board
-    void placePiece (Pieces pieces){
+    public void placePiece (Pieces pieces){
         //...
     }
 
 
     // update the board information when a new peg is placed or moved on the board
-    void placePeg (Pegs pegs){
+    public void placePeg (Pegs pegs){
         //...
     }
 
 
 
-
-
     // get all positions of all neighbours that are on the game board
-    int[] getNeighbours (int positionID){
+    public int[] getNeighbours (int positionID){
         // ...
         return null;
     }

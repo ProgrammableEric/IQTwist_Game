@@ -15,6 +15,14 @@ public class TwistGame {
 
     Node[] nodes = new Node[32];
 
+    public static void initializeNodes (Node[] nodes){
+        for (int i =0; i < nodes.length; i++){
+            nodes[i].pieceValue = 0;             // all nodes are set to be empty at the start of the game
+            nodes[i].piece = null;
+            nodes[i].peg = null;
+        }
+    }
+
   /**
    * Determine whether a piece or peg placement is well-formed according to the following:
    * - it consists of exactly four characters
@@ -182,9 +190,7 @@ public class TwistGame {
   }
 
 
-  public static int posDecode (char col, char row){
-      return (row - 'A')*8 + (int) col - 1;
-  }
+
 
   /**
    * Given a string describing a placement of pieces and pegs, return a set
