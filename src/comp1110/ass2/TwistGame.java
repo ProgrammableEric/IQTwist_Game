@@ -171,9 +171,7 @@ public class TwistGame {
       Node[] nodes = new Node[32];
 
       for (int i =0; i < nodes.length; i++){
-          nodes[i].pieceValue = 0;             // all nodes are set to be empty at the start of the game
-          nodes[i].piece = null;
-          nodes[i].peg = null;
+          nodes[i] = new Node(0, null, null);
           }
 
       // check if the placement string is well formed
@@ -184,10 +182,13 @@ public class TwistGame {
 
       for (int j = 0; j < placement.length() / 4; j++){
 
-          String temp = placement.substring(j,j+3);
+          String temp = placement.substring(j*4,(j+1)*4);
+          //System.out.println(temp);
 
           // if the given string represents a piece
           if (isPiece(temp)){
+              //System.out.println("got a piece");
+              //System.out.println(temp.charAt(0));
 
               // initialize a new piece
             Piece newPiece = new Piece(temp);
@@ -206,32 +207,40 @@ public class TwistGame {
             // put the piece onto the game board, check if there's clash between pieces
             for (int i = 0; i < newPiece.positions.length; i++){
                 int id = newPiece.keyPosition + newPiece.positions[i];
-                if (nodes[id].pieceHere()) {
+                if (!nodes[id].pieceHere()) {
                     nodes[id].piece = newPiece;
                     nodes[id].pieceValue = newPiece.pieceValues[i];
                 } else{
+                    //System.out.println(id);
                     System.out.println("Pieces clash! ");
                     return false;
                 }
             }
-
+            // put the peg onto the board
           } else if (isPeg(temp)){
+              //System.out.println("got a peg");
               Peg newPeg = new Peg(temp);
               int id2 = newPeg.position;
               nodes[id2].peg = newPeg;
 
-          } else return false;
+          } else {
+              System.out.println("here");return false;}
 
       }
 
       // check if each Piece and Peg matches according to the game rule
+        for (int j = 0; j < nodes.length; j++){
+          if (nodes[j].pegHere()){
+              if (nodes[j].pieceHere()){
+                  if (nodes[j].peg.colour != nodes[j].piece.colour || nodes[j].pieceValue != 2) return false;
+              }
+          }
+        }
 
-
-
-
+        return true;
 
     // FIXME Task 5: determine whether a placement string is valid
-    return false;
+
   }
 
 
@@ -279,11 +288,12 @@ public class TwistGame {
   }
 
 
-  // check if a 4-character placement string represents a piece or a peg
+  // check if a 4-character placement string represents a piece
   public static boolean isPiece (String piecePlacement){
       return (piecePlacement.charAt(0) >= 'a' && piecePlacement.charAt(0) <= 'h');
   }
 
+    // check if a 4-character placement string represents a piece
   public static boolean isPeg (String piecePlacement){
       return (piecePlacement.charAt(0) >= 'i' && piecePlacement.charAt(0) <= 'l');
   }

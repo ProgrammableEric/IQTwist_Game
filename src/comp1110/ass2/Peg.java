@@ -20,7 +20,7 @@ public class Peg {
 
     // given a piece placement string, decode piece key position (top left corner position of the squareboard )
     public static int posDecode (char col, char row){
-        return (row - 'A')*8 + (int) col - 1;
+        return (row - 'A')*8 + (col - '1') ;
     }
 
 

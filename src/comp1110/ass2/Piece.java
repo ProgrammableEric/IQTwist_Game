@@ -74,9 +74,7 @@ public class Piece {
 
 
     // given a piece placement string, decode piece key position (top left corner position of the squareboard )
-    public static int posDecode (char col, char row){
-        return (row - 'A')*8 + (int) col - 1;
-    }
+    public static int posDecode (char col, char row){ return (row - 'A')*8 +  (col - '1') ; }
 
 
     // given a piece placement string, decode piece squareboard representation as a 1-dimensional array.
@@ -239,7 +237,7 @@ public class Piece {
                     case '2':
                         return new int[]{1, 8, 9, 10};
                     case '3':
-                        return new int[]{1, 2, 8, 16};
+                        return new int[]{0, 1, 8, 16};
                     case '4':
                         return new int[]{2, 8, 9, 10};
                     case '5':
@@ -393,7 +391,7 @@ public class Piece {
                     case EAST: case WEST: case FEAST: case FWEST:
                         if (this.keyPosition % 8 > 6  || this.keyPosition / 8 > 1) test =  false;
                         break;
-                }
+                } break;
 
 
             case 'c':
@@ -404,7 +402,7 @@ public class Piece {
                     case EAST: case WEST: case FEAST: case FWEST:
                         if (this.keyPosition  > 7 ) test =  false;
                         break;
-                }
+                } break;
 
 
             case 'e':
@@ -425,9 +423,8 @@ public class Piece {
                     case EAST: case WEST: case FEAST: case FWEST:
                         if (this.keyPosition / 8 > 1 ) test =  false;
                         break;
-                }
+                } break;
         }
-
         return test;
     }
 

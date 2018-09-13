@@ -68,7 +68,7 @@ public class Node {
 
     // method tells if a piece is placed on the node
     public boolean pieceHere (){
-        return pieceValue != 0;
+        return pieceValue != 0 && piece != null;
     }
 
 
