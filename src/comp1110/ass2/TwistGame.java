@@ -310,28 +310,44 @@ public class TwistGame {
                         }
                     }
 
-                    // System.out.println(temp2);
+                    // check symmetry
                     if (isPlacementStringValid(temp2)) {
-                        ans.add(putPiece);
+                        switch (temp2.charAt(0)){
+
+                            case 'c': case 'h':
+                                if (temp2.charAt(3) >= '2' && temp2.charAt(3) < '4') {
+                                    if (!ans.contains(symmetry(temp2))) {ans.add(putPiece);break;}
+                                } else if (temp2.charAt(3) >= '0' && temp2.charAt(3) <= '1') {ans.add(putPiece); break;}
+                                else break;
+
+                            case 'a': case 'b': case 'd': case 'e': case 'f': case 'g':
+                                if (temp2.charAt(3) >= '4' && temp2.charAt(3) <= '7'){
+                                    if (!ans.contains(symmetry(temp2))) {ans.add(putPiece);break;}
+                                } else if (temp2.charAt(3) >= '0' && temp2.charAt(3) <= '3') {ans.add(putPiece); break;}
+                                else break;
+                                }
+
+
+                        }
                     }
                 }
             }
         }
-    }
 
-      // check symmetric pieces ******fix here !!!!!!**********
 
-      Iterator<String> iter = ans.iterator();
+      // remove identical piece placement for piece c and h.
+//      Iterator<String> iter = ans.iterator();
+//
+//      while (iter.hasNext()) {
+//          String q = iter.next();
+//
+//          if (q.charAt(0) == 'c' || q.charAt(0) == 'h'){
+//                  if (q.charAt(3) > '3') {
+//                      iter.remove(); break;
+//                  }
+//          }
+//          }
 
-      while (iter.hasNext()) {
-          String q = iter.next();
-
-          if (q.charAt(0) == 'c' || q.charAt(0) == 'h') {
-              if (q.charAt(3) != '0' && q.charAt(3) != '1' && q.charAt(3) != '2' && q.charAt(3) != '3') {
-                  iter.remove();
-              }
-          }
-      }
 
 
     // FIXME Task 6: determine the set of valid next piece placements
@@ -369,6 +385,30 @@ public class TwistGame {
     // check if a 4-character placement string represents a piece
   public static boolean isPeg (String piecePlacement){
       return (piecePlacement.charAt(0) >= 'i' && piecePlacement.charAt(0) <= 'l');
+  }
+
+  // given an input string representing a piece, compute the placement string of its symmetry
+  public static String symmetry (String placement){
+      String ans = null;
+
+      switch (placement.charAt(0)){
+          case 'c': case 'h':
+
+              switch (placement.charAt(3)){
+                  case '3': {ans = placement.substring(0,3) + '1';break;}
+                  case '2': {ans = placement.substring(0,3) + '0';break;}
+              }
+
+          case 'a': case 'b': case 'd': case 'e': case 'f': case 'g':
+
+              switch (placement.charAt(3)){
+                  case '4': {ans = placement.substring(0,3) + '2';break;}
+                  case '5': {ans = placement.substring(0,3) + '1';break;}
+                  case '6': {ans = placement.substring(0,3) + '0';break;}
+                  case '7': {ans = placement.substring(0,3) + '3';break;}
+              }
+      }
+      return ans;
   }
 
 
