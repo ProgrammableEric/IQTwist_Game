@@ -1,6 +1,7 @@
 package comp1110.ass2;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.HashMap;
 import java.lang.String;
@@ -171,6 +172,8 @@ public class TwistGame {
 
       Node[] nodes = new Node[32];
 
+
+
       for (int i =0; i < nodes.length; i++){
           nodes[i] = new Node(0, null, null);
           }
@@ -233,10 +236,16 @@ public class TwistGame {
         for (int j = 0; j < nodes.length; j++){
           if (nodes[j].pegHere()){
               if (nodes[j].pieceHere()){
-                  if (nodes[j].peg.colour != nodes[j].piece.colour || nodes[j].pieceValue != 2) return false;
+                  if (nodes[j].peg.colour != nodes[j].piece.colour ) {
+                      System.out.println("Bad peg placement! ");
+                      return false;}
+                  if (nodes[j].pieceValue != 2)
+                      {System.out.println("Bad peg placement! ");
+                      return false;}
               }
           }
         }
+
 
         return true;
 
@@ -290,8 +299,8 @@ public class TwistGame {
                     //System.out.println(putPiece+placement);
 
                     // combine the selected piece into the original piece placement string
-                    if (k.equals("a")) temp2 = putPiece + placement;
-                    else if (k.equals("h")) temp2 = placement + putPiece;
+                    if (k.charAt(0) < placement.charAt(0)) temp2 = putPiece + placement;
+                    else if (k.charAt(0) > placement.charAt(placement.length()-4)) temp2 = placement + putPiece;
                     else {
 
                         for (int p = 0; p < placement.length(); p += 4) {
@@ -301,7 +310,7 @@ public class TwistGame {
                         }
                     }
 
-                    System.out.println(temp2);
+                    // System.out.println(temp2);
                     if (isPlacementStringValid(temp2)) {
                         ans.add(putPiece);
                     }
@@ -309,6 +318,20 @@ public class TwistGame {
             }
         }
     }
+
+      // check symmetric pieces
+
+      Iterator<String> iter = ans.iterator();
+
+      while (iter.hasNext()) {
+          String q = iter.next();
+
+          if (q.charAt(0) == 'c' || q.charAt(0) == 'h') {
+              if (q.charAt(3) != '0' && q.charAt(3) != '1' && q.charAt(3) != '2' && q.charAt(3) != '3') {
+                  iter.remove();
+              }
+          }
+      }
 
 
     // FIXME Task 6: determine the set of valid next piece placements
