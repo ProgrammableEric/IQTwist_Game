@@ -1,5 +1,6 @@
 package comp1110.ass2;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.HashMap;
 import java.lang.String;
@@ -261,8 +262,57 @@ public class TwistGame {
    * @return An set of viable piece placements, or null if there are none.
    */
   public static Set<String> getViablePiecePlacements(String placement) {
+
+    Set <String> ans = new HashSet<String>();
+    //ans = null;
+
+    Set <String> pieceIDs = new HashSet<String>();
+    for (char i = 'a'; i <= 'h'; i++){pieceIDs.add(String.valueOf(i));}
+
+
+    for (int j = 0; j < placement.length() / 4; j++){
+
+          String temp = placement.substring(j*4,(j+1)*4);
+          if (isPiece(temp)){
+              pieceIDs.remove(String.valueOf(temp.charAt(0)));
+          }
+    }
+
+    String temp2 = "";
+
+    for (String k : pieceIDs){
+        for (char col = '1'; col <= '8'; col++) {
+            for (char row = 'A'; row <= 'D'; row++) {
+                for (char ori = '0'; ori <= '7'; ori++) {
+
+                    String putPiece = k + col + row + ori;
+                    //System.out.println(putPiece);
+                    //System.out.println(putPiece+placement);
+
+                    // combine the selected piece into the original piece placement string
+                    if (k.equals("a")) temp2 = putPiece + placement;
+                    else if (k.equals("h")) temp2 = placement + putPiece;
+                    else {
+
+                        for (int p = 0; p < placement.length(); p += 4) {
+                            if ((placement.charAt(p) < k.charAt(0) && placement.charAt(p + 4) > k.charAt(0))) {
+                                temp2 = placement.substring(0, p+4) + putPiece + placement.substring(p + 4, placement.length());
+                            }
+                        }
+                    }
+
+                    System.out.println(temp2);
+                    if (isPlacementStringValid(temp2)) {
+                        ans.add(putPiece);
+                    }
+                }
+            }
+        }
+    }
+
+
     // FIXME Task 6: determine the set of valid next piece placements
-    return null;
+    return ans;
   }
 
   /**
