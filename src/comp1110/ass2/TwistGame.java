@@ -319,7 +319,7 @@ public class TwistGame {
         }
     }
 
-      // check symmetric pieces
+      // check symmetric pieces ******fix here !!!!!!**********
 
       Iterator<String> iter = ans.iterator();
 
