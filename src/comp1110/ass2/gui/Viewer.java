@@ -21,7 +21,7 @@ import javafx.scene.transform.Rotate;
 
 /**
  * A very simple viewer for piece placements in the twist game.
- *
+ *  *
  * NOTE: This class is separate from your main game class.  This
  * class does not play a game, it just illustrates various piece
  * placements.
@@ -167,42 +167,42 @@ public class Viewer extends Application {
 
 
     // calculate offset in Y direction
-    private int offsetY (char row){
-        return sceneOffsetY + (row - 'A')*SQUARE_SIZE;
-    }
-    // calculate offset in X direction
-    private int offsetX (char column){
-        return sceneOffsetX + (column - '1')*SQUARE_SIZE;
-    }
-    /**
-     * Draw a placement in the window, removing any previously drawn one
-     *
-     * @param placement  A valid placement string
-     */
-    private void makePlacement(String placement) {
-
-        char pieceType;
-        char column;
-        char row;
-        char orientation;
-
-        pieces.getChildren().clear();
-        pegs.getChildren().clear();
-
-        for (int i = 0; i < placement.length();i += 4){
-            pieceType = placement.charAt(i);
-            column = placement.charAt(i+1);
-            row = placement.charAt(i+2);
-            orientation = placement.charAt(i+3);
-
-            if (pieceType >= 'a' && pieceType <= 'h'){
-                pieces.getChildren().add(new Piece(pieceType,column,row,orientation));
-
-            } else if (pieceType >= 'i' && pieceType <= 'l'){
-                pegs.getChildren().add(new Peg(pieceType,column,row));
-            }
-
+        private int offsetY (char row){
+            return sceneOffsetY + (row - 'A')*SQUARE_SIZE;
         }
+        // calculate offset in X direction
+        private int offsetX (char column){
+            return sceneOffsetX + (column - '1')*SQUARE_SIZE;
+        }
+        /**
+         * Draw a placement in the window, removing any previously drawn one
+         *
+         * @param placement  A valid placement string
+         */
+        private void makePlacement(String placement) {
+
+            char pieceType;
+            char column;
+            char row;
+            char orientation;
+
+            pieces.getChildren().clear();
+            pegs.getChildren().clear();
+
+            for (int i = 0; i < placement.length();i += 4){
+                pieceType = placement.charAt(i);
+                column = placement.charAt(i+1);
+                row = placement.charAt(i+2);
+                orientation = placement.charAt(i+3);
+
+                if (pieceType >= 'a' && pieceType <= 'h'){
+                    pieces.getChildren().add(new Piece(pieceType,column,row,orientation));
+
+                } else if (pieceType >= 'i' && pieceType <= 'l'){
+                    pegs.getChildren().add(new Peg(pieceType,column,row));
+                }
+
+            }
         // FIXME Task 4: implement the simple placement viewer
     }
 
