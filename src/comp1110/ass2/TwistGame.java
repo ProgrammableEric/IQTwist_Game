@@ -313,18 +313,25 @@ public class TwistGame {
                     if (isPlacementStringValid(temp2)) {
                         switch (temp2.charAt(0)){
 
+                            case 'a': case 'd': case 'g':
+                                ans.add(putPiece);break;
+
                             case 'c': case 'h':
                                 if (temp2.charAt(3) >= '2' && temp2.charAt(3) < '4') {
-                                    if (!ans.contains(symmetry(temp2))) {ans.add(putPiece);break;}
-                                } else if (temp2.charAt(3) >= '0' && temp2.charAt(3) <= '1') {ans.add(putPiece); break;}
+                                    if (!ans.contains(symmetry(putPiece))) {ans.add(putPiece);break;}
+                                } else if (temp2.charAt(3) >= '0' && temp2.charAt(3) < '2') {ans.add(putPiece); break;}
                                 else break;
 
-                            case 'a': case 'b': case 'd': case 'e': case 'f': case 'g':
+                            case 'b':
                                 if (temp2.charAt(3) >= '4' && temp2.charAt(3) <= '7'){
-                                    if (!ans.contains(symmetry(temp2))) {ans.add(putPiece);break;}
+                                    if (!ans.contains(symmetry(putPiece))) {ans.add(putPiece);break;}
                                 } else if (temp2.charAt(3) >= '0' && temp2.charAt(3) <= '3') {ans.add(putPiece); break;}
                                 else break;
-                                }
+
+                            case 'e':
+
+                            case 'f':
+                        }
 
 
                         }
