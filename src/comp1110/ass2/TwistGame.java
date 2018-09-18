@@ -173,7 +173,6 @@ public class TwistGame {
       Node[] nodes = new Node[32];
 
 
-
       for (int i =0; i < nodes.length; i++){
           nodes[i] = new Node(0, null, null);
           }
@@ -310,7 +309,7 @@ public class TwistGame {
                         }
                     }
 
-                    // check symmetry
+                    // check symmetry **************** fix here !!!!!!****************************
                     if (isPlacementStringValid(temp2)) {
                         switch (temp2.charAt(0)){
 
@@ -347,8 +346,6 @@ public class TwistGame {
 //                  }
 //          }
 //          }
-
-
 
     // FIXME Task 6: determine the set of valid next piece placements
     return ans;
