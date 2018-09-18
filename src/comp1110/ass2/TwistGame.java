@@ -311,26 +311,30 @@ public class TwistGame {
 
                     // check symmetry **************** fix here !!!!!!****************************
                     if (isPlacementStringValid(temp2)) {
-                        switch (temp2.charAt(0)){
+                        switch (putPiece.charAt(0)){
 
                             case 'a': case 'd': case 'g':
                                 ans.add(putPiece);break;
 
                             case 'c': case 'h':
-                                if (temp2.charAt(3) >= '2' && temp2.charAt(3) < '4') {
+                                if (putPiece.charAt(3) >= '2' && putPiece.charAt(3) < '4') {
                                     if (!ans.contains(symmetry(putPiece))) {ans.add(putPiece);break;}
-                                } else if (temp2.charAt(3) >= '0' && temp2.charAt(3) < '2') {ans.add(putPiece); break;}
+                                } else if (putPiece.charAt(3) >= '0' && putPiece.charAt(3) < '2') {ans.add(putPiece); break;}
                                 else break;
 
                             case 'b':
-                                if (temp2.charAt(3) >= '4' && temp2.charAt(3) <= '7'){
+                                if (putPiece.charAt(3) == '2' || putPiece.charAt(3) == '3' ||
+                                        putPiece.charAt(3) == '6' || putPiece.charAt(3) == '7'){
                                     if (!ans.contains(symmetry(putPiece))) {ans.add(putPiece);break;}
-                                } else if (temp2.charAt(3) >= '0' && temp2.charAt(3) <= '3') {ans.add(putPiece); break;}
+                                } else {ans.add(putPiece); break;}
+
+
+                            case 'e': case 'f':
+                                if (putPiece.charAt(3) >= '4' && putPiece.charAt(3) < '8') {
+                                    if (!ans.contains(symmetry(putPiece))) {ans.add(putPiece);break;}
+                                } else if (putPiece.charAt(3) >= '0' && putPiece.charAt(3) < '4') {ans.add(putPiece); break;}
                                 else break;
 
-                            case 'e':
-
-                            case 'f':
                         }
 
 
@@ -403,13 +407,32 @@ public class TwistGame {
                   case '2': {ans = placement.substring(0,3) + '0';break;}
               }
 
-          case 'a': case 'b': case 'd': case 'e': case 'f': case 'g':
+           case 'b':
+
+              switch (placement.charAt(3)){
+                  case '2': {ans = placement.substring(0,3) + '0';break;}
+                  case '3': {ans = placement.substring(0,3) + '1';break;}
+                  case '6': {ans = placement.substring(0,3) + '4';break;}
+                  case '7': {ans = placement.substring(0,3) + '5';break;}
+              }
+
+          case 'e':
+
+              switch (placement.charAt(3)){
+                  case '4': {ans = placement.substring(0,3) + '1';break;}
+                  case '5': {ans = placement.substring(0,3) + '2';break;}
+                  case '6': {ans = placement.substring(0,3) + '3';break;}
+                  case '7': {ans = placement.substring(0,3) + '0';break;}
+              }
+
+
+          case 'f':
 
               switch (placement.charAt(3)){
                   case '4': {ans = placement.substring(0,3) + '2';break;}
-                  case '5': {ans = placement.substring(0,3) + '1';break;}
+                  case '5': {ans = placement.substring(0,3) + '3';break;}
                   case '6': {ans = placement.substring(0,3) + '0';break;}
-                  case '7': {ans = placement.substring(0,3) + '3';break;}
+                  case '7': {ans = placement.substring(0,3) + '1';break;}
               }
       }
       return ans;
