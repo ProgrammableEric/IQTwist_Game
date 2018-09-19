@@ -179,7 +179,7 @@ public class TwistGame {
 
       // check if the placement string is well formed
       if (!isPlacementStringWellFormed(placement)) {
-          System.out.println("This is not a valid placement string !");
+          //System.out.println("This is not a valid placement string !");
           return false;
       }
 
@@ -202,7 +202,7 @@ public class TwistGame {
 
             // check if the piece is entirely on board
             if ( !newPiece.isOnBoard() ) {
-                System.out.println("A piece has been put outside the game board boundary");
+                //System.out.println("A piece has been put outside the game board boundary");
                 return false;
             }
 
@@ -215,7 +215,7 @@ public class TwistGame {
                     nodes[id].pieceValue = newPiece.pieceValues[i];
                 } else{
                     //System.out.println(id);
-                    System.out.println("Pieces clash! ");
+                    //System.out.println("Pieces clash! ");
                     return false;
                 }
             }
@@ -227,7 +227,8 @@ public class TwistGame {
               nodes[id2].peg = newPeg;
 
           } else {
-              System.out.println("here");return false;}
+              //System.out.println("here");
+              return false;}
 
       }
 
@@ -236,10 +237,10 @@ public class TwistGame {
           if (nodes[j].pegHere()){
               if (nodes[j].pieceHere()){
                   if (nodes[j].peg.colour != nodes[j].piece.colour ) {
-                      System.out.println("Bad peg placement! ");
+                      //System.out.println("Bad peg placement! ");
                       return false;}
                   if (nodes[j].pieceValue != 2)
-                      {System.out.println("Bad peg placement! ");
+                      {//System.out.println("Bad peg placement! ");
                       return false;}
               }
           }
@@ -317,22 +318,37 @@ public class TwistGame {
                                 ans.add(putPiece);break;
 
                             case 'c': case 'h':
+
                                 if (putPiece.charAt(3) >= '2' && putPiece.charAt(3) < '4') {
-                                    if (!ans.contains(symmetry(putPiece))) {ans.add(putPiece);break;}
-                                } else if (putPiece.charAt(3) >= '0' && putPiece.charAt(3) < '2') {ans.add(putPiece); break;}
+
+                                    if (!(ans.contains(symmetry(putPiece)))) { ans.add(putPiece);break;}
+                                    else break;
+
+                                } else if (putPiece.charAt(3) >= '0' && putPiece.charAt(3) < '2') { ans.add(putPiece); break;}
+
                                 else break;
 
                             case 'b':
+
+
                                 if (putPiece.charAt(3) == '2' || putPiece.charAt(3) == '3' ||
                                         putPiece.charAt(3) == '6' || putPiece.charAt(3) == '7'){
-                                    if (!ans.contains(symmetry(putPiece))) {ans.add(putPiece);break;}
+
+                                    if (!(ans.contains(symmetry(putPiece)))) {ans.add(putPiece);break;}
+                                    else break;
+
                                 } else {ans.add(putPiece); break;}
 
 
                             case 'e': case 'f':
+
                                 if (putPiece.charAt(3) >= '4' && putPiece.charAt(3) < '8') {
+
                                     if (!ans.contains(symmetry(putPiece))) {ans.add(putPiece);break;}
+                                    else break;
+
                                 } else if (putPiece.charAt(3) >= '0' && putPiece.charAt(3) < '4') {ans.add(putPiece); break;}
+
                                 else break;
 
                         }
@@ -359,7 +375,9 @@ public class TwistGame {
 //          }
 
     // FIXME Task 6: determine the set of valid next piece placements
-    return ans;
+      if (ans.isEmpty())return null;
+      else return ans;
+
   }
 
   /**
@@ -405,7 +423,7 @@ public class TwistGame {
               switch (placement.charAt(3)){
                   case '3': {ans = placement.substring(0,3) + '1';break;}
                   case '2': {ans = placement.substring(0,3) + '0';break;}
-              }
+              }break;
 
            case 'b':
 
@@ -414,7 +432,7 @@ public class TwistGame {
                   case '3': {ans = placement.substring(0,3) + '1';break;}
                   case '6': {ans = placement.substring(0,3) + '4';break;}
                   case '7': {ans = placement.substring(0,3) + '5';break;}
-              }
+              }break;
 
           case 'e':
 
@@ -423,7 +441,7 @@ public class TwistGame {
                   case '5': {ans = placement.substring(0,3) + '2';break;}
                   case '6': {ans = placement.substring(0,3) + '3';break;}
                   case '7': {ans = placement.substring(0,3) + '0';break;}
-              }
+              }break;
 
 
           case 'f':
@@ -433,7 +451,7 @@ public class TwistGame {
                   case '5': {ans = placement.substring(0,3) + '3';break;}
                   case '6': {ans = placement.substring(0,3) + '0';break;}
                   case '7': {ans = placement.substring(0,3) + '1';break;}
-              }
+              }break;
       }
       return ans;
   }
