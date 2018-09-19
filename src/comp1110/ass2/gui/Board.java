@@ -28,8 +28,6 @@ public class Board extends Application {
 
 
 
-
-
     @Override
     public void start(Stage primaryStage) throws Exception {
 
@@ -38,3 +36,4 @@ public class Board extends Application {
 
     }
 }
+
