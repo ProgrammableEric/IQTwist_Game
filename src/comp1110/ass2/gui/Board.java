@@ -1,5 +1,6 @@
 package comp1110.ass2.gui;
 
+import comp1110.ass2.Colour;
 import comp1110.ass2.TwistGame;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -11,6 +12,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 
 import java.awt.*;
 
@@ -22,6 +25,7 @@ public class Board extends Application {
     private static final int MAIN_PANEL_WIDTH = 8 * SQUARE_SIZE;
     private static final int MAIN_PANEL_HEIGHT = 4 * SQUARE_SIZE;
     private static final int MARGIN_X = 20;
+    private static final int MAIN_PANEL_X = MARGIN_X + MAIN_PANEL_HEIGHT;
     private static final int MARGIN_Y = 60;
     private static final int PIECE_SPACE = 20;
 
@@ -31,6 +35,9 @@ public class Board extends Application {
 
     /* where to find media assets*/
     private static final String URI_BASE = "assets/";
+    private static final String BASEBOARD_URI = Board.class.getResource(URI_BASE + "baseboard.png").toString();
+
+
 
     /* make for unplaced piece*/
     public static final char NOT_PLACED = 255;
@@ -40,6 +47,7 @@ public class Board extends Application {
     private final Group controls = new Group();
     private final Group pieces = new Group();
     private final Group pegs = new Group();
+    private final Group board = new Group();
 
     /* message on success*/
     private final Text successText = new Text("Well done!");
@@ -345,10 +353,49 @@ public class Board extends Application {
 //        root.getChildren().add(background);
         root.getChildren().add(pieces);
 //        root.getChildren().add(pegs);
-
+         grid();
 
         primaryStage.setScene(scene);
         primaryStage.show();
 
     }
+    private void makeBoard() {
+        board.getChildren().clear();
+
+        ImageView baseboard = new ImageView();
+        baseboard.setImage(new Image(BASEBOARD_URI));
+        baseboard.setFitWidth(MAIN_PANEL_WIDTH);
+        baseboard.setFitHeight(MAIN_PANEL_HEIGHT);
+        baseboard.setLayoutX(MAIN_PANEL_X);
+        board.getChildren().add(baseboard);
+
+        board.toBack();
+    }
+
+    public void grid() {
+        Rectangle tile = new Rectangle(300, 200, 60, 60);
+        int a = 300;
+        int b = 250;
+        int xstep = 60;
+        int ystep = 60;
+        tile.setFill(null);
+        tile.setStroke(Color.BLACK);
+
+        for (int i = 0; i < 8 ; i++) {
+            tile = new Rectangle (a+xstep*i, b, 60, 60);
+            root.getChildren().add(tile);
+            tile.setFill(null);
+            tile.setStroke(Color.BLACK);
+            for (int j = 0; j < 4 ; j++) {
+                tile = new Rectangle (a, b+ystep*j, 60, 60);
+                root.getChildren().add(tile);
+                tile.setFill(null);
+                tile.setStroke(Color.BLACK);
+            }
+
+        }
+    }
+
+
+
 }
