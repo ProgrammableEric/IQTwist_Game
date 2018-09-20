@@ -4,4 +4,7 @@ I declare that the work I have submitted for Stage D of this assignment and all 
 
 * The code in class <...> uses an idea suggested by <...>
 
-Signed: Mary Jones (u23445678)
+
+* task 5 and 6 are done by Chunze with the help of Hua Guo in organizing positions data. 
+
+Signed: Chunze Fu (u5885811)
