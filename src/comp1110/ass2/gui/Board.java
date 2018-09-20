@@ -25,9 +25,11 @@ public class Board extends Application {
     private static final int MAIN_PANEL_WIDTH = 8 * SQUARE_SIZE;
     private static final int MAIN_PANEL_HEIGHT = 4 * SQUARE_SIZE;
     private static final int MARGIN_X = 20;
-    private static final int MAIN_PANEL_X = MARGIN_X + MAIN_PANEL_HEIGHT;
     private static final int MARGIN_Y = 60;
+    private static final int MAIN_PANEL_X = MARGIN_X + MAIN_PANEL_HEIGHT;
     private static final int PIECE_SPACE = 20;
+    private static final int VIEWER_WIDTH = 750;
+    private static final int VIEWER_HEIGHT = 500;
 
     private static int sceneOffsetX = 210;
     private static int sceneOffsetY = 150;
@@ -265,12 +267,12 @@ public class Board extends Application {
 //                event.consume();
 //            });
 //
-//            setOnMousePressed(event -> {      // mouse press indicates begin of drag
+//            setOnMousePressed(event -> {      // mouse press indicates begin of drag (select piece)
 //                mouseX = event.getSceneX();
 //                mouseY = event.getSceneY();
 //            });
 
-//            setOnMouseDragged(event -> {      // mouse is being dragged
+//            setOnMouseDragged(event -> {      // mouse is being dragged (holds piece)
 //                hideCompletion();
 //                toFront();
 //                double movementX = event.getSceneX() - mouseX;
@@ -281,9 +283,14 @@ public class Board extends Application {
 //                mouseY = event.getSceneY();
 //                event.consume();
 //            });
-//            setOnMouseReleased(event -> {     // drag is complete
+//            setOnMouseReleased(event -> {     // drag is complete (places piece on grid)
 //                snapToGrid();
 //            });
+
+           /* setOnMouseClicked(event -> ); (rotates pieces)
+
+            */
+
 //        }
 //
 //        /**
@@ -372,6 +379,7 @@ public class Board extends Application {
         board.toBack();
     }
 
+    //use grid pane perhaps?
     public void grid() {
         Rectangle tile = new Rectangle(300, 200, 60, 60);
         int a = 300;
