@@ -56,7 +56,7 @@ public class Viewer extends Application {
     }
 
     class Piece extends ImageView{
-        int piece;    // ????????????? what for ????????????????????
+        int piece;
         /** constructor for a playing piece
          *
          */
@@ -65,7 +65,7 @@ public class Viewer extends Application {
         Piece (char piece, char column, char row, char orientation){
 
             int posX;  int posY;
-            double recHeight = 0;  double recWidth = 0;
+
 
             if (piece >= 'i') {
                 throw new IllegalArgumentException("Bad piece: \"" + piece + "\"");
@@ -74,24 +74,24 @@ public class Viewer extends Application {
             this.piece = piece - 'a';
             switch (piece){
                 case 'a': case 'b': case 'd': case 'f':
-                    setFitHeight(2*SQUARE_SIZE); recHeight = 2*SQUARE_SIZE;
-                    setFitWidth(3*SQUARE_SIZE);  recWidth = 3*SQUARE_SIZE;
+                    setFitHeight(2*SQUARE_SIZE);
+                    setFitWidth(3*SQUARE_SIZE);
                     setEffect(dropShadow); break;
                 case 'c':
-                    setFitHeight(SQUARE_SIZE); recHeight = SQUARE_SIZE;
-                    setFitWidth(4*SQUARE_SIZE); recWidth = 4*SQUARE_SIZE;
+                    setFitHeight(SQUARE_SIZE);
+                    setFitWidth(4*SQUARE_SIZE);
                     setEffect(dropShadow); break;
                 case 'e':
-                    setFitHeight(2*SQUARE_SIZE); recHeight = 2*SQUARE_SIZE;
-                    setFitWidth(2*SQUARE_SIZE); recWidth = 2*SQUARE_SIZE;
+                    setFitHeight(2*SQUARE_SIZE);
+                    setFitWidth(2*SQUARE_SIZE);
                     setEffect(dropShadow); break;
                 case 'g':
-                    setFitHeight(3*SQUARE_SIZE); recHeight = 3*SQUARE_SIZE;
-                    setFitWidth(3*SQUARE_SIZE); recWidth = 3*SQUARE_SIZE;
+                    setFitHeight(3*SQUARE_SIZE);
+                    setFitWidth(3*SQUARE_SIZE);
                     setEffect(dropShadow); break;
                 case 'h':
-                    setFitHeight(SQUARE_SIZE); recHeight = SQUARE_SIZE;
-                    setFitWidth(3*SQUARE_SIZE); recWidth = 3*SQUARE_SIZE;
+                    setFitHeight(SQUARE_SIZE);
+                    setFitWidth(3*SQUARE_SIZE);
                     setEffect(dropShadow);break;
             }
 

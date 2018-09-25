@@ -58,7 +58,7 @@ public class Piece {
     }
 
     // given a piece placement string, decode piece direction
-    public static Direction orientationDecode (char dir){
+    private static Direction orientationDecode (char dir){
         switch (dir) {
             case '0': return Direction.NORTH;
             case '1': return Direction.EAST;
@@ -74,11 +74,11 @@ public class Piece {
 
 
     // given a piece placement string, decode piece key position (top left corner position of the squareboard )
-    public static int posDecode (char col, char row){ return (row - 'A')*8 +  (col - '1') ; }
+    private static int posDecode (char col, char row){ return (row - 'A')*8 +  (col - '1') ; }
 
 
     // given a piece placement string, decode piece squareboard representation as a 1-dimensional array.
-    public static int[] pieceValuesDecode (char pieceID, char dir){
+    private static int[] pieceValuesDecode (char pieceID, char dir){
         switch (pieceID) {
             case 'a':
                 switch (dir) {
@@ -226,7 +226,7 @@ public class Piece {
     }
 
 
-    public static int[] positionsDecode (char pieceID, char dir){
+    private static int[] positionsDecode (char pieceID, char dir){
         switch (pieceID) {
             case 'a':
                 switch (dir) {
@@ -361,7 +361,7 @@ public class Piece {
 
 
 
-    public static Colour colourDecode (char pieceID){
+    private static Colour colourDecode (char pieceID){
         switch (pieceID) {
             case 'a': case 'b':
                 return Colour.RED;

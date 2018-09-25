@@ -19,13 +19,13 @@ public class Peg {
     }
 
     // given a piece placement string, decode piece key position (top left corner position of the squareboard )
-    public static int posDecode (char col, char row){
+    private static int posDecode (char col, char row){
         return (row - 'A')*8 + (col - '1') ;
     }
 
 
 
-    public static Colour colourDecode (char pieceID) {
+    private static Colour colourDecode (char pieceID) {
         switch (pieceID) {
             case 'i':
                 return Colour.RED;
