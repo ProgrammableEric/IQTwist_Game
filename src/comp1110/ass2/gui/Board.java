@@ -28,17 +28,18 @@ public class Board extends Application {
     private static final int SQUARE_SIZE = 60;
     private static final int MAIN_PANEL_WIDTH = 8 * SQUARE_SIZE;
     private static final int MAIN_PANEL_HEIGHT = 4 * SQUARE_SIZE;
-    private static final int MAIN_PANEL_OFFSET_X = 433;      // change it !!!
-    private static final int MAIN_PANEL_OFFSET_Y = 400;
-    private static final int MARGIN_X = 20;
-    private static final int MARGIN_Y = 60;
-//    private static final int MAIN_PANEL_X = MARGIN_X + MAIN_PANEL_HEIGHT;
+    private static final int MARGIN_X = 40;
+    private static final int MARGIN_Y = 80;
+    private static final int MAIN_PANEL_OFFSET_X = BOARD_WIDTH - MARGIN_X - MAIN_PANEL_WIDTH;
+    private static final int MAIN_PANEL_OFFSET_Y = BOARD_HEIGHT - MARGIN_Y - MAIN_PANEL_HEIGHT;
+
+    //    private static final int MAIN_PANEL_X = MARGIN_X + MAIN_PANEL_HEIGHT;
     private static final int PIECE_SPACE = 20;
 
 
     /* where to find media assets*/
     private static final String URI_BASE = "assets/";
-    private static final String BASEBOARD_URI = Board.class.getResource(URI_BASE + "baseboard.png").toString();
+    //private static final String BASEBOARD_URI = Board.class.getResource(URI_BASE + "baseboard.png").toString();
 
 
     /* make for unplaced piece*/
@@ -56,8 +57,11 @@ public class Board extends Application {
     /* message on success*/
     private final Text completionText = new Text("Well done!");
 
-    /* piece at the begin*/
-    char [] piecestate = new char[8];
+    /* the state of the pieces */
+    char[] pieceState = new char[8];        // state of each piece, if not on the board, NOT_PLACED, if on the board, it stores the
+                                            // key pos index of the piece, which is an integer from 0 - 31.
+    /* the orientation of the pieces */
+    char[] pieceOrientation = new char[8];  //  denoted by integer 0 - 7
 
     /* the IQ-TWIST game*/
     TwistGame twistGame;
@@ -65,8 +69,7 @@ public class Board extends Application {
     /* Define a drop shadow effect that we will apply to tiles */
     private static DropShadow dropShadow;
 
-    /* Static initializer to initialize dropShadow */
-    {
+    /* Static initializer to initialize dropShadow */ {
         dropShadow = new DropShadow();
         dropShadow.setOffsetX(2.0);
         dropShadow.setOffsetY(2.0);
@@ -74,9 +77,9 @@ public class Board extends Application {
     }
 
 
-
-    /** an inner class that represents pieces in the game
-     *  visual presentation of the piece
+    /**
+     * an inner class that represents pieces in the game
+     * visual presentation of the piece
      */
 
     class Piece extends ImageView {
@@ -274,16 +277,19 @@ public class Board extends Application {
         }
     }
 
-    class Peg extends ImageView{
+    class Peg extends ImageView {
         int peg;
 
-        /** Constructor used to place the objective peg.
-         * @param peg The peg to be displayed (given in the objectives)
+        /**
+         * Constructor used to place the objective peg.
+         *
+         * @param peg    The peg to be displayed (given in the objectives)
          * @param column The column index the peg (1-8)
-         * @param row The row index of the peg (A-D)
+         * @param row    The row index of the peg (A-D)
          */
-        Peg (char peg, char column, char row){
-            int posX;  int posY;
+        Peg(char peg, char column, char row) {
+            int posX;
+            int posY;
 
             if (peg >= 'm') {
                 throw new IllegalArgumentException("Bad tile: \"" + peg + "\"");
@@ -321,7 +327,8 @@ public class Board extends Application {
 
         DraggablePiece(char piece) {
             super(piece);
-            piecestate[piece - 'a'] = NOT_PLACED; //start out off panel
+            pieceState[piece - 'a'] = NOT_PLACED; //start out off panel
+            pieceOrientation[piece - 'a'] = 0;
 
             /* unplaced pieces location on board */
             switch (piece) {
@@ -384,11 +391,10 @@ public class Board extends Application {
 
             setOnMousePressed(event -> {      // mouse press indicates begin of drag
                 MouseButton btn = event.getButton();
-                if (btn == MouseButton.PRIMARY){
+                if (btn == MouseButton.PRIMARY) {
                     mouseX = event.getSceneX();
                     mouseY = event.getSceneY();
-                }
-                else if (btn == MouseButton.SECONDARY) {
+                } else if (btn == MouseButton.SECONDARY) {
                     flipPiece();
                 }
             });
@@ -408,79 +414,114 @@ public class Board extends Application {
                 snapToGrid();
             });
         }
-    }
 
 
-    /**
-     * Snap the tile to the nearest grid position (if it is over the grid)
-     */
-    private void snapToGrid() {
+        /**
+         * Snap the tile to the nearest grid position (if it is over the grid)
+         */
+        private void snapToGrid() {
 
-                if (onBoard() && (!alreadyOccupied())) {
-                    if ((getLayoutX() >= (BOARD_X - (SQUARE_SIZE / 2))) && (getLayoutX() < (BOARD_X + (SQUARE_SIZE / 2)))) {
-                        setLayoutX(BOARD_X);
-                    } else if ((getLayoutX() >= BOARD_X + (SQUARE_SIZE / 2)) && (getLayoutX() < BOARD_X + 1.5 * SQUARE_SIZE)) {
-                        setLayoutX(BOARD_X + SQUARE_SIZE);
-                    } else if ((getLayoutX() >= BOARD_X + 1.5 * SQUARE_SIZE) && (getLayoutX() < BOARD_X + 2.5 * SQUARE_SIZE)) {
-                        setLayoutX(BOARD_X + 2 * SQUARE_SIZE);
+            if (onBoard() ) {
+
+                for (int i = 0; i <= 7; i++){
+                    if (getLayoutX() >= (MAIN_PANEL_OFFSET_X - (SQUARE_SIZE / 2) + i*SQUARE_SIZE) &&
+                            ( getLayoutX() < (MAIN_PANEL_OFFSET_X + (SQUARE_SIZE / 2) + i*SQUARE_SIZE)) ){
+                        setLayoutX(MAIN_PANEL_OFFSET_X + i*SQUARE_SIZE);
                     }
 
-                    if ((getLayoutY() >= (BOARD_Y - (SQUARE_SIZE / 2))) && (getLayoutY() < (BOARD_Y + (SQUARE_SIZE / 2)))) {
-                        setLayoutY(BOARD_Y);
-                    } else if ((getLayoutY() >= BOARD_Y + (SQUARE_SIZE / 2)) && (getLayoutY() < BOARD_Y + 1.5 * SQUARE_SIZE)) {
-                        setLayoutY(BOARD_Y + SQUARE_SIZE);
-                    } else if ((getLayoutY() >= BOARD_Y + 1.5 * SQUARE_SIZE) && (getLayoutY() < BOARD_Y + 2.5 * SQUARE_SIZE)) {
-                        setLayoutY(BOARD_Y + 2 * SQUARE_SIZE);
+                    if (getLayoutY() >= (MAIN_PANEL_OFFSET_Y - (SQUARE_SIZE / 2) + i*SQUARE_SIZE) &&
+                            ( getLayoutY() < (MAIN_PANEL_OFFSET_Y + (SQUARE_SIZE / 2) + i*SQUARE_SIZE)) ){
+                        setLayoutY(MAIN_PANEL_OFFSET_Y + i*SQUARE_SIZE);
                     }
-                    setPosition();
-                } else {
-                    snapToHome();
                 }
-                updateAndCheck();
+                setPosition();
+            } else {
+                snapToHome();
+            }
+            updateAndCheck();
+        }
+
+        /**
+         * Snap the mask to its home position (if it is not on the grid)
+         */
+        private void snapToHome() {
+            setLayoutX(homeX);
+            setLayoutY(homeY);
+            setRotate(0);
+            pieceState[piece] = NOT_PLACED;
+            pieceOrientation[piece] = '0';
+        }
+
+
+        /**
+         * Rotate the piece by 90 degrees (unless this is mask zero and there is a constraint on mask zero)
+         */
+        private void rotate() {
+            double angle = (getRotate() + 90) % 360;
+            setRotate(angle);
+            pieceOrientation[piece] =  (char) (angle / 90);
+            setPosition();
+            updateAndCheck();
+        }
+
+        /**
+         * Flip the piece horizontally
+         */
+        private void flipPiece() {
+            if (pieceState[piece] == NOT_PLACED){
+                if ( pieceOrientation[piece] == '0') {
+                    setScaleY(-1);
+                    pieceOrientation[piece] = '4';
+                    setPosition();
+                    updateAndCheck();
+                } else if (pieceOrientation[piece] == '4'){
+                    setScaleY(-1);
+                    pieceOrientation[piece] = '0';
+                    setPosition();
+                    updateAndCheck();
+                }
+            }
             }
 
 
-    /**
-     * Rotate the piece by 90 degrees (unless this is mask zero and there is a constraint on mask zero)
-     */
-    private void rotate() {
-        setRotate((getRotate() + 90) % 360);
-        setPosition();
-        updateAndCheck();
-    }
-
-    /**
-     * Flip the piece vertically
-     */
-    private void flipPiece() {
-        //...
-        setPosition();
-        updateAndCheck();
-    }
-
-    /**
-     * Determine the grid-position of the origin of the tile
-     * or -1 if it is off the grid, taking into account its rotation.
-     */
-    private void setPosition() {
-        int x = (int) (getLayoutX() - BOARD_X) / SQUARE_SIZE;
-        int y = (int) (getLayoutY() - BOARD_Y) / SQUARE_SIZE;
-        int rotate = (int) getRotate() / 90;
-        if (x < 0)
-            tileState[tile] = NOT_PLACED;
-        else {
-            char val = (char) ((y * 3 + x) * 4 + rotate);
-            tileState[tile] = val;
+        /**
+         * @return true if the mask is on the board
+         */
+        private boolean onBoard() {
+            return getLayoutX() > (MAIN_PANEL_OFFSET_X - (SQUARE_SIZE / 2)) && (getLayoutX() < (MAIN_PANEL_OFFSET_X + 7.5 * SQUARE_SIZE))
+                    && getLayoutY() > (MAIN_PANEL_OFFSET_Y - (SQUARE_SIZE / 2)) && (getLayoutY() < (MAIN_PANEL_OFFSET_Y + 3.5 * SQUARE_SIZE));
         }
+
+
+        /**
+         * Determine the grid-position of the origin of the tile
+         * or -1 if it is off the grid, taking into account its rotation.
+         */
+        private void setPosition() {
+            int x = (int) (getLayoutX() - MAIN_PANEL_OFFSET_X) / SQUARE_SIZE;
+            int y = (int) (getLayoutY() - MAIN_PANEL_OFFSET_Y) / SQUARE_SIZE;
+            int rotate = (int) getRotate() / 90;
+            if (x < 0 || y < 0)
+                pieceState[piece] = NOT_PLACED;
+            else {
+                char val = (char) (y * 8 + x);
+                pieceState[piece] = val;
+            }
+        }
+
+
+        /**
+         * @return the mask placement represented as a string
+         */
+        public String toString() {
+            return "Pos index: " + pieceState[piece] + ", Orientation index: " + pieceOrientation[piece];
+        }
+
     }
 
-
-
-
-    private void updateAndCheck() {
-    }
-
-
+    /**
+     * Set up each of the eight pieces
+     */
     private void makePieces() {
         pieces.getChildren().clear();
         for (char m = 'a'; m <= 'h'; m++) {
@@ -489,53 +530,57 @@ public class Board extends Application {
     }
 
 
+    private void updateAndCheck() { //...
+    }
 
-    private void newGame(){
+
+
+    private void newGame() {
         makePieces();
     }
 
 
-
     // calculate offset in Y direction
-    private int offsetY (char row){
-        return MAIN_PANEL_OFFSET_Y + (row - 'A')*SQUARE_SIZE;
+    private int offsetY(char row) {
+        return MAIN_PANEL_OFFSET_Y + (row - 'A') * SQUARE_SIZE;
     }
+
     // calculate offset in X direction
-    private int offsetX (char column){
-        return MAIN_PANEL_OFFSET_X + (column - '1')*SQUARE_SIZE;
+    private int offsetX(char column) {
+        return MAIN_PANEL_OFFSET_X + (column - '1') * SQUARE_SIZE;
     }
 
 
     /**
      * Draw a placement in the window, removing any previously drawn one
      *
-     * @param placement  A valid placement string
+     * @param placement A valid placement string
      */
-    private void makePlacement(String placement) {
-
-        char pieceType;
-        char column;
-        char row;
-        char orientation;
-
-        pieces.getChildren().clear();
-        pegs.getChildren().clear();
-
-        for (int i = 0; i < placement.length(); i += 4) {
-            pieceType = placement.charAt(i);
-            column = placement.charAt(i + 1);
-            row = placement.charAt(i + 2);
-            orientation = placement.charAt(i + 3);
-
-            if (pieceType >= 'a' && pieceType <= 'h') {
-                pieces.getChildren().add(new Viewer.Piece(pieceType, column, row, orientation));
-
-            } else if (pieceType >= 'i' && pieceType <= 'l') {
-                pegs.getChildren().add(new Viewer.Peg(pieceType, column, row));
-            }
-
-        }
-    }
+//    private void makePlacement(String placement) {
+//
+//        char pieceType;
+//        char column;
+//        char row;
+//        char orientation;
+//
+//        pieces.getChildren().clear();
+//        pegs.getChildren().clear();
+//
+//        for (int i = 0; i < placement.length(); i += 4) {
+//            pieceType = placement.charAt(i);
+//            column = placement.charAt(i + 1);
+//            row = placement.charAt(i + 2);
+//            orientation = placement.charAt(i + 3);
+//
+//            if (pieceType >= 'a' && pieceType <= 'h') {
+//                pieces.getChildren().add(new Viewer.Piece(pieceType, column, row, orientation));
+//
+//            } else if (pieceType >= 'i' && pieceType <= 'l') {
+//                pegs.getChildren().add(new Viewer.Peg(pieceType, column, row));
+//            }
+//
+//        }
+//    }
 
 
     /**
@@ -561,12 +606,11 @@ public class Board extends Application {
     private void makeGameBoard() {
         gameBoard.getChildren().clear();
 
-        ImageView baseboard = new ImageView();
+        Rectangle background = new Rectangle(MAIN_PANEL_OFFSET_X, MAIN_PANEL_OFFSET_Y, MAIN_PANEL_WIDTH, MAIN_PANEL_HEIGHT);
+        background.setFill(Color.BLACK);
+        System.out.println("here");
 
-        Rectangle background = new Rectangle(MAIN_PANEL_OFFSET_X,MAIN_PANEL_OFFSET_Y, MAIN_PANEL_WIDTH,MAIN_PANEL_HEIGHT);
-        background.setFill(Color.GRAY);
-
-        gameBoard.getChildren().add(baseboard);
+        gameBoard.getChildren().add(background);
         gameBoard.toBack();
     }
 
@@ -580,29 +624,28 @@ public class Board extends Application {
     // FIXME Task 11: Generate interesting starting placements
 
 
-
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("TwistGame Board");
         Scene scene = new Scene(root, BOARD_WIDTH, BOARD_HEIGHT);
-
-        newGame();
 
 //        root.getChildren().add(controls);
         root.getChildren().add(gameBoard);
         root.getChildren().add(pieces);
 //        root.getChildren().add(pegs);
 
+        makeGameBoard();
+        //makeControls();
+        //makePlacement("a7A7b6A7c1A3d2A6e2C3f3C4g4A7h6D0i6B0j2B0j1C0k3C0l4B0l5C0");    // run placement
 
-
-        makeControls();
-        makePlacement("a7A7b6A7c1A3d2A6e2C3f3C4g4A7h6D0i6B0j2B0j1C0k3C0l4B0l5C0");    // run placement
+        newGame();
 
         primaryStage.setScene(scene);
         primaryStage.show();
 
     }
+
+}
 
 //
 //    private void makeBoard() {
