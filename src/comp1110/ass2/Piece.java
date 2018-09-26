@@ -78,7 +78,7 @@ public class Piece {
 
 
     // given a piece placement string, decode piece squareboard representation as a 1-dimensional array.
-    private static int[] pieceValuesDecode (char pieceID, char dir){
+    public static int[] pieceValuesDecode (char pieceID, char dir){
         switch (pieceID) {
             case 'a':
                 switch (dir) {
@@ -226,7 +226,7 @@ public class Piece {
     }
 
 
-    private static int[] positionsDecode (char pieceID, char dir){
+    public static int[] positionsDecode (char pieceID, char dir){
         switch (pieceID) {
             case 'a':
                 switch (dir) {
