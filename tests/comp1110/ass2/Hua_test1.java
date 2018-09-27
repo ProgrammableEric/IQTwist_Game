@@ -29,6 +29,7 @@ public class Hua_test1 {
     String piece5 = new String("d5B5");
     Direction d5 = Piece.orientationDecode(piece5.charAt(3));
 
+
     Piece p1 = new Piece(piece1);
     Piece p2 = new Piece(piece2);
     Piece p3 = new Piece(piece3);
@@ -56,6 +57,5 @@ public class Hua_test1 {
         assertTrue(p5.isOnBoard() == true);
 
     }
-
 
 }
