@@ -23,9 +23,11 @@ import java.util.ArrayList;
 
 public class Node {
 
+
     int pieceValue;      // value (0,1,2 according to Class Pieces) associated with the node,
     Piece piece;         // the piece associated with this board location, if any.
     Peg peg;             // the peg associated with this board location, if any.
+
 
 
 
@@ -92,9 +94,60 @@ public class Node {
 
 
     // get all positions of all neighbours that are on the game board
-    public int[] getNeighbours (int positionID){
-        // ...
-        return null;
+    public static int[] getNeighbours (int positionID) {
+        int[] neighbours = new int[8];
+
+          if ((positionID>=9 && positionID<15)||(positionID>16 && positionID<23)) {
+            neighbours[0] = positionID-9;
+            neighbours[1] = positionID-8;
+            neighbours[2] = positionID-7;
+            neighbours[3] =  positionID-1;
+            neighbours[4] = positionID+1;
+            neighbours[5] = positionID+7;
+            neighbours[6] = positionID+8;
+            neighbours[7] = positionID+9;
+        } if (positionID>0 && positionID<7) {
+            neighbours[0] = positionID-1;
+            neighbours[1] = positionID+1;
+            neighbours[2] = positionID+7;
+            neighbours[3] = positionID+8;
+            neighbours[4] = positionID+9;
+        } if (positionID>24 && positionID<31){
+            neighbours[0] = positionID-1;
+            neighbours[1] = positionID+1;
+            neighbours[2] = positionID-7;
+            neighbours[3] = positionID-8;
+            neighbours[4] = positionID-9;
+        } if (positionID==8||positionID==16) {
+            neighbours[0] = positionID-8;
+            neighbours[1] = positionID-7;
+            neighbours[2] = positionID+1;
+            neighbours[3] = positionID+8;
+            neighbours[4] = positionID+9;
+        } if (positionID==15||positionID==23) {
+            neighbours[0] = positionID-1;
+            neighbours[1] = positionID-8;
+            neighbours[2] = positionID-9;
+            neighbours[3] = positionID+7;
+            neighbours[4] = positionID+8;
+        } if (positionID==0) {
+            neighbours[0] = positionID+1;
+            neighbours[1] = positionID+8;
+            neighbours[2] = positionID+9;
+        } if (positionID==7) {
+            neighbours[0] = positionID-1;
+            neighbours[1] = positionID+7;
+            neighbours[2] = positionID+8;
+        } if (positionID==24) {
+            neighbours[0] = positionID-8;
+            neighbours[1] = positionID-7;
+            neighbours[2] = positionID+1;
+        } if (positionID==31) {
+            neighbours[0] = positionID-9;
+            neighbours[1] = positionID-8;
+            neighbours[2] = positionID-1;
+        }
+        return neighbours;
     }
 
 
