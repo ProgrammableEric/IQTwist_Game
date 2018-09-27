@@ -63,7 +63,6 @@ public class Node {
 
     // method determine if there's either a peg or piece occupying this node
     public boolean isEmpty (){
-        // ...
         return pieceValue == 0 && peg == null;
     }
 

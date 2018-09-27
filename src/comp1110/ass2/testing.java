@@ -1,9 +1,15 @@
 package comp1110.ass2;
 
+import java.util.HashSet;
+
 public class testing {
     public static void main(String[] args) {
-        String s = "b6A2c1A3d2A6e2C3f3C4g4A7h6D0i6B0j2B0j1C0k3C0l4B0l5C0";
-        boolean a = TwistGame.isPlacementStringValid(s);
+        HashSet <String> ans = new HashSet<>();
+        ans.add("b2C4");
+        String s = "b2C6";
+        String a = TwistGame.symmetry(s);
         System.out.println(a);
+
+        System.out.println(ans.contains(TwistGame.symmetry(s)));
     }
 }
