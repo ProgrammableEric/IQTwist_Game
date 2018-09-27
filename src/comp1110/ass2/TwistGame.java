@@ -17,7 +17,7 @@ public class TwistGame {
 
 //    Node[] nodes = new Node[32];
 //
-//    public static void initializeNodes (Node[] nodes){
+//    private static void initializeNodes (Node[] nodes){
 //        for (int i =0; i < nodes.length; i++){
 //            nodes[i].pieceValue = 0;             // all nodes are set to be empty at the start of the game
 //            nodes[i].piece = null;
@@ -310,7 +310,7 @@ public class TwistGame {
                         }
                     }
 
-                    // check symmetry **************** fix here !!!!!!****************************
+                    // check symmetry
                     if (isPlacementStringValid(temp2)) {
                         switch (putPiece.charAt(0)){
 
@@ -361,18 +361,6 @@ public class TwistGame {
         }
 
 
-      // remove identical piece placement for piece c and h.
-//      Iterator<String> iter = ans.iterator();
-//
-//      while (iter.hasNext()) {
-//          String q = iter.next();
-//
-//          if (q.charAt(0) == 'c' || q.charAt(0) == 'h'){
-//                  if (q.charAt(3) > '3') {
-//                      iter.remove(); break;
-//                  }
-//          }
-//          }
 
     // FIXME Task 6: determine the set of valid next piece placements
       if (ans.isEmpty())return null;
@@ -413,7 +401,7 @@ public class TwistGame {
       return (piecePlacement.charAt(0) >= 'i' && piecePlacement.charAt(0) <= 'l');
   }
 
-  // given an input string representing a piece, compute the placement string of its symmetry
+  // given an input string representing a piece, compute the placement string of its symmetry (weak symmetry only, strong symmerty is ignored in the game logic)
   public static String symmetry (String placement){
       String ans = null;
 
