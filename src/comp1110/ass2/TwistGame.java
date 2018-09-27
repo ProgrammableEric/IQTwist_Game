@@ -401,7 +401,7 @@ public class TwistGame {
       return (piecePlacement.charAt(0) >= 'i' && piecePlacement.charAt(0) <= 'l');
   }
 
-  // given an input string representing a piece, compute the placement string of its symmetry (weak symmetry only, strong symmerty is ignored in the game logic)
+  // given an input string representing a piece, compute the placement string of its symmetry (weak symmetry, strong symmerty is ignored in the game logic)
   public static String symmetry (String placement){
       String ans = null;
 
