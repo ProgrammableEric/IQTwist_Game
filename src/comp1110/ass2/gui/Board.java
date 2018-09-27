@@ -13,11 +13,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.geometry.Bounds;
+
 
 import java.awt.*;
 
@@ -318,6 +321,8 @@ public class Board extends Application {
         int homeX, homeY;           // the position in the window where the piece should be when not on the panel
         double mouseX, mouseY;      // the last known mouse positions (used when dragging)
 
+        int flipCount = 0;          // count the number of flips, used in flipPiece() method
+
 
         /**
          * Construct a draggable piece
@@ -459,7 +464,13 @@ public class Board extends Application {
         private void rotate() {
             double angle = (getRotate() + 90) % 360;
             setRotate(angle);
-            pieceOrientation[piece] =  (char) (angle / 90);
+            if (flipCount%2 == 0) {
+                pieceOrientation[piece] =  (char) (angle / 90);       // update orientation of the piece
+            } else if (flipCount%2 == 1){
+                pieceOrientation[piece] =  (char) (4 + (angle / 90));       // update orientation of the piece
+            }
+
+
             setPosition();
             updateAndCheck();
         }
@@ -468,19 +479,41 @@ public class Board extends Application {
          * Flip the piece horizontally
          */
         private void flipPiece() {
-            if (pieceState[piece] == NOT_PLACED){
-                if ( pieceOrientation[piece] == '0') {
-                    setScaleY(-1);
-                    pieceOrientation[piece] = '4';
-                    setPosition();
-                    updateAndCheck();
-                } else if (pieceOrientation[piece] == '4'){
-                    setScaleY(-1);
-                    pieceOrientation[piece] = '0';
-                    setPosition();
-                    updateAndCheck();
+            if (flipCount%2 == 0){
+                if (pieceState[piece] == NOT_PLACED){
+                    if ( pieceOrientation[piece] == '0') {
+                        setScaleY(-1);
+                        pieceOrientation[piece] = '4';
+                        setPosition();
+                        updateAndCheck();
+                        flipCount++;
+                    } else if (pieceOrientation[piece] == '4'){
+                        setScaleY(-1);
+                        pieceOrientation[piece] = '0';
+                        setPosition();
+                        updateAndCheck();
+                        flipCount++;
+                    }
+                }
+
+            }else if (flipCount%2 == 1){
+                if (pieceState[piece] == NOT_PLACED){
+                    if ( pieceOrientation[piece] == '0') {
+                        setScaleY(1);
+                        pieceOrientation[piece] = '4';
+                        setPosition();
+                        updateAndCheck();
+                        flipCount ++;
+                    } else if (pieceOrientation[piece] == '4'){
+                        setScaleY(1);
+                        pieceOrientation[piece] = '0';
+                        setPosition();
+                        updateAndCheck();
+                        flipCount ++;
+                    }
                 }
             }
+
             }
 
 
@@ -488,8 +521,15 @@ public class Board extends Application {
          * @return true if the mask is on the board
          */
         private boolean onBoard() {
-            return getLayoutX() > (MAIN_PANEL_OFFSET_X - (SQUARE_SIZE / 2)) && (getLayoutX() < (MAIN_PANEL_OFFSET_X + 7.5 * SQUARE_SIZE))
-                    && getLayoutY() > (MAIN_PANEL_OFFSET_Y - (SQUARE_SIZE / 2)) && (getLayoutY() < (MAIN_PANEL_OFFSET_Y + 3.5 * SQUARE_SIZE));
+            Bounds bound = this.localToScene(this.getBoundsInLocal());
+            double minx = bound.getMinX();
+            double miny = bound.getMinY();
+            double maxx = bound.getMaxX();
+            double maxy = bound.getMaxY();
+
+            return (minx > (MAIN_PANEL_OFFSET_X - SQUARE_SIZE/2)) && (miny > (MAIN_PANEL_OFFSET_Y - SQUARE_SIZE/2)) &&
+                    (maxx < (MAIN_PANEL_OFFSET_X + MAIN_PANEL_WIDTH + SQUARE_SIZE/2)) && (maxy < (MAIN_PANEL_OFFSET_Y + MAIN_PANEL_HEIGHT + SQUARE_SIZE/2));
+
         }
 
 
@@ -606,11 +646,30 @@ public class Board extends Application {
     private void makeGameBoard() {
         gameBoard.getChildren().clear();
 
+        // baseboard as a triangle with colour GRAY
         Rectangle background = new Rectangle(MAIN_PANEL_OFFSET_X, MAIN_PANEL_OFFSET_Y, MAIN_PANEL_WIDTH, MAIN_PANEL_HEIGHT);
-        background.setFill(Color.BLACK);
-        System.out.println("here");
-
+        background.setFill(Color.LIGHTGRAY);
         gameBoard.getChildren().add(background);
+
+        // grids
+        for (int i = 1; i < MAIN_PANEL_WIDTH/SQUARE_SIZE; i++){
+            Line line = new Line();
+            line.setStartX(MAIN_PANEL_OFFSET_X + i * SQUARE_SIZE);
+            line.setEndX(MAIN_PANEL_OFFSET_X + i * SQUARE_SIZE);
+            line.setStartY(MAIN_PANEL_OFFSET_Y);
+            line.setEndY(MAIN_PANEL_OFFSET_Y + MAIN_PANEL_HEIGHT);
+            gameBoard.getChildren().add(line);
+        }
+
+        for (int i = 1; i < MAIN_PANEL_HEIGHT/SQUARE_SIZE; i++){
+            Line line = new Line();
+            line.setStartX(MAIN_PANEL_OFFSET_X);
+            line.setEndX(MAIN_PANEL_OFFSET_X +  MAIN_PANEL_WIDTH);
+            line.setStartY(MAIN_PANEL_OFFSET_Y + i * SQUARE_SIZE);
+            line.setEndY(MAIN_PANEL_OFFSET_Y + i * SQUARE_SIZE);
+            gameBoard.getChildren().add(line);
+        }
+
         gameBoard.toBack();
     }
 
@@ -647,44 +706,6 @@ public class Board extends Application {
 
 }
 
-//
-//    private void makeBoard() {
-//        board.getChildren().clear();
-//
-//        ImageView baseboard = new ImageView();
-//        baseboard.setImage(new Image(BASEBOARD_URI));
-//        baseboard.setFitWidth(MAIN_PANEL_WIDTH);
-//        baseboard.setFitHeight(MAIN_PANEL_HEIGHT);
-//        baseboard.setLayoutX(MAIN_PANEL_X);
-//        board.getChildren().add(baseboard);
-//
-//        board.toBack();
-//    }
-
-//    //use grid pane perhaps?
-//    public void grid() {
-//        Rectangle tile = new Rectangle(300, 200, 60, 60);
-//        int a = 300;
-//        int b = 250;
-//        int xstep = 60;
-//        int ystep = 60;
-//        tile.setFill(null);
-//        tile.setStroke(Color.BLACK);
-//
-//        for (int i = 0; i < 8 ; i++) {
-//            tile = new Rectangle (a+xstep*i, b, 60, 60);
-//            root.getChildren().add(tile);
-//            tile.setFill(null);
-//            tile.setStroke(Color.BLACK);
-//            for (int j = 0; j < 4 ; j++) {
-//                tile = new Rectangle (a, b+ystep*j, 60, 60);
-//                root.getChildren().add(tile);
-//                tile.setFill(null);
-//                tile.setStroke(Color.BLACK);
-//            }
-//
-//        }
-//    }
 
 
 
