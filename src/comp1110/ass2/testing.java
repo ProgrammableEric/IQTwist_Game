@@ -11,5 +11,6 @@ public class testing {
         System.out.println(a);
 
         System.out.println(ans.contains(TwistGame.symmetry(s)));
+
     }
 }
