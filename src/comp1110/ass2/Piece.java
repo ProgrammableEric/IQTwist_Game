@@ -58,7 +58,7 @@ public class Piece {
     }
 
     // given a piece placement string, decode piece direction
-    private static Direction orientationDecode (char dir){
+    public static Direction orientationDecode(char dir) {
         switch (dir) {
             case '0': return Direction.NORTH;
             case '1': return Direction.EAST;

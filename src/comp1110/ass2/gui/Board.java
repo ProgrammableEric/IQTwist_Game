@@ -62,7 +62,7 @@ public class Board extends Application {
 
     /* the state of the pieces */
     char[] pieceState = new char[8];        // state of each piece, if not on the board, NOT_PLACED, if on the board, it stores the
-                                            // key pos index of the piece, which is an integer from 0 - 31.
+    // key pos index of the piece, which is an integer from 0 - 31.
     /* the orientation of the pieces */
     char[] pieceOrientation = new char[8];  //  denoted by integer 0 - 7
 
@@ -426,25 +426,130 @@ public class Board extends Application {
          */
         private void snapToGrid() {
 
-            if (onBoard() ) {
+            if (onBoard()) {
 
-                for (int i = 0; i <= 7; i++){
-                    if (getLayoutX() >= (MAIN_PANEL_OFFSET_X - (SQUARE_SIZE / 2) + i*SQUARE_SIZE) &&
-                            ( getLayoutX() < (MAIN_PANEL_OFFSET_X + (SQUARE_SIZE / 2) + i*SQUARE_SIZE)) ){
-                        setLayoutX(MAIN_PANEL_OFFSET_X + i*SQUARE_SIZE);
-                    }
+                switch (piece) {
+                    case 4:
+                    case 6:
+                        for (int i = 0; i <= 7; i++) {
+                            if (getLayoutX() >= (MAIN_PANEL_OFFSET_X - (SQUARE_SIZE / 2) + i * SQUARE_SIZE) &&
+                                    (getLayoutX() < (MAIN_PANEL_OFFSET_X + (SQUARE_SIZE / 2) + i * SQUARE_SIZE))) {
+                                setLayoutX(MAIN_PANEL_OFFSET_X + i * SQUARE_SIZE);
+                            }
 
-                    if (getLayoutY() >= (MAIN_PANEL_OFFSET_Y - (SQUARE_SIZE / 2) + i*SQUARE_SIZE) &&
-                            ( getLayoutY() < (MAIN_PANEL_OFFSET_Y + (SQUARE_SIZE / 2) + i*SQUARE_SIZE)) ){
-                        setLayoutY(MAIN_PANEL_OFFSET_Y + i*SQUARE_SIZE);
-                    }
+                            if (getLayoutY() >= (MAIN_PANEL_OFFSET_Y - (SQUARE_SIZE / 2) + i * SQUARE_SIZE) &&
+                                    (getLayoutY() < (MAIN_PANEL_OFFSET_Y + (SQUARE_SIZE / 2) + i * SQUARE_SIZE))) {
+                                setLayoutY(MAIN_PANEL_OFFSET_Y + i * SQUARE_SIZE);
+                            }
+                        } break;
+
+                    case 0:
+                    case 1:
+                    case 3:
+                    case 5:
+
+                        if ((int) pieceOrientation[piece] % 2 == 1) {
+                            for (int i = 0; i <= 7; i++) {
+                                if (getLayoutX() + SQUARE_SIZE / 2 >= (MAIN_PANEL_OFFSET_X - (SQUARE_SIZE / 2) + i * SQUARE_SIZE) &&
+                                        (getLayoutX() + SQUARE_SIZE / 2 < (MAIN_PANEL_OFFSET_X + (SQUARE_SIZE / 2) + i * SQUARE_SIZE))) {
+                                    setLayoutX(MAIN_PANEL_OFFSET_X + i * SQUARE_SIZE - SQUARE_SIZE / 2);
+                                }
+
+                                if (getLayoutY() - SQUARE_SIZE / 2 >= (MAIN_PANEL_OFFSET_Y - (SQUARE_SIZE / 2) + i * SQUARE_SIZE) &&
+                                        (getLayoutY() - SQUARE_SIZE / 2 < (MAIN_PANEL_OFFSET_Y + (SQUARE_SIZE / 2) + i * SQUARE_SIZE))) {
+                                    setLayoutY(MAIN_PANEL_OFFSET_Y + i * SQUARE_SIZE + SQUARE_SIZE / 2);
+                                }
+                            } break;
+                        } else {
+                            for (int j = 0; j <= 7; j++) {
+                                if (getLayoutX() >= (MAIN_PANEL_OFFSET_X - (SQUARE_SIZE / 2) + j * SQUARE_SIZE) &&
+                                        (getLayoutX() < (MAIN_PANEL_OFFSET_X + (SQUARE_SIZE / 2) + j * SQUARE_SIZE))) {
+                                    setLayoutX(MAIN_PANEL_OFFSET_X + j * SQUARE_SIZE);
+                                }
+
+                                if (getLayoutY() >= (MAIN_PANEL_OFFSET_Y - (SQUARE_SIZE / 2) + j * SQUARE_SIZE) &&
+                                        (getLayoutY() < (MAIN_PANEL_OFFSET_Y + (SQUARE_SIZE / 2) + j * SQUARE_SIZE))) {
+                                    setLayoutY(MAIN_PANEL_OFFSET_Y + j * SQUARE_SIZE);
+                                }
+                            } break;
+                        }
+
+                    case 2:
+
+                        if ((int) pieceOrientation[piece] % 2 == 1) {
+                            for (int i = 0; i <= 7; i++) {
+                                if (getLayoutX() + SQUARE_SIZE * 1.5 >= (MAIN_PANEL_OFFSET_X - (SQUARE_SIZE / 2) + i * SQUARE_SIZE) &&
+                                        (getLayoutX() + SQUARE_SIZE * 1.5 < (MAIN_PANEL_OFFSET_X + (SQUARE_SIZE / 2) + i * SQUARE_SIZE))) {
+                                    setLayoutX(MAIN_PANEL_OFFSET_X + i * SQUARE_SIZE - SQUARE_SIZE * 1.5);
+                                }
+
+                                if (getLayoutY() - SQUARE_SIZE * 1.5 >= (MAIN_PANEL_OFFSET_Y - (SQUARE_SIZE / 2) + i * SQUARE_SIZE) &&
+                                        (getLayoutY() - SQUARE_SIZE * 1.5 < (MAIN_PANEL_OFFSET_Y + (SQUARE_SIZE / 2) + i * SQUARE_SIZE))) {
+                                    setLayoutY(MAIN_PANEL_OFFSET_Y + i * SQUARE_SIZE + SQUARE_SIZE * 1.5);
+                                }
+                            } break;
+                        } else {
+                            for (int j = 0; j <= 7; j++) {
+                                if (getLayoutX() >= (MAIN_PANEL_OFFSET_X - (SQUARE_SIZE / 2) + j * SQUARE_SIZE) &&
+                                        (getLayoutX() < (MAIN_PANEL_OFFSET_X + (SQUARE_SIZE / 2) + j * SQUARE_SIZE))) {
+                                    setLayoutX(MAIN_PANEL_OFFSET_X + j * SQUARE_SIZE);
+                                }
+
+                                if (getLayoutY() >= (MAIN_PANEL_OFFSET_Y - (SQUARE_SIZE / 2) + j * SQUARE_SIZE) &&
+                                        (getLayoutY() < (MAIN_PANEL_OFFSET_Y + (SQUARE_SIZE / 2) + j * SQUARE_SIZE))) {
+                                    setLayoutY(MAIN_PANEL_OFFSET_Y + j * SQUARE_SIZE);
+                                }
+                            }break;
+                        }
+
+                    case 7:
+
+                        if ((int) pieceOrientation[piece] % 2 == 1) {
+                            for (int i = 0; i <= 7; i++) {
+                                if (getLayoutX() + SQUARE_SIZE >= (MAIN_PANEL_OFFSET_X - (SQUARE_SIZE / 2) + i * SQUARE_SIZE) &&
+                                        (getLayoutX() + SQUARE_SIZE < (MAIN_PANEL_OFFSET_X + (SQUARE_SIZE / 2) + i * SQUARE_SIZE))) {
+                                    setLayoutX(MAIN_PANEL_OFFSET_X + i * SQUARE_SIZE - SQUARE_SIZE);
+                                }
+
+                                if (getLayoutY() - SQUARE_SIZE >= (MAIN_PANEL_OFFSET_Y - (SQUARE_SIZE / 2) + i * SQUARE_SIZE) &&
+                                        (getLayoutY() - SQUARE_SIZE < (MAIN_PANEL_OFFSET_Y + (SQUARE_SIZE / 2) + i * SQUARE_SIZE))) {
+                                    setLayoutY(MAIN_PANEL_OFFSET_Y + i * SQUARE_SIZE + SQUARE_SIZE);
+                                }
+                            }break;
+                        } else {
+                            for (int j = 0; j <= 7; j++) {
+                                if (getLayoutX() >= (MAIN_PANEL_OFFSET_X - (SQUARE_SIZE / 2) + j * SQUARE_SIZE) &&
+                                        (getLayoutX() < (MAIN_PANEL_OFFSET_X + (SQUARE_SIZE / 2) + j * SQUARE_SIZE))) {
+                                    setLayoutX(MAIN_PANEL_OFFSET_X + j * SQUARE_SIZE);
+                                }
+
+                                if (getLayoutY() >= (MAIN_PANEL_OFFSET_Y - (SQUARE_SIZE / 2) + j * SQUARE_SIZE) &&
+                                        (getLayoutY() < (MAIN_PANEL_OFFSET_Y + (SQUARE_SIZE / 2) + j * SQUARE_SIZE))) {
+                                    setLayoutY(MAIN_PANEL_OFFSET_Y + j * SQUARE_SIZE);
+                                }
+                            }break;
+                        }
                 }
+
                 setPosition();
-            } else {
-                snapToHome();
             }
-            updateAndCheck();
-        }
+
+//                for (int i = 0; i <= 7; i++){
+//                    if (getLayoutX() >= (MAIN_PANEL_OFFSET_X - (SQUARE_SIZE / 2) + i*SQUARE_SIZE) &&
+//                            ( getLayoutX() < (MAIN_PANEL_OFFSET_X + (SQUARE_SIZE / 2) + i*SQUARE_SIZE)) ){
+//                        setLayoutX(MAIN_PANEL_OFFSET_X + i*SQUARE_SIZE);
+//                    }
+//
+//                    if (getLayoutY() >= (MAIN_PANEL_OFFSET_Y - (SQUARE_SIZE / 2) + i*SQUARE_SIZE) &&
+//                            ( getLayoutY() < (MAIN_PANEL_OFFSET_Y + (SQUARE_SIZE / 2) + i*SQUARE_SIZE)) ){
+//                        setLayoutY(MAIN_PANEL_OFFSET_Y + i*SQUARE_SIZE);
+//                    }
+//                }
+
+         else{ snapToHome(); }
+        updateAndCheck();
+    }
+
 
         /**
          * Snap the mask to its home position (if it is not on the grid)
@@ -538,11 +643,17 @@ public class Board extends Application {
          * or -1 if it is off the grid, taking into account its rotation.
          */
         private void setPosition() {
-            int x = (int) (getLayoutX() - MAIN_PANEL_OFFSET_X) / SQUARE_SIZE;
-            int y = (int) (getLayoutY() - MAIN_PANEL_OFFSET_Y) / SQUARE_SIZE;
-            int rotate = (int) getRotate() / 90;
-            if (x < 0 || y < 0)
+            Bounds bound = this.localToScene(this.getBoundsInLocal());
+            double minx = bound.getMinX();
+            double miny = bound.getMinY();
+
+
+            int x = (int) (minx - MAIN_PANEL_OFFSET_X) / SQUARE_SIZE;
+            int y = (int) (miny - MAIN_PANEL_OFFSET_Y) / SQUARE_SIZE;
+
+            if (x < 0 || y < 0) {
                 pieceState[piece] = NOT_PLACED;
+            }
             else {
                 char val = (char) (y * 8 + x);
                 pieceState[piece] = val;
