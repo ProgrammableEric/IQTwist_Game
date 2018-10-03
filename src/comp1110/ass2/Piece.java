@@ -361,7 +361,7 @@ public class Piece {
 
 
 
-    private static Colour colourDecode (char pieceID){
+    public static Colour colourDecode (char pieceID){
         switch (pieceID) {
             case 'a': case 'b':
                 return Colour.RED;
