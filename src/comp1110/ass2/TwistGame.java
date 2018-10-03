@@ -1,9 +1,7 @@
 package comp1110.ass2;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.HashMap;
+import java.lang.reflect.Array;
+import java.util.*;
 import java.lang.String;
 
 /**
@@ -298,17 +296,20 @@ public class TwistGame {
                     //System.out.println(putPiece);
                     //System.out.println(putPiece+placement);
 
-                    // combine the selected piece into the original piece placement string
-                    if (k.charAt(0) < placement.charAt(0)) temp2 = putPiece + placement;
-                    else if (k.charAt(0) > placement.charAt(placement.length()-4)) temp2 = placement + putPiece;
-                    else {
+//                    if (k.charAt(0) < placement.charAt(0)) temp2 = putPiece + placement;
+//                    else if (k.charAt(0) > placement.charAt(placement.length()-4)) temp2 = placement + putPiece;
+//                    else {
+//
+//                        for (int p = 0; p < placement.length(); p += 4) {
+//                            if ((placement.charAt(p) < k.charAt(0) && placement.charAt(p + 4) > k.charAt(0))) {
+//                                temp2 = placement.substring(0, p+4) + putPiece + placement.substring(p + 4, placement.length());
+//                            }
+//                        }
+//                    }
 
-                        for (int p = 0; p < placement.length(); p += 4) {
-                            if ((placement.charAt(p) < k.charAt(0) && placement.charAt(p + 4) > k.charAt(0))) {
-                                temp2 = placement.substring(0, p+4) + putPiece + placement.substring(p + 4, placement.length());
-                            }
-                        }
-                    }
+                    // combine the selected piece into the original piece placement string
+
+                    temp2 = GetNewPlacement(placement,putPiece);
 
                     // check symmetry
                     if (isPlacementStringValid(temp2)) {
@@ -385,16 +386,68 @@ public class TwistGame {
    * @return An array of strings, each 32-characters long, describing a unique
    * unordered solution to the game given the starting point provided by placement.
    */
-  public static String[] getSolutions(String placement) {
-    // FIXME Task 9: determine all solutions to the game, given a particular starting placement
-    return null;
-  }
 
+  static ArrayList<String> solutions = new ArrayList<>();
+
+
+  public static String[] getSolutions(String placement) {
+      // find all solutions for this initial placement
+      String[] solu = Allsolution(placement);
+
+      solutions.clear();
+      return solu;
+
+
+//      // check whether this placement is a right solution
+//      if (IsSolution(placement)){
+//          solutions.add(placement.substring(0,32));
+//      }
+//
+//      //find the next step and store them in a set
+//      Set <String> next_step = getViablePiecePlacements(placement);
+//      ArrayList<String> SolutionNextStep = new ArrayList<>();
+
+//      if (next_step!=null){
+//          for (String i: next_step){
+//              SolutionNextStep.add(GetNewPlacement(placement,i));
+//              }
+//          }
+//          for(String j: SolutionNextStep){
+//              getSolutions(j);
+//          }
+//
+//      String[] s = solutions.toArray(new String[0]);
+//      TreeSet<String> ans = new TreeSet<>();
+//      for (int i=0; i<s.length;i++){
+//          ans.add(s[i]);
+//      }
+//      String[] s1 = new String[ans.size()];
+//      for (int i=0; i<s1.length; i++){
+//          s1[i] = ans.pollFirst();
+//      }
+//      System.out.println(Arrays.toString(s));
+//      return s;
+
+//      if (Onesolution(placement)!=null){
+//          solutions.add(Onesolution(placement).get(0));
+//      }
+
+
+//      Set<String> set = new TreeSet(solutions);
+//      String[] ans = new String[set.size()];
+//      for (int i=0; i<set.size();i++) {
+//          ans[i] = ((TreeSet<String>) set).pollFirst();
+//      }
+//      System.out.println(Arrays.toString(ans));
+
+    // FIXME Task 9: determine all solutions to the game, given a particular starting placement
+  }
 
   // check if a 4-character placement string represents a piece
   public static boolean isPiece (String piecePlacement){
       return (piecePlacement.charAt(0) >= 'a' && piecePlacement.charAt(0) <= 'h');
   }
+
 
     // check if a 4-character placement string represents a piece
   public static boolean isPeg (String piecePlacement){
@@ -444,6 +497,85 @@ public class TwistGame {
       return ans;
   }
 
+    // combine the selected piece into the original piece placement string
+
+  public static String GetNewPlacement(String placement, String piece){
+      String newplacement = "";
+      if (piece.charAt(0) < placement.charAt(0)){
+          newplacement = piece + placement;
+      }
+      else if(piece.charAt(0) > placement.charAt(placement.length()-4)){
+          newplacement = placement + piece;
+      }
+      else {
+          for (int i = 0; i<placement.length(); i+=4){
+              if (placement.charAt(i) < piece.charAt(0) && placement.charAt(i+4) > piece.charAt(0)){
+                  newplacement = placement.substring(0,i+4) + piece + placement.substring(i+4,placement.length());
+              }
+          }
+      }
+      return newplacement;
+  }
 
 
-}
+  // check whether this placement is a solution
+
+  public static boolean IsSolution(String placement){
+      String temp="";
+      for (int j = 0; j < placement.length() / 4; j++) {
+
+          temp += placement.charAt(j * 4);
+      }
+      return temp.contains("abcdefgh");
+  }
+
+
+  // find all solutions for an input placement
+
+  public static String[] Allsolution(String placement){
+
+      //check whether this solution is right
+      if (IsSolution(placement)){
+          solutions.add(placement.substring(0,32));
+      }
+
+      //find the next step and store them in a set
+      Set <String> next_step = getViablePiecePlacements(placement);
+      ArrayList<String> SolutionNextStep = new ArrayList<>();
+
+      // combine every next step piece and initial placement and store them as new placements
+      if (next_step!=null){
+          for (String i: next_step){
+              SolutionNextStep.add(GetNewPlacement(placement,i));
+          }
+      }
+
+      //recurse to get next step until there is no next step
+      for(String j: SolutionNextStep){
+          Allsolution(j);
+      }
+
+      // translate arraylist to String[]
+      String[] solution = solutions.toArray(new String[0]);
+
+      //eliminate duplicate solutions
+      TreeSet<String> ans = new TreeSet<>();
+      for (int i=0; i<solution.length;i++){
+          ans.add(solution[i]);
+      }
+      String[] UniqueSolution = new String[ans.size()];
+      for (int i=0; i<UniqueSolution.length; i++){
+          UniqueSolution[i] = ans.pollFirst();
+      }
+
+      return UniqueSolution;
+
+  }
+
+
+
+  }
+
+
+
+
