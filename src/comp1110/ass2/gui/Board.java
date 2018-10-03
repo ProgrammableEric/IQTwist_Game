@@ -453,7 +453,7 @@ public class Board extends Application {
                     case 3:
                     case 5:
 
-                        if ((int) pieceOrientation[piece] % 2 == 1) {
+                        if (pieceOrientation[piece] % 2 == 1) {
                             for (int i = 0; i <= 7; i++) {
                                 if (getLayoutX() + SQUARE_SIZE / 2 >= (MAIN_PANEL_OFFSET_X - (SQUARE_SIZE / 2) + i * SQUARE_SIZE) &&
                                         (getLayoutX() + SQUARE_SIZE / 2 < (MAIN_PANEL_OFFSET_X + (SQUARE_SIZE / 2) + i * SQUARE_SIZE))) {
@@ -538,18 +538,6 @@ public class Board extends Application {
 
                 setPosition();
             }
-
-//                for (int i = 0; i <= 7; i++){
-//                    if (getLayoutX() >= (MAIN_PANEL_OFFSET_X - (SQUARE_SIZE / 2) + i*SQUARE_SIZE) &&
-//                            ( getLayoutX() < (MAIN_PANEL_OFFSET_X + (SQUARE_SIZE / 2) + i*SQUARE_SIZE)) ){
-//                        setLayoutX(MAIN_PANEL_OFFSET_X + i*SQUARE_SIZE);
-//                    }
-//
-//                    if (getLayoutY() >= (MAIN_PANEL_OFFSET_Y - (SQUARE_SIZE / 2) + i*SQUARE_SIZE) &&
-//                            ( getLayoutY() < (MAIN_PANEL_OFFSET_Y + (SQUARE_SIZE / 2) + i*SQUARE_SIZE)) ){
-//                        setLayoutY(MAIN_PANEL_OFFSET_Y + i*SQUARE_SIZE);
-//                    }
-//                }
 
          else{ snapToHome(); }
         updateAndCheck();
@@ -648,13 +636,14 @@ public class Board extends Application {
          * or -1 if it is off the grid, taking into account its rotation.
          */
         private void setPosition() {
+
             Bounds bound = this.localToScene(this.getBoundsInLocal());
             double minx = bound.getMinX();
             double miny = bound.getMinY();
 
 
-            int x = (int) (minx - MAIN_PANEL_OFFSET_X) / SQUARE_SIZE;
-            int y = (int) (miny - MAIN_PANEL_OFFSET_Y) / SQUARE_SIZE;
+            int x = (int) (minx - MAIN_PANEL_OFFSET_X + SQUARE_SIZE/2) / SQUARE_SIZE;
+            int y = (int) (miny - MAIN_PANEL_OFFSET_Y + SQUARE_SIZE/2) / SQUARE_SIZE;
 
             if (x < 0 || y < 0) {
                 pieceState[piece] = -1;
@@ -692,7 +681,7 @@ public class Board extends Application {
         for (int i = 0; i < pieceState.length; i ++){
             pieceState[i] = -1;
         }
-        makePlacement("b6A7c1A3d2A6f3C4g4A7h6D0i6B0j2B0j1C0k3C0l4B0l5C0");    // run placement
+        makePlacement("c1A3d2A6f3C4g4A7h6D0i6B0j2B0j1C0k3C0l4B0l5C0");    // run placement
         makePieces();
     }
 
@@ -765,8 +754,8 @@ public class Board extends Application {
         completionText.setEffect(dropShadow);
         completionText.setCache(true);
         completionText.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 80));
-        completionText.setLayoutX(20);
-        completionText.setLayoutY(375);
+        completionText.setLayoutX(MAIN_PANEL_OFFSET_X);
+        completionText.setLayoutY(MAIN_PANEL_OFFSET_Y - 100);
         completionText.setTextAlignment(TextAlignment.CENTER);
         root.getChildren().add(completionText);
     }
@@ -777,7 +766,6 @@ public class Board extends Application {
         completionText.toFront();
         completionText.setOpacity(1);
     }
-
 
     /**
      * Hide the completion message
