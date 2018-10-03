@@ -4,8 +4,6 @@ import java.util.HashSet;
 
 public class testing {
     public static void main(String[] args) {
-        char j = '1';
-        int i = (int)j;
-        System.out.println(i);
+        System.out.println(String.valueOf(3 + 1) + String.valueOf ((char)('A' + 2)));
     }
 }

@@ -15,7 +15,10 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -61,10 +64,12 @@ public class Board extends Application {
     private final Text completionText = new Text("Well done!");
 
     /* the state of the pieces */
-    char[] pieceState = new char[8];        // state of each piece, if not on the board, NOT_PLACED, if on the board, it stores the
-    // key pos index of the piece, which is an integer from 0 - 31.
+    int[] pieceState = new int[8];        // state of each piece, if not on the board, -1, if on the board, it stores the
+                                         // key pos index of the piece, which is an integer from 0 - 31.
     /* the orientation of the pieces */
-    char[] pieceOrientation = new char[8];  //  denoted by integer 0 - 7
+    int[] pieceOrientation = new int[8];  //  denoted by integer 0 - 7
+
+    String pegPlacementString;
 
     /* the IQ-TWIST game*/
     TwistGame twistGame;
@@ -93,7 +98,7 @@ public class Board extends Application {
          *
          * @param piece the letter representing the piece to be created.
          */
-        Piece(char piece) {
+        public Piece(char piece) {
 
             if (piece >= 'i') {
                 throw new IllegalArgumentException("Bad piece: \"" + piece + "\"");
@@ -182,7 +187,7 @@ public class Board extends Application {
          * @param orientation The orientation index of the piece (0-7)
          */
 
-        Piece(char piece, char column, char row, char orientation) {
+        public Piece(char piece, char column, char row, char orientation) {
 
             int posX;
             int posY;
@@ -290,7 +295,7 @@ public class Board extends Application {
          * @param column The column index the peg (1-8)
          * @param row    The row index of the peg (A-D)
          */
-        Peg(char peg, char column, char row) {
+        public Peg(char peg, char column, char row) {
             int posX;
             int posY;
 
@@ -332,7 +337,7 @@ public class Board extends Application {
 
         DraggablePiece(char piece) {
             super(piece);
-            pieceState[piece - 'a'] = NOT_PLACED; //start out off panel
+            pieceState[piece - 'a'] = -1; //start out off panel
             pieceOrientation[piece - 'a'] = 0;
 
             /* unplaced pieces location on board */
@@ -558,8 +563,8 @@ public class Board extends Application {
             setLayoutX(homeX);
             setLayoutY(homeY);
             setRotate(0);
-            pieceState[piece] = NOT_PLACED;
-            pieceOrientation[piece] = '0';
+            pieceState[piece] = -1;
+            pieceOrientation[piece] = 0;
         }
 
 
@@ -570,9 +575,9 @@ public class Board extends Application {
             double angle = (getRotate() + 90) % 360;
             setRotate(angle);
             if (flipCount%2 == 0) {
-                pieceOrientation[piece] =  (char) (angle / 90);       // update orientation of the piece
+                pieceOrientation[piece] =  (int)(angle / 90);       // update orientation of the piece
             } else if (flipCount%2 == 1){
-                pieceOrientation[piece] =  (char) (4 + (angle / 90));       // update orientation of the piece
+                pieceOrientation[piece] =  (int) (4 + (angle / 90));       // update orientation of the piece
             }
 
 
@@ -585,16 +590,16 @@ public class Board extends Application {
          */
         private void flipPiece() {
             if (flipCount%2 == 0){
-                if (pieceState[piece] == NOT_PLACED){
-                    if ( pieceOrientation[piece] == '0') {
+                if (pieceState[piece] == -1){
+                    if ( pieceOrientation[piece] == 0) {
                         setScaleY(-1);
-                        pieceOrientation[piece] = '4';
+                        pieceOrientation[piece] = 4;
                         setPosition();
                         updateAndCheck();
                         flipCount++;
-                    } else if (pieceOrientation[piece] == '4'){
+                    } else if (pieceOrientation[piece] == 4){
                         setScaleY(-1);
-                        pieceOrientation[piece] = '0';
+                        pieceOrientation[piece] = 0;
                         setPosition();
                         updateAndCheck();
                         flipCount++;
@@ -602,16 +607,16 @@ public class Board extends Application {
                 }
 
             }else if (flipCount%2 == 1){
-                if (pieceState[piece] == NOT_PLACED){
-                    if ( pieceOrientation[piece] == '0') {
+                if (pieceState[piece] == -1){
+                    if ( pieceOrientation[piece] == 0) {
                         setScaleY(1);
-                        pieceOrientation[piece] = '4';
+                        pieceOrientation[piece] = 4;
                         setPosition();
                         updateAndCheck();
                         flipCount ++;
-                    } else if (pieceOrientation[piece] == '4'){
+                    } else if (pieceOrientation[piece] == 4){
                         setScaleY(1);
-                        pieceOrientation[piece] = '0';
+                        pieceOrientation[piece] = 0;
                         setPosition();
                         updateAndCheck();
                         flipCount ++;
@@ -652,10 +657,10 @@ public class Board extends Application {
             int y = (int) (miny - MAIN_PANEL_OFFSET_Y) / SQUARE_SIZE;
 
             if (x < 0 || y < 0) {
-                pieceState[piece] = NOT_PLACED;
+                pieceState[piece] = -1;
             }
             else {
-                char val = (char) (y * 8 + x);
+                int val =  (y * 8 + x);
                 pieceState[piece] = val;
             }
         }
@@ -674,19 +679,20 @@ public class Board extends Application {
      * Set up each of the eight pieces
      */
     private void makePieces() {
-        pieces.getChildren().clear();
+        //pieces.getChildren().clear();
         for (char m = 'a'; m <= 'h'; m++) {
-            pieces.getChildren().add(new DraggablePiece(m));
+            if (pieceState[m-'a'] == -1){
+            pieces.getChildren().add(new DraggablePiece(m));}
         }
     }
 
 
-    private void updateAndCheck() { //...
-    }
-
-
-
     private void newGame() {
+        hideCompletion();
+        for (int i = 0; i < pieceState.length; i ++){
+            pieceState[i] = -1;
+        }
+        makePlacement("b6A7c1A3d2A6f3C4g4A7h6D0i6B0j2B0j1C0k3C0l4B0l5C0");    // run placement
         makePieces();
     }
 
@@ -703,37 +709,67 @@ public class Board extends Application {
 
 
     /**
-     * Draw a placement in the window, removing any previously drawn one
+     * Implement starting placement
      *
-     * @param placement A valid placement string
+     * @param placement A string representing starting state of the game
      */
-//    private void makePlacement(String placement) {
-//
-//        char pieceType;
-//        char column;
-//        char row;
-//        char orientation;
-//
-//        pieces.getChildren().clear();
-//        pegs.getChildren().clear();
-//
-//        for (int i = 0; i < placement.length(); i += 4) {
-//            pieceType = placement.charAt(i);
-//            column = placement.charAt(i + 1);
-//            row = placement.charAt(i + 2);
-//            orientation = placement.charAt(i + 3);
-//
-//            if (pieceType >= 'a' && pieceType <= 'h') {
-//                pieces.getChildren().add(new Viewer.Piece(pieceType, column, row, orientation));
-//
-//            } else if (pieceType >= 'i' && pieceType <= 'l') {
-//                pegs.getChildren().add(new Viewer.Peg(pieceType, column, row));
-//            }
-//
-//        }
-//    }
+    private void makePlacement(String placement) {
+
+        char pieceType;
+        char column;
+        char row;
+        char orientation;
+
+        pieces.getChildren().clear();
+        pegs.getChildren().clear();
+
+        for (int i = 0; i < placement.length(); i += 4) {
+            pieceType = placement.charAt(i);
+            column = placement.charAt(i + 1);
+            row = placement.charAt(i + 2);
+            orientation = placement.charAt(i + 3);
+
+            if (pieceType >= 'a' && pieceType <= 'h') {
+                pieces.getChildren().add(new Board.Piece(pieceType, column, row, orientation));
+                pieceState[pieceType - 'a'] = column - '1' + 8 * (row - 'A');
+                pieceOrientation[pieceType - 'a'] = orientation - '0';
+
+            } else if (pieceType >= 'i' && pieceType <= 'l') {
+                pegPlacementString = placement.substring(i,placement.length());
+                pegs.getChildren().add(new Board.Peg(pieceType, column, row));
+
+            }
+
+        }
+    }
 
 
+
+    private void updateAndCheck() {
+
+        for (int i = 0; i < pieceState.length; i ++){
+            System.out.println("piece number: "+ i +" piece state:" + pieceState[i] + " piece ori: "+ pieceOrientation[i]);
+        }
+
+        boolean finished = TwistGame.updateAndCheck(pieceState, pieceOrientation, pegPlacementString);
+        if (!finished)return;
+        else showCompletion();
+        //...
+    }
+
+    /**
+     * Create the message to be displayed when the player completes the puzzle.
+     */
+    private void makeCompletion() {
+        completionText.setFill(Color.BLACK);
+        completionText.setEffect(dropShadow);
+        completionText.setCache(true);
+        completionText.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 80));
+        completionText.setLayoutX(20);
+        completionText.setLayoutY(375);
+        completionText.setTextAlignment(TextAlignment.CENTER);
+        root.getChildren().add(completionText);
+    }
     /**
      * Show the completion message
      */
@@ -802,11 +838,11 @@ public class Board extends Application {
 //        root.getChildren().add(controls);
         root.getChildren().add(gameBoard);
         root.getChildren().add(pieces);
-//        root.getChildren().add(pegs);
+        root.getChildren().add(pegs);
 
         makeGameBoard();
         //makeControls();
-        //makePlacement("a7A7b6A7c1A3d2A6e2C3f3C4g4A7h6D0i6B0j2B0j1C0k3C0l4B0l5C0");    // run placement
+        makeCompletion();
 
         newGame();
 

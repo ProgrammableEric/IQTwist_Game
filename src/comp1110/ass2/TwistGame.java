@@ -391,6 +391,38 @@ public class TwistGame {
   }
 
 
+
+    /** check if the game is complete by examining piece states and piece orientations
+     *
+     * @param pieceState          A string of 8 integer representing the state of each piece. For each piece it is either
+     *                            encoded as -1 (not placed), or is the node index of its key position. (refer to Node class.)
+     * @param pieceOrientation    A string of 8 integer representing the state of each piece. Denoted as int 0 - 7
+     * @param pegPlacementString  String representing all the peg placements from initial placement.
+     *
+     * @return  true if the game if complete.
+     */
+    public static boolean updateAndCheck (int[] pieceState, int[] pieceOrientation, String pegPlacementString){
+
+        String toCheck = "";
+        boolean onBoard = true;
+        boolean finished;
+
+        for (int i = 0; i < pieceState.length; i ++){
+            if (pieceState[i] == -1) onBoard = false;
+        }
+
+        if (onBoard){
+            for (int i = 0; i < pieceState.length; i ++){
+                toCheck += String.valueOf((char) ('a' + i)) + Piece.posEncode(pieceState[i]) + String.valueOf(pieceOrientation[i]);
+            }
+            finished = isPlacementStringValid(toCheck + pegPlacementString);
+            return finished;
+
+        } else return false;
+
+    }
+
+
   // check if a 4-character placement string represents a piece
   public static boolean isPiece (String piecePlacement){
       return (piecePlacement.charAt(0) >= 'a' && piecePlacement.charAt(0) <= 'h');
