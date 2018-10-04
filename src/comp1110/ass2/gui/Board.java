@@ -35,13 +35,13 @@ public class Board extends Application {
     /*board layout*/
     private static final int BOARD_WIDTH = 933;
     private static final int BOARD_HEIGHT = 700;
-    private static final int SQUARE_SIZE = 60;
+    private static final int SQUARE_SIZE = 50;
     private static final int MAIN_PANEL_WIDTH = 8 * SQUARE_SIZE;
     private static final int MAIN_PANEL_HEIGHT = 4 * SQUARE_SIZE;
-    private static final int MARGIN_X = 40;
+    private static final int MARGIN_X = 80;
     private static final int MARGIN_Y = 80;
-    private static final int MAIN_PANEL_OFFSET_X = BOARD_WIDTH - MARGIN_X - MAIN_PANEL_WIDTH;
-    private static final int MAIN_PANEL_OFFSET_Y = BOARD_HEIGHT - MARGIN_Y - MAIN_PANEL_HEIGHT;
+    private static final int MAIN_PANEL_OFFSET_X = BOARD_WIDTH - 2*MARGIN_X - MAIN_PANEL_WIDTH;
+    private static final int MAIN_PANEL_OFFSET_Y = BOARD_HEIGHT - 2*MARGIN_Y - MAIN_PANEL_HEIGHT;
 
     //    private static final int MAIN_PANEL_X = MARGIN_X + MAIN_PANEL_HEIGHT;
     private static final int PIECE_SPACE = 20;
@@ -358,13 +358,20 @@ public class Board extends Application {
             }
 
             /*             event handlers */
-            setOnScroll(event -> {            // scroll to change orientation
-                hideCompletion();
-                rotate();
-                event.consume();
-            });
+//            setOnScroll(event -> {            // scroll to change orientation
+//                hideCompletion();
+//                rotate();
+//                event.consume();
+//            });
 
             setOnMousePressed(event -> {      // mouse press indicates begin of drag
+
+                setOnScroll(event2 -> {            // scroll to change orientation
+                    hideCompletion();
+                    rotate();
+                    event.consume();
+                });
+
                 MouseButton btn = event.getButton();
                 if (btn == MouseButton.PRIMARY) {
                     mouseX = event.getSceneX();
@@ -646,7 +653,7 @@ public class Board extends Application {
         for (int i = 0; i < pieceState.length; i ++){
             pieceState[i] = -1;
         }
-        makePlacement("c1A3d2A6f3C4g4A7h6D0i6B0j2B0j1C0k3C0l4B0l5C0");    // run placement
+        makePlacement("j2B0j1C0k3C0l4B0l5C0");    // run placement
         makePieces();
     }
 
