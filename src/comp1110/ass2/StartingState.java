@@ -1,5 +1,7 @@
 package comp1110.ass2;
 
+import java.util.Random;
+
 // this class is a dictionary of the starting state of the game (any locations for preset pegs and pieces)
 // and some implementations. It could be multiple placement string patterns that will be selected by
 // the player at the start of the game.
@@ -9,23 +11,44 @@ package comp1110.ass2;
 
 
 public class StartingState {
-    //key press events:
-    // 1 return StarterDifficulty
-    // sout "starter"
-    // 2 return JuniorDifficulty
-    // sout "junior"
-    // 3 return ExpertDifficulty
-    // sout "expert"// ...
-    // 4 return MasterDifficulty
-    // sout "master"
-    // 5 return WizardDifficulty
-    // sout "wizard"
+    public static void main(String[] args) {
+        System.out.println(Starter());
+    }
 
-    public String Starter() {
-        String[] scenes = {"22j30i","22j30i"};
-        return "";
-       // int i =
 
+    public static String Starter() {
+        String[] scenes = {"26l27l28j29j30k31k", "2j9j10l11l12i18k", "2k4l6j10l12k14j", "12l13k20i21l", "9j13i18l19k20k25j29l", "5i13k21l29k"};
+        Random i = new Random();
+        int rand = i.nextInt(6);
+        return scenes[rand];
+    }
+
+    public String Junior() {
+        String[] scenes = {"22j30i", "9i17l", "3i5l12l19j22k", "9k12i17l20j", "6l11k15k", "2j5i16j21l26k31l"};
+        Random i = new Random();
+        int rand = i.nextInt(6);
+        return scenes[rand];
+    }
+
+    public String Expert() {
+        String[] scenes = {"10j12k25j29l30l", "9k11i22j28j", "4l7l18j26j29k", "0k3l21j23k26j", "10j11k18i19k", "5j9k10j"};
+        Random i = new Random();
+        int rand = i.nextInt(6);
+        return scenes[rand];
+    }
+
+    public String Master() {
+        String[] scenes = {"15k20k21i", "5j8k14k18l21i27l", "3l9k13l19i", "6j13i14j16k20l24l", "2k5j26l28j", "3j9i14j18k26k"};
+        Random i = new Random();
+        int rand = i.nextInt(6);
+        return scenes[rand];
+    }
+
+    public String Wizard() {
+        String[] scenes = {"19j23k28k", "10j17j22l", "3k14l17l", "12j18l22i28k", "6i8k23k", "2k4l26i28j"};
+        Random i = new Random();
+        int rand = i.nextInt(6);
+        return scenes[rand];
     }
 
 }
