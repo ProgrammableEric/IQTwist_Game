@@ -35,28 +35,29 @@ public class StartingState {
     }
 
     public static String Master() {
-        String[] scenes = {"15k20k21i", "5j8k14k18l21i27l", "3l9k13l19i", "6j13i14j16k20l24l", "2k5j26l28j", "3j9i14j18k26k"};
+        String[] scenes = {"15k20k21i", "5j8k14k18l21i27l", "3l9k13l19i", "6j13i14j16k20l24l", "2k5j26l28j", "3j9i14j18k26k", "4j14k21i25j", "2j7k12j18i24k"};
         Random i = new Random();
         int rand = i.nextInt(6);
         return scenes[rand];
+        switch (pieceID) {
+            case 'i':
+                return Colour.RED;
+            case 'j':
+                return Colour.BLUE;
+            case 'k':
+                return Colour.GREEN;
+            case 'l':
+                return Colour.YELLOW;
     }
 
     public static String Wizard() {
-        String[] scenes = {"19j23k28k", "10j17j22l", "3k14l17l", "12j18l22i28k", "6i8k23k", "2k4l26i28j", "0l9j13l22k30k", "17l20j21k", "11l13k28i"};
+        String[] scenes = {"19j23k28k", "10j17j22l", "3k14l17l", "12j18l22i28k", "6i8k23k", "2k4l26i28j", "0l9j13l22k30k", "17l20j21k", "11l13k28i", "4i18j21l", "12k20j28j", "4k20j29i"};
         Random i = new Random();
-        int rand = i.nextInt(6);
+        int rand = i.nextInt(12);
         return scenes[rand];
     }
 
 }
-switch (pieceID) {
-        case 'i':
-        return Colour.RED;
-        case 'j':
-        return Colour.BLUE;
-        case 'k':
-        return Colour.GREEN;
-        case 'l':
-        return Colour.YELLOW;
+
 
 
