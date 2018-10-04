@@ -28,25 +28,34 @@ public class TwistGame {
 //        }
 //    }
 
-  /**
+
+    /**
    * Determine whether a piece or peg placement is well-formed according to the following:
    * - it consists of exactly four characters
    * - the first character is in the range a .. l (pieces and pegs)
    * - the second character is in the range 1 .. 8 (columns)
    * - the third character is in the range A .. D (rows)
    * - the fourth character is in the range 0 .. 7 (if a piece) or is 0 (if a peg)
+     *
+     *  Author: Hua Guo(u6419283)
    *
    * @param piecePlacement A string describing a single piece or peg placement
    * @return True if the placement is well-formed
    */
   public static boolean isPlacementWellFormed(String piecePlacement) {
     // FIXME Task 2: determine whether a piece or peg placement is well-formed
-      String first = "abcdefghijkl";
-      String second = "12345678";
-      String third = "ABCD";
-      String fourth = "01234567";
-      //check if it consists of exactly four characters
+      // give the right character range for each character in the piece/peg placement
+      String first = "abcdefghijkl";  //character range for the first character
+
+      String second = "12345678";     //character range for the second character
+
+      String third = "ABCD";          //character range for the third character
+
+      String fourth = "01234567";     ////character range for the fourth character
+
+      //check if this placement consists of exactly four characters
     if (piecePlacement.length() != 4) return false;
+
     else {
         for (int i = 0; i < 4; i++) {
             //check if the first character is in the range a .. l (pieces and pegs)
@@ -96,8 +105,11 @@ public class TwistGame {
    * - no piece or red peg appears more than once in the placement
    * - no green, blue or yellow peg appears more than twice in the placement
    *
+   *  Author: Hua Guo(u6419283)
+   *
    * @param placement A string describing a placement of one or more pieces and pegs
    * @return True if the placement is well-formed
+   *
    */
   public static boolean isPlacementStringWellFormed(String placement) {
 
@@ -120,14 +132,14 @@ public class TwistGame {
           }
       }
 
-      // check duplicates
-      // find a string of the first letter of every four-letter
+
+      // find a string consists of the first letter of every four-character in this placement
       String s = "";
       for (int m = 0; m < placement.length() / 4; m++) {
           s = s + placement.charAt(4 * m);
       }
 
-      //establish a map of the first letter of every four-letter
+      // establish a map to store each character's number in this string.
       HashMap<String, Integer> map = new HashMap<String, Integer>();
 
       for (int i = 0; i < s.length(); i++) {
@@ -140,9 +152,9 @@ public class TwistGame {
           }
       }
 
-      //check the duplications of pegs and pieces
-      //no piece or red peg can appear more than once in the placement
-      //no green, blue or yellow peg appears more than twice in the placement
+      // check the duplications of pegs and pieces
+      // no piece or red peg can appear more than once in the placement
+      // no green, blue or yellow peg appears more than twice in the placement
 
       for (String keys : map.keySet()) {
           if (keys.equals("j") || keys.equals("k") || keys.equals("l")) {
@@ -155,9 +167,11 @@ public class TwistGame {
           }
 
       }
+
     // FIXME Task 3: determine whether a placement is well-formed
       return true;
   }
+
 
   /**
    * Determine whether a placement string is valid.  To be valid, the placement
@@ -372,12 +386,13 @@ public class TwistGame {
    * than one solution.  The most obvious example is the unconstrained board,
    * which has very many solutions.
    *
-   * Author: Hua Guo
+   * Author: Hua Guo(u6419283)
    *
    * @param placement A valid piece placement string.
    * @return An array of strings, each 32-characters long, describing a unique
    * unordered solution to the game given the starting point provided by placement.
    */
+
 
   public static ArrayList<String> solutions = new ArrayList<>();
 
@@ -479,83 +494,135 @@ public class TwistGame {
       return ans;
   }
 
+    /**
+     * Return the combination of selected piece placement and the original placement string by by alphabetical ordering of the first character.
+     * <p>
+     * Valid placement sequence should be alphabetical ordering.
+     * if the first character of piece < the first character of placement, arrange the placement in the end of piece;
+     * if the first character of piece > the first character of placement, arrange piece in the end of placement;
+     * else find the position of the first character of piece in the placement by alphabetical ordering and combine them.
+     * <p>
+     * Author: Hua Guo(u6419283)
+     *
+     * @param placement A original placement string.
+     * @param piece     A piece placement string.
+     * @return the combination of selected piece placement and the original placement string by by alphabetical ordering of the first character.
+     */
 
-  // combine the selected piece into the original piece placement string
-  public static String GetNewPlacement(String placement, String piece){
-      String newplacement = "";
-      if (piece.charAt(0) < placement.charAt(0)){
-          newplacement = piece + placement;
-      }
-      else if(piece.charAt(0) > placement.charAt(placement.length()-4)){
-          newplacement = placement + piece;
-      }
-      else {
-          for (int i = 0; i<placement.length(); i+=4){
-              if (placement.charAt(i) < piece.charAt(0) && placement.charAt(i+4) > piece.charAt(0)){
-                  newplacement = placement.substring(0,i+4) + piece + placement.substring(i+4,placement.length());
-              }
-          }
-      }
-      return newplacement;
+    public static String GetNewPlacement(String placement, String piece){
+        String newplacement = "";
+
+        if (piece.charAt(0) < placement.charAt(0)){
+
+            newplacement = piece + placement;
+
+        } else if(piece.charAt(0) > placement.charAt(placement.length()-4)){
+
+            newplacement = placement + piece;
+
+        } else {
+
+            for (int i = 0; i<placement.length(); i+=4){
+
+                if (placement.charAt(i) < piece.charAt(0) && placement.charAt(i+4) > piece.charAt(0)){
+
+                    newplacement = placement.substring(0,i+4) + piece + placement.substring(i+4,placement.length());
+
+                }
+            }
+        }
+        return newplacement;
+    }
+
+
+    /**
+     * Check if the input placement is a valid solution in the IQ-Twist game.
+     *
+     * Valid solution should be a 32-character string giving the placement sequence
+     * of all eight pieces, and eight pieces should be combined by alphabetical ordering
+     * and the combination of every first character for eight pieces should be "abcdefgh".
+     *
+     * The valid solutions should not include any symmetric piece placements.
+     *
+     * Author: Hua Guo(u6419283)
+     *
+     * @param placement A placement string.
+     * @return true if combination of every first character for every four-character piece placement contains "abcdefgh"
+     */
+
+    public static boolean IsSolution(String placement){
+        String temp="";
+        for (int j = 0; j < placement.length() / 4; j++) {
+
+            temp += placement.charAt(j * 4);
+        }
+        return temp.contains("abcdefgh");
+    }
+
+    /**
+     * Return an array of all unique solutions for a given starting placement.
+     *
+     * Each solution should be a 32-character string giving the placement sequence
+     * of all eight pieces, given the starting placement.
+     *
+     * The set of solutions should not include any symmetric piece placements.
+     *
+     * In the IQ-Twist game, valid challenges can have only one solution, but
+     * other starting placements that are not valid challenges may have more
+     * than one solution.  The most obvious example is the unconstrained board,
+     * which has very many solutions.
+     *
+     * Author: Hua Guo(u6419283)
+     *
+     * @param placement A valid piece placement string.
+     * @return An array of strings, each 32-characters long, describing a unique
+     * unordered solution to the game given the starting point provided by placement.
+     */
+
+    public static String[] Allsolution(String placement) {
+
+        // check whether this solution is valid
+        if (IsSolution(placement)){
+            solutions.add(placement.substring(0,32));
+        }
+
+        // find all possible next steps and store them in a set
+        Set <String> next_step = getViablePiecePlacements(placement);
+        ArrayList<String> SolutionNextStep = new ArrayList<>();
+
+        // combine each next step piece with initial placement and store them as new placements
+        if (next_step != null){
+            for (String i: next_step){
+                SolutionNextStep.add(GetNewPlacement(placement,i));
+            }
+        }
+
+        // recurse this method to get next step until there is no next step
+        for(String j: SolutionNextStep){
+            Allsolution(j);
+        }
+
+        // translate Arraylist to String[]
+        String[] solution = solutions.toArray(new String[0]);
+
+        // eliminate duplicate solutions to get unique solution array
+        TreeSet<String> ans = new TreeSet<>();
+        for (int i = 0; i<solution.length; i++){
+
+            ans.add(solution[i]);
+
+        }
+
+        String[] uniqueSolution = new String[ans.size()];
+        for (int i = 0; i < uniqueSolution.length; i++) {
+
+            uniqueSolution[i] = ans.pollFirst();
+
+        }
+
+        return uniqueSolution;
+
+    }
+
   }
-
-
-  // check whether this placement is a solution
-  public static boolean IsSolution(String placement){
-      String temp="";
-      for (int j = 0; j < placement.length() / 4; j++) {
-
-          temp += placement.charAt(j * 4);
-      }
-      return temp.contains("abcdefgh");
-  }
-
-
-  // find all solutions for an input placement
-  public static String[] Allsolution(String placement){
-
-      //check whether this solution is right
-      if (IsSolution(placement)){
-          solutions.add(placement.substring(0,32));
-      }
-
-      //find the next step and store them in a set
-      Set <String> next_step = getViablePiecePlacements(placement);
-      ArrayList<String> SolutionNextStep = new ArrayList<>();
-
-      // combine every next step piece and initial placement and store them as new placements
-      if (next_step!=null){
-          for (String i: next_step){
-              SolutionNextStep.add(GetNewPlacement(placement,i));
-          }
-      }
-
-      //recurse to get next step until there is no next step
-      for(String j: SolutionNextStep){
-          Allsolution(j);
-      }
-
-      // translate arraylist to String[]
-      String[] solution = solutions.toArray(new String[0]);
-
-      //eliminate duplicate solutions
-      TreeSet<String> ans = new TreeSet<>();
-      for (int i=0; i<solution.length;i++){
-          ans.add(solution[i]);
-      }
-      String[] UniqueSolution = new String[ans.size()];
-      for (int i=0; i<UniqueSolution.length; i++){
-          UniqueSolution[i] = ans.pollFirst();
-      }
-
-      return UniqueSolution;
-
-  }
-
-
-
-  }
-
-
-
 
