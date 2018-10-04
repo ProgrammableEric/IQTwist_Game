@@ -76,6 +76,17 @@ public class Piece {
     // given a piece placement string, decode piece key position (top left corner position of the squareboard )
     private static int posDecode (char col, char row){ return (row - 'A')*8 +  (col - '1') ; }
 
+    // given a key position, encode it into piece placement string (Column(1-8) + Row(A-D))
+    public static String posEncode (int code){
+
+        int col = code % 8;
+        int row = code / 8;
+
+        String ans = String.valueOf(col + 1) + String.valueOf ((char)('A' + row));
+        return ans;
+
+    }
+
 
     // given a piece placement string, decode piece squareboard representation as a 1-dimensional array.
     public static int[] pieceValuesDecode (char pieceID, char dir){
@@ -361,7 +372,7 @@ public class Piece {
 
 
 
-    private static Colour colourDecode (char pieceID){
+    public static Colour colourDecode (char pieceID){
         switch (pieceID) {
             case 'a': case 'b':
                 return Colour.RED;
@@ -427,23 +438,6 @@ public class Piece {
         }
         return test;
     }
-
-
-
-    // method updating the fields of the piece when it has been rotated
-    void rotatePiece (int orientation){
-        // ...
-    }
-
-    // method updating the fields of the piece when it has been moved
-    void movePiece (int keyPosition){
-        //...
-    }
-
-
-
-
-
 
 
 }
