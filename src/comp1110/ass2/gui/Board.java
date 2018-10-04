@@ -74,7 +74,7 @@ public class Board extends Application {
     /* the orientation of the pieces */
     int[] pieceOrientation = new int[8];  //  denoted by integer 0 - 7
 
-    String pegPlacementString;
+    String pegPlacementString = "";
 
     /* the IQ-TWIST game*/
     TwistGame twistGame;
@@ -195,7 +195,7 @@ public class Board extends Application {
                     break;
             }
 
-            // ???????????????? rotation of the image ?????????????????
+            // rotation of the image
             if (orientation <= '3') {
                 setRotate((orientation - '0') * 90);
             } else if (orientation <= '7') {
@@ -393,17 +393,10 @@ public class Board extends Application {
                 mouseY = event.getSceneY();
                 event.consume();
             });
-            setOnMouseReleased(event -> {     // drag is complete (places piece on grid)
-                snapToGrid();
-//                // check piece overlapping
-//                String tempString = "";
-//                for (int i = 0; i < pieceState.length; i ++){
-//                    if (pieceState[i] != 0){
-//                        tempString += String.valueOf((char) ('a' + i)) + comp1110.ass2.Piece.posEncode(pieceState[i]) + String.valueOf(pieceOrientation[i]);
-//                    }
-//                }
-//                if (!TwistGame.isPlacementStringValid(tempString)) {
-//                    System.out.println(tempString);snapToHome();}
+            setOnMouseReleased(event -> {     // drag is complete (placing piece on grid)
+                MouseButton btn2 = event.getButton();
+                if (btn2 == MouseButton.PRIMARY)snapToGrid();
+
             });
         }
 
@@ -463,7 +456,7 @@ public class Board extends Application {
 
                     case 2:
 
-                        if ((int) pieceOrientation[piece] % 2 == 1) {
+                        if (pieceOrientation[piece] % 2 == 1) {
                             for (int i = 0; i <= 7; i++) {
                                 if (getLayoutX() + SQUARE_SIZE * 1.5 >= (MAIN_PANEL_OFFSET_X - (SQUARE_SIZE / 2) + i * SQUARE_SIZE) &&
                                         (getLayoutX() + SQUARE_SIZE * 1.5 < (MAIN_PANEL_OFFSET_X + (SQUARE_SIZE / 2) + i * SQUARE_SIZE))) {
@@ -491,7 +484,7 @@ public class Board extends Application {
 
                     case 7:
 
-                        if ((int) pieceOrientation[piece] % 2 == 1) {
+                        if ( pieceOrientation[piece] % 2 == 1) {
                             for (int i = 0; i <= 7; i++) {
                                 if (getLayoutX() + SQUARE_SIZE >= (MAIN_PANEL_OFFSET_X - (SQUARE_SIZE / 2) + i * SQUARE_SIZE) &&
                                         (getLayoutX() + SQUARE_SIZE < (MAIN_PANEL_OFFSET_X + (SQUARE_SIZE / 2) + i * SQUARE_SIZE))) {
@@ -518,21 +511,27 @@ public class Board extends Application {
                         }
                 }
 
+                System.out.println("layout x: "+ getLayoutX() + " layoutY: " + getLayoutY());
+
                 setPosition();
 
-//                // check piece overlapping
-//                String tempString = "";
-//                for (int i = 0; i < pieceState.length; i ++){
-//                    if (pieceState[i] != -1){
-//                        tempString += String.valueOf((char) ('a' + i)) + comp1110.ass2.Piece.posEncode(pieceState[i]) + String.valueOf(pieceOrientation[i]);
-//                    }
-//                }
-//                if (onBoard() && !TwistGame.isPlacementStringValid(tempString)) {
-//                    System.out.println(tempString);snapToHome();}
+                // check piece overlapping
+                String tempString = "";
+                for (int i = 0; i < pieceState.length; i ++){
+                    if (pieceState[i] != -1){
+                        tempString += String.valueOf((char) ('a' + i)) + comp1110.ass2.Piece.posEncode(pieceState[i]) + String.valueOf(pieceOrientation[i]);
+                    }
+                }
+                tempString += pegPlacementString;
+                System.out.println("temp string to check: " + tempString);
+
+                if (!TwistGame.isPlacementStringValid(tempString)) {
+                    System.out.println("there's an overlap");snapToHome();}
 
             }
 
          else{ snapToHome(); }
+
         updateAndCheck();
     }
 
@@ -541,9 +540,17 @@ public class Board extends Application {
          * Snap the mask to its home position (if it is not on the grid)
          */
         private void snapToHome() {
-            setLayoutX(homeX);
-            setLayoutY(homeY);
-            setRotate(0);
+
+            if (flipCount % 2 == 0) {
+                setLayoutX(homeX);
+                setLayoutY(homeY);
+                setRotate(0);
+            } else {
+                setLayoutX(homeX);
+                setLayoutY(homeY);
+                flipPiece();
+                setRotate(0);
+            }
             pieceState[piece] = -1;
             pieceOrientation[piece] = 0;
         }
@@ -555,12 +562,10 @@ public class Board extends Application {
         private void rotate() {
             double angle = (getRotate() + 90) % 360;
             setRotate(angle);
-            if (flipCount%2 == 0) {
-                pieceOrientation[piece] =  (int)(angle / 90);       // update orientation of the piece
-            } else if (flipCount%2 == 1){
-                pieceOrientation[piece] =  (int) (4 + (angle / 90));       // update orientation of the piece
-            }
+            int temp = pieceOrientation[piece];
+            pieceOrientation[piece] = comp1110.ass2.Piece.rotate(temp);
 
+            if (onBoard()) snapToGrid();
 
             setPosition();
             updateAndCheck();
@@ -570,50 +575,17 @@ public class Board extends Application {
          * Flip the piece horizontally
          */
         private void flipPiece() {
-            System.out.println("piece ori is "+ pieceOrientation[piece]);
-            System.out.println("flipcount: "+ flipCount);
-            if (flipCount%2 == 0){
-                System.out.println("12345");
 
-                if (pieceState[piece] == -1) {
-                    if (pieceOrientation[piece] == 0) {
-                        System.out.println("here");
-                        setScaleY(-1);
-                        pieceOrientation[piece] = 4;
-                        setPosition();
-                        //updateAndCheck();
-                        flipCount++;
-                    } else if (pieceOrientation[piece] == 4) {
+            int prevOri = pieceOrientation[piece];
+            pieceOrientation[piece] = comp1110.ass2.Piece.flip(piece, prevOri);
 
-                        setScaleY(-1);
-                        pieceOrientation[piece] = 0;
-                        setPosition();
-                        //updateAndCheck();
-                        flipCount++;
-                    }
-                }
+            flipCount ++;
 
-            }else if (flipCount%2 == 1){
-                System.out.println("yeh!");
-                if (pieceState[piece] == -1){
-                    if ( pieceOrientation[piece] == 0) {
-                        System.out.println("in");
-                        setScaleY(1);
-                        pieceOrientation[piece] = 4;
-                        setPosition();
-                        //updateAndCheck();
-                        flipCount ++;
-                    } else if (pieceOrientation[piece] == 4){
-                        System.out.println("yeh yeh");
-                        setScaleY(1);
-                        pieceOrientation[piece] = 0;
-                        setPosition();
-                        //updateAndCheck();
-                        flipCount ++;
-                    }
-                }
-            }
+            if (prevOri % 2 == 0) setScaleY(getScaleY() * -1);         // flip the piece
+            else setScaleX(getScaleX() * -1);
 
+            setPosition();
+            updateAndCheck();
             }
 
 
@@ -647,6 +619,8 @@ public class Board extends Application {
             int x = (int) (minx - MAIN_PANEL_OFFSET_X + SQUARE_SIZE/2) / SQUARE_SIZE;
             int y = (int) (miny - MAIN_PANEL_OFFSET_Y + SQUARE_SIZE/2) / SQUARE_SIZE;
 
+            System.out.println("posx: "+ x + " posy: " + y);
+
             if (x < 0 || y < 0) {
                 pieceState[piece] = -1;
             }
@@ -678,16 +652,6 @@ public class Board extends Application {
     }
 
 
-    private void newGame() {
-        hideCompletion();
-        for (int i = 0; i < pieceState.length; i ++){
-            pieceState[i] = -1;
-        }
-        makePlacement("c1A3d2A6e2C3f3C4g4A7h6D0i6B0j2B0j1C0k3C0l4B0l5C0");    // run placement
-        makePieces();
-    }
-
-
     // calculate offset in Y direction
     private int offsetY(char row) {
         return MAIN_PANEL_OFFSET_Y + (row - 'A') * SQUARE_SIZE;
@@ -699,50 +663,14 @@ public class Board extends Application {
     }
 
 
-    /**
-     * Implement starting placement
-     *
-     * @param placement A string representing starting state of the game
-     */
-    private void makePlacement(String placement) {
-
-        char pieceType;
-        char column;
-        char row;
-        char orientation;
-
-        pieces.getChildren().clear();
-        pegs.getChildren().clear();
-
-        for (int i = 0; i < placement.length(); i += 4) {
-            pieceType = placement.charAt(i);
-            column = placement.charAt(i + 1);
-            row = placement.charAt(i + 2);
-            orientation = placement.charAt(i + 3);
-
-            if (pieceType >= 'a' && pieceType <= 'h') {
-                pieces.getChildren().add(new Board.Piece(pieceType, column, row, orientation));
-                pieceState[pieceType - 'a'] = column - '1' + 8 * (row - 'A');
-                pieceOrientation[pieceType - 'a'] = orientation - '0';
-
-            } else if (pieceType >= 'i' && pieceType <= 'l') {
-                pegPlacementString = placement.substring(i,placement.length());
-                pegs.getChildren().add(new Board.Peg(pieceType, column, row));
-
-            }
-
-        }
-    }
-
-
-
     private void updateAndCheck() {
 
-        String tempString = "";
 
+        System.out.println("******************************************");
         for (int i = 0; i < pieceState.length; i ++){
             System.out.println("piece number: "+ i +" piece state:" + pieceState[i] + " piece ori: "+ pieceOrientation[i]);
         }
+        System.out.println("\n");
 
         boolean finished = TwistGame.updateAndCheck(pieceState, pieceOrientation, pegPlacementString);
         if (!finished) { return; }
@@ -821,6 +749,54 @@ public class Board extends Application {
 
     // FIXME Task 11: Generate interesting starting placements
 
+    /**
+     * Implement starting placement
+     *
+     * @param placement A string representing starting state of the game
+     */
+    private void makePlacement(String placement) {
+
+        char pieceType;
+        char column;
+        char row;
+        char orientation;
+
+        pieces.getChildren().clear();
+        pegs.getChildren().clear();
+
+        for (int i = 0; i < placement.length(); i += 4) {
+            pieceType = placement.charAt(i);
+            column = placement.charAt(i + 1);
+            row = placement.charAt(i + 2);
+            orientation = placement.charAt(i + 3);
+
+            if (pieceType >= 'a' && pieceType <= 'h') {
+                pieces.getChildren().add(new Board.Piece(pieceType, column, row, orientation));
+                pieceState[pieceType - 'a'] = column - '1' + 8 * (row - 'A');
+                pieceOrientation[pieceType - 'a'] = orientation - '0';
+
+            } else if (pieceType >= 'i' && pieceType <= 'l') {
+                pegPlacementString += placement.substring(i,i + 4);
+                pegs.getChildren().add(new Board.Peg(pieceType, column, row));
+
+            }
+
+        }
+
+        System.out.println("peg placement is: "+ pegPlacementString);
+    }
+
+    /**
+     * Start a new game, resetting everything as necessary
+     */
+    private void newGame() {
+        hideCompletion();
+        for (int i = 0; i < pieceState.length; i ++){
+            pieceState[i] = -1;
+        }
+        makePlacement("c1A3d2A6e2C3f3C4g4A7h6D0i6B0j2B0j1C0k3C0l4B0l5C0");    // run placement
+        makePieces();
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {

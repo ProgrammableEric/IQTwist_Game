@@ -18,16 +18,6 @@ import java.lang.String;
 public class TwistGame {
 
 
-//    Node[] nodes = new Node[32];
-//
-//    private static void initializeNodes (Node[] nodes){
-//        for (int i =0; i < nodes.length; i++){
-//            nodes[i].pieceValue = 0;             // all nodes are set to be empty at the start of the game
-//            nodes[i].piece = null;
-//            nodes[i].peg = null;
-//        }
-//    }
-
   /**
    * Determine whether a piece or peg placement is well-formed according to the following:
    * - it consists of exactly four characters
@@ -38,6 +28,8 @@ public class TwistGame {
    *
    * @param piecePlacement A string describing a single piece or peg placement
    * @return True if the placement is well-formed
+   *
+   * Author: Hua Guo
    */
   public static boolean isPlacementWellFormed(String piecePlacement) {
     // FIXME Task 2: determine whether a piece or peg placement is well-formed
@@ -98,6 +90,8 @@ public class TwistGame {
    *
    * @param placement A string describing a placement of one or more pieces and pegs
    * @return True if the placement is well-formed
+   *
+   * Author: Hua Guo
    */
   public static boolean isPlacementStringWellFormed(String placement) {
 
@@ -170,6 +164,8 @@ public class TwistGame {
    *
    * @param placement A placement sequence string
    * @return True if the placement sequence is valid
+   *
+   * Author： Chunze Fu (u5885811)
    */
   public static boolean isPlacementStringValid(String placement) {
 
@@ -270,6 +266,8 @@ public class TwistGame {
    *
    * @param placement A valid placement string (comprised of peg and piece placements)
    * @return An set of viable piece placements, or null if there are none.
+   *
+   * Author： Chunze Fu (u5885811)
    */
   public static Set<String> getViablePiecePlacements(String placement) {
 
@@ -402,6 +400,8 @@ public class TwistGame {
    * @param pegPlacementString  String representing all the peg placements from initial placement.
    *
    * @return  true if the game if complete.
+   *
+   * Autho: Chunze Fu (u5885811)
    */
   public static boolean updateAndCheck (int[] pieceState, int[] pieceOrientation, String pegPlacementString){
 
@@ -424,19 +424,20 @@ public class TwistGame {
 
     }
 
-
   // check if a 4-character placement string represents a piece
   public static boolean isPiece (String piecePlacement){
       return (piecePlacement.charAt(0) >= 'a' && piecePlacement.charAt(0) <= 'h');
   }
 
-
-    // check if a 4-character placement string represents a piece
+  // check if a 4-character placement string represents a piece
   public static boolean isPeg (String piecePlacement){
       return (piecePlacement.charAt(0) >= 'i' && piecePlacement.charAt(0) <= 'l');
   }
 
-  // given an input string representing a piece, compute the placement string of its symmetry (weak symmetry, strong symmety is ignored in the game logic)
+  /** given an input string representing a piece, compute the placement string of its symmetry (weak symmetry, strong symmety is ignored in the game logic)
+   *
+   *  Author: Chunze Fu (u5885811)
+   */
   public static String symmetry (String placement){
       String ans = null;
 
