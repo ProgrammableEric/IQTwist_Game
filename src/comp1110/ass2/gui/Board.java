@@ -74,6 +74,7 @@ public class Board extends Application {
     /* the orientation of the pieces */
     int[] pieceOrientation = new int[8];  //  denoted by integer 0 - 7
 
+    /* substring of the given placement string that only represnet the pegs */
     String pegPlacementString = "";
 
     /* the IQ-TWIST game*/
@@ -662,7 +663,7 @@ public class Board extends Application {
         return MAIN_PANEL_OFFSET_X + (column - '1') * SQUARE_SIZE;
     }
 
-
+    // checking if the game is complete, whenever any piece's been moved/rotated/flipped
     private void updateAndCheck() {
 
 

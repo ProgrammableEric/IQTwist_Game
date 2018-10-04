@@ -18,6 +18,8 @@ import java.util.ArrayList;
  * Finished state is determined by :
  * 1. all nodes are occupied with one and only piece;
  * 2. all pegs are placed in the right place, of the color-matched piece
+ *
+ * Author: Chunze Fu (u5885811) and Mei Yee (u6700948)
 */
 
 
