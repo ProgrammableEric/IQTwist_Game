@@ -395,6 +395,15 @@ public class Board extends Application {
             });
             setOnMouseReleased(event -> {     // drag is complete (places piece on grid)
                 snapToGrid();
+//                // check piece overlapping
+//                String tempString = "";
+//                for (int i = 0; i < pieceState.length; i ++){
+//                    if (pieceState[i] != 0){
+//                        tempString += String.valueOf((char) ('a' + i)) + comp1110.ass2.Piece.posEncode(pieceState[i]) + String.valueOf(pieceOrientation[i]);
+//                    }
+//                }
+//                if (!TwistGame.isPlacementStringValid(tempString)) {
+//                    System.out.println(tempString);snapToHome();}
             });
         }
 
@@ -511,14 +520,15 @@ public class Board extends Application {
 
                 setPosition();
 
-                // check piece overlapping
-                String tempString = "";
-                for (int i = 0; i < pieceState.length; i ++){
-                    if (pieceState[i] != 0){
-                    tempString += String.valueOf((char) ('a' + i)) + comp1110.ass2.Piece.posEncode(pieceState[i]) + String.valueOf(pieceOrientation[i]);
-                }
-                if (!TwistGame.isPlacementStringValid(tempString)){snapToHome();}
-                }
+//                // check piece overlapping
+//                String tempString = "";
+//                for (int i = 0; i < pieceState.length; i ++){
+//                    if (pieceState[i] != -1){
+//                        tempString += String.valueOf((char) ('a' + i)) + comp1110.ass2.Piece.posEncode(pieceState[i]) + String.valueOf(pieceOrientation[i]);
+//                    }
+//                }
+//                if (onBoard() && !TwistGame.isPlacementStringValid(tempString)) {
+//                    System.out.println(tempString);snapToHome();}
 
             }
 
@@ -560,36 +570,45 @@ public class Board extends Application {
          * Flip the piece horizontally
          */
         private void flipPiece() {
+            System.out.println("piece ori is "+ pieceOrientation[piece]);
+            System.out.println("flipcount: "+ flipCount);
             if (flipCount%2 == 0){
-                if (pieceState[piece] == -1){
-                    if ( pieceOrientation[piece] == 0) {
+                System.out.println("12345");
+
+                if (pieceState[piece] == -1) {
+                    if (pieceOrientation[piece] == 0) {
+                        System.out.println("here");
                         setScaleY(-1);
                         pieceOrientation[piece] = 4;
                         setPosition();
-                        updateAndCheck();
+                        //updateAndCheck();
                         flipCount++;
-                    } else if (pieceOrientation[piece] == 4){
+                    } else if (pieceOrientation[piece] == 4) {
+
                         setScaleY(-1);
                         pieceOrientation[piece] = 0;
                         setPosition();
-                        updateAndCheck();
+                        //updateAndCheck();
                         flipCount++;
                     }
                 }
 
             }else if (flipCount%2 == 1){
+                System.out.println("yeh!");
                 if (pieceState[piece] == -1){
                     if ( pieceOrientation[piece] == 0) {
+                        System.out.println("in");
                         setScaleY(1);
                         pieceOrientation[piece] = 4;
                         setPosition();
-                        updateAndCheck();
+                        //updateAndCheck();
                         flipCount ++;
                     } else if (pieceOrientation[piece] == 4){
+                        System.out.println("yeh yeh");
                         setScaleY(1);
                         pieceOrientation[piece] = 0;
                         setPosition();
-                        updateAndCheck();
+                        //updateAndCheck();
                         flipCount ++;
                     }
                 }
@@ -664,7 +683,7 @@ public class Board extends Application {
         for (int i = 0; i < pieceState.length; i ++){
             pieceState[i] = -1;
         }
-        makePlacement("j2B0j1C0k3C0l4B0l5C0");    // run placement
+        makePlacement("c1A3d2A6e2C3f3C4g4A7h6D0i6B0j2B0j1C0k3C0l4B0l5C0");    // run placement
         makePieces();
     }
 
