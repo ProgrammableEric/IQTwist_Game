@@ -39,21 +39,14 @@ public class StartingState {
         Random i = new Random();
         int rand = i.nextInt(6);
         return scenes[rand];
-        switch (pieceID) {
-            case 'i':
-                return Colour.RED;
-            case 'j':
-                return Colour.BLUE;
-            case 'k':
-                return Colour.GREEN;
-            case 'l':
-                return Colour.YELLOW;
+
     }
 
     public static String Wizard() {
-        String[] scenes = {"19j23k28k", "10j17j22l", "3k14l17l", "12j18l22i28k", "6i8k23k", "2k4l26i28j", "0l9j13l22k30k", "17l20j21k", "11l13k28i", "4i18j21l", "12k20j28j", "4k20j29i"};
+        String[] scenes = {"l5C0"};
+        //String[] scenes = {"19j23k28k", "10j17j22l", "3k14l17l", "12j18l22i28k", "6i8k23k", "2k4l26i28j", "0l9j13l22k30k", "17l20j21k", "11l13k28i", "4i18j21l", "12k20j28j", "4k20j29i"};
         Random i = new Random();
-        int rand = i.nextInt(12);
+        int rand = i.nextInt(1);
         return scenes[rand];
     }
 

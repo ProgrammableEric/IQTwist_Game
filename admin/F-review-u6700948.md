@@ -35,5 +35,5 @@ used).
 
 5. Suggest a particular situation in which the program will not function correctly.
 When the last piece with a solid fill is placed on a peg of its own colour, the game displays "Well done!". This is evidently incorrect as a filled
-piece should not be able to be placed on a peg. This suggests that the method ?? has discrepancies.
+piece should not be able to be placed on a peg. Eric suggested that the inner class DraggablePiece has mistakes and will be fixed.
 
