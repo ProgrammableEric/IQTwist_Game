@@ -1,6 +1,7 @@
 package comp1110.ass2.gui;
 
 import comp1110.ass2.Colour;
+import comp1110.ass2.StartingState;
 import comp1110.ass2.TwistGame;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -8,10 +9,13 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -42,6 +46,8 @@ public class Board extends Application {
     private static final int MARGIN_Y = 80;
     private static final int MAIN_PANEL_OFFSET_X = BOARD_WIDTH - MARGIN_X - MAIN_PANEL_WIDTH;
     private static final int MAIN_PANEL_OFFSET_Y = BOARD_HEIGHT - MARGIN_Y - MAIN_PANEL_HEIGHT;
+    private static VBox vBox;
+    private static HBox hBox;
 
     //    private static final int MAIN_PANEL_X = MARGIN_X + MAIN_PANEL_HEIGHT;
     private static final int PIECE_SPACE = 20;
@@ -783,6 +789,28 @@ public class Board extends Application {
     // FIXME Task 11: Generate interesting starting placements
 
 
+    public void menu() {
+        hBox = new HBox();
+        hBox.setSpacing(15.0);
+        vBox = new VBox();
+        vBox.getChildren().add(hBox);
+        controls.getChildren().add(vBox);
+        root.getChildren().add(controls);
+        Button starter = new Button("Starter");
+        Button junior = new Button("Junior");
+        Button expert = new Button("Expert");
+        Button master = new Button("Master");
+        Button wizard = new Button("Wizard");
+        root.getChildren().addAll(starter,junior,expert,master,wizard);
+
+        starter.setOnAction(event -> makePlacement(StartingState.Starter()));
+        junior.setOnAction(event -> makePlacement(StartingState.Junior()));
+        expert.setOnAction(event -> makePlacement(StartingState.Expert()));
+        master.setOnAction(event -> makePlacement(StartingState.Master()));
+        wizard.setOnAction(event -> makePlacement(StartingState.Wizard()));
+
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("TwistGame Board");
@@ -793,11 +821,16 @@ public class Board extends Application {
         root.getChildren().add(pieces);
         root.getChildren().add(pegs);
 
+
+
         makeGameBoard();
         //makeControls();
         makeCompletion();
+        menu();
+
 
         newGame();
+
 
         primaryStage.setScene(scene);
         primaryStage.show();
