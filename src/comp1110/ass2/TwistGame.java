@@ -257,8 +257,6 @@ public class TwistGame {
   }
 
 
-
-
   /**
    * Given a string describing a placement of pieces and pegs, return a set
    * of all possible next viable piece placements.   To be viable, a piece
@@ -373,6 +371,8 @@ public class TwistGame {
    * other starting placements that are not valid challenges may have more
    * than one solution.  The most obvious example is the unconstrained board,
    * which has very many solutions.
+   *
+   * Author: Hua Guo
    *
    * @param placement A valid piece placement string.
    * @return An array of strings, each 32-characters long, describing a unique

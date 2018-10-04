@@ -137,45 +137,6 @@ public class Board extends Application {
                     break;
             }
 
-            // ???????????????? rotation of the image ?????????????????
-//            if ( orientation<='3'){
-//                setRotate((orientation - '0')*90);
-//            }else if ( orientation<='7'){
-//                setScaleY(-1);
-//                setRotate((orientation - '4')*90);
-//            }
-
-            // put each piece in place by offsetting
-//            posX = offsetX(column);
-//            posY = offsetY(row);
-//            switch (piece){
-//                case 'e': case 'g':
-//                    setLayoutX(posX);
-//                    setLayoutY(posY);
-//                    break;
-//                case 'a': case 'b': case 'd': case 'f':
-//                    if (Integer.parseInt(String.valueOf(orientation))%2 == 1){
-//                        setLayoutX(posX - SQUARE_SIZE/2);
-//                        setLayoutY(posY + SQUARE_SIZE/2);break;
-//                    }else {
-//                        setLayoutX(posX);
-//                        setLayoutY(posY);break;}
-//                case 'c':
-//                    if (Integer.parseInt(String.valueOf(orientation))%2 == 1){
-//                        setLayoutX(posX - SQUARE_SIZE*1.5);
-//                        setLayoutY(posY + SQUARE_SIZE*1.5);break;
-//                    }else {
-//                        setLayoutX(posX);
-//                        setLayoutY(posY);break;}
-//                case 'h':
-//                    if (Integer.parseInt(String.valueOf(orientation))%2 == 1){
-//                        setLayoutX(posX - SQUARE_SIZE);
-//                        setLayoutY(posY + SQUARE_SIZE);break;
-//                    }else {
-//                        setLayoutX(posX);
-//                        setLayoutY(posY);break;}
-//            }
-
         }
 
         /**

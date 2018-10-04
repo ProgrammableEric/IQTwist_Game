@@ -440,21 +440,4 @@ public class Piece {
     }
 
 
-
-    // method updating the fields of the piece when it has been rotated
-    void rotatePiece (int orientation){
-        // ...
-    }
-
-    // method updating the fields of the piece when it has been moved
-    void movePiece (int keyPosition){
-        //...
-    }
-
-
-
-
-
-
-
 }
