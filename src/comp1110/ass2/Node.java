@@ -79,19 +79,6 @@ public class Node {
     }
 
 
-    // update the board information when a new piece is placed or moved on the board
-    public void placePiece (Piece piece){
-        //...
-    }
-
-
-    // update the board information when a new peg is placed or moved on the board
-    public void placePeg (Peg peg){
-        //...
-    }
-
-
-
     // get all positions of all neighbours that are on the game board
     public static int[] getNeighbours (int positionID) {
         int[] neighbours = new int[8];
