@@ -1,6 +1,7 @@
 package comp1110.ass2.gui;
 
 import comp1110.ass2.Colour;
+import comp1110.ass2.Piece;
 import comp1110.ass2.TwistGame;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -509,6 +510,16 @@ public class Board extends Application {
                 }
 
                 setPosition();
+
+                // check piece overlapping
+                String tempString = "";
+                for (int i = 0; i < pieceState.length; i ++){
+                    if (pieceState[i] != 0){
+                    tempString += String.valueOf((char) ('a' + i)) + comp1110.ass2.Piece.posEncode(pieceState[i]) + String.valueOf(pieceOrientation[i]);
+                }
+                if (!TwistGame.isPlacementStringValid(tempString)){snapToHome();}
+                }
+
             }
 
          else{ snapToHome(); }
@@ -708,12 +719,14 @@ public class Board extends Application {
 
     private void updateAndCheck() {
 
+        String tempString = "";
+
         for (int i = 0; i < pieceState.length; i ++){
             System.out.println("piece number: "+ i +" piece state:" + pieceState[i] + " piece ori: "+ pieceOrientation[i]);
         }
 
         boolean finished = TwistGame.updateAndCheck(pieceState, pieceOrientation, pegPlacementString);
-        if (!finished)return;
+        if (!finished) { return; }
         else showCompletion();
         //...
     }
