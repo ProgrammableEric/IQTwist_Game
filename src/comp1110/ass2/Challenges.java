@@ -1,35 +1,59 @@
 package comp1110.ass2;
 /**
- * Choose a new starting statement, given a challenge level.  The method should select a randomized
+ * Choose a new starting statement, given a difficulty level.  The method should select a randomized
  * statement from the n pre-defined solutions, being sure to select a statement with the correct
- * level of challenge.
+ * level of difficulty.
  *
- * So, for example, if the challenge level is 0 (starter), then this function should use a randomized
- * index between 0 and n (inclusive) to return an objective from the statement array that is
- * level 0 difficulty.  On the other hand, if the difficulty is 3 (master), then this function
+ * So, for example, if the difficulty level is 1 (starter), then this function should use a randomized
+ * index between 0 and 11 (inclusive) to return an challenge from the statement array that is
+ * level 1 difficulty.  On the other hand, if the difficulty is 4 (master), then this function
  * should use a randomized index between 36 and 47 (inclusive) to return an objective from the
- * OBJECTIVES array that is level 3 difficulty.
+ * OBJECTIVES array that is level 4 difficulty.
 
  *
  * @param difficulty The difficulty of the game (1 - starter, 2 - junior, 3 - expert, 4 - master)
- * @return An objective at the appropriate level of difficulty.
- * 
+ * @return A challenge at the appropriate level of difficulty.
+ *
  * Author: Hua Guo
  */
 
 public class Challenges {
     private String statement;   // the starting statement
-    private int Number;    // the number of original game (1 .. n)
+    private int Number;         // the number of original game (1 .. 48)
 
+
+    /**
+     * Construct the challenges.
+     * @param statement  A string represnting the starting placement
+     * @param Number The challenge number from the original board game,
+     *               a value from 1 .. 48.
+     */
     public Challenges(String statement,int Number) {
         assert Number >= 1 && Number <= 48;
         this.statement = statement;
         this.Number = Number;
     }
 
+
+    /**
+     * Choose a new challenge, given a difficulty level.  The method should select a randomized
+     * objective from the 48 pre-defined solutions, being sure to select a challenge with the correct
+     * level of difficulty.
+     *
+     * So, for example, if the difficulty is 1 (starter), then this function should use a randomized
+     * index between 0 and 11 (inclusive) to return an objective from the CHALLENGES array that is
+     * level 1 difficulty.  On the other hand, if the difficulty is 4 (master), then this function
+     * should use a randomized index between 36 and 47 (inclusive) to return an objective from the
+     * OBJECTIVES array that is level 4 difficulty.
+     * <p>
+     *
+     * @param difficulty The difficulty of the game (1 - starter, 2 - junior, 3 - expert, 4 - master)
+     * @return A challenge at the appropriate level of difficulty.
+     */
+
     public static Challenges newChallenge(int difficulty) {
         assert difficulty >= 1 && difficulty <= 4;
-        int r = 1;
+        int r = 0;
         switch (difficulty) {
             case 1:
                 r = (int) (Math.random() * 12);
@@ -65,16 +89,17 @@ public class Challenges {
         return statement;
     }
 
- /*
-   * This array defines a set of 48 pre-defined puzzle objectives.
-   *
-   * There are four categories of objective, according to four difficulty levels, with
-   * 12 objectives per difficulty level, organized within the array as follows:
-  * Starter: 0-11
-  * Junior: 12-23
-  * Expert: 24-35
-  * Master: 36-47
-  */
+    /**
+     * This array defines a set of 48 pre-defined challenges.
+     *
+     * There are four categories of challenge, according to four difficulty levels, with
+     * 12 objectives per difficulty level, organized within the array as follows:
+     * Starter: 0-11
+     * Junior: 12-23
+     * Expert: 24-35
+     * Master: 36-47
+     */
+
     static Challenges[] CHALLENGES = {
             new Challenges("f3C4i6B0j2B0j1C0k3C0l4B0l5C0",1),
          new Challenges("f3C4i6B0j2B0j1C0k3C0l4B0l5C0",2),

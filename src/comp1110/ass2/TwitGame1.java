@@ -1,20 +1,30 @@
 package comp1110.ass2;
 
-//Author: Hua Guo
+/**
+ * This class represents a game of 'TwitGame', which is based directly on Smart Games' IQ-Twist game
+ * (http://www.smartgames.eu/en/smartgames/iq-twist)
+ *
+ * The game uses the following encodings to represent game state.
+ * Author: Hua Guo
+ */
+
+
+
 
 public class TwitGame1 {
 
     Node[] nodes;
 
 
-    /* The objective represents the problem to be solved in this instance of the game. */
+    /* The challenges represents the problem to be solved in this instance of the game. */
     private Challenges challenges;
 
 
     /**
-     * Construct a game with a given challenge, and initialize the node graph.
+     * Construct a game with a given difficulty, and initialize the node graph.
      *
      * @param challenge The challenge of this game.
+     * Author: Hua Guo
      */
     TwitGame1(Challenges challenges) {
         this.challenges = challenges;
@@ -32,6 +42,10 @@ public class TwitGame1 {
         this(Challenges.newChallenge(difficulty));
     }
 
+
+    /**
+     * @return the statement for this challenge
+     */
     public String getPlacement() {
         return this.challenges.getStatement();
     }
@@ -41,6 +55,7 @@ public class TwitGame1 {
  * Initialize the node graph according to the initial challenge placement
  * This is only called once, at the beginning of the program, from the
  * constructor.
+ * Author: Hua Guo
  */
     private void initializeNodeGraph() {
         nodes = new Node[32];

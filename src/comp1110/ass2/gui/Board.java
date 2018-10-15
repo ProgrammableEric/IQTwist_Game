@@ -655,26 +655,13 @@ public class Board extends Application {
         for (int i = 0; i < pieceState.length; i ++){
             pieceState[i] = -1;
         }
-        TwitGame1 twisGame = new TwitGame1((int)difficulty.getValue());
-        makePlacement(twisGame.getPlacement());
-
-        //makePlacement(Wi);    // run placement
-        //makePlacement("i6B0j2B0j1C0k3C0l4B0l5C0");    // run placement
-
-        //Challenges c = Challenges.newChallenge(2);
-
-        //makePlacement(c.getStatement());
+        TwitGame1 twisGame = new TwitGame1((int)difficulty.getValue());  // start a new game with selected difficulty
+        makePlacement(twisGame.getPlacement());  // put starting placement on the board
         makePieces();
 
-        //resetPieces();
+
+        //makePlacement("i6B0j2B0j1C0k3C0l4B0l5C0");    // run placement
     }
-
-    /**
-     * Start a new game, resetting everything as necessary
-     */
-
-
-
 
 
     // calculate offset in Y direction
@@ -722,9 +709,6 @@ public class Board extends Application {
 
         }
     }
-
-
-
 
 
     private void updateAndCheck() {
@@ -827,9 +811,10 @@ public class Board extends Application {
     /* the difficulty slider */
     private final Slider difficulty = new Slider();
 
+
     /**
-     * Create the controls that allow the game to be restarted and the difficulty
-     * level set.
+     * Create the controls that allow the game to be start with selected difficulty
+     * and reset pieces back in their home position
      * Author: Hua Guo
      */
     private void makeControls() {
@@ -840,7 +825,7 @@ public class Board extends Application {
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                newGame();
+                newGame();      // start a new game with selected difficulty
             }
         });
         controls.getChildren().add(button);
@@ -852,16 +837,15 @@ public class Board extends Application {
         button2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                resetPieces();
+                resetPieces();      // put pieces back in their home position
             }
         });
         controls.getChildren().add(button2);
 
 
-
-        difficulty.setMin(1);
+        difficulty.setMin(1);       // set the difficulty range
         difficulty.setMax(4);
-        difficulty.setValue(2);
+        difficulty.setValue(2);     // set the initial default difficulty
         difficulty.setShowTickLabels(true);
         difficulty.setShowTickMarks(true);
         difficulty.setMajorTickUnit(1);
@@ -913,14 +897,11 @@ public class Board extends Application {
         root.getChildren().add(pegs);
         root.getChildren().add(controls);
 
-
-
         makeGameBoard();
         makeControls();
         //makeControls();
         makeCompletion();
         //menu();
-
 
         newGame();
 
