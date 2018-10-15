@@ -1,18 +1,27 @@
 package comp1110.ass2.gui;
 
+
 import comp1110.ass2.Colour;
 import comp1110.ass2.Piece;
 import comp1110.ass2.TwistGame;
+
+import comp1110.ass2.*;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -41,8 +50,15 @@ public class Board extends Application {
     private static final int MAIN_PANEL_HEIGHT = 4 * SQUARE_SIZE;
     private static final int MARGIN_X = 80;
     private static final int MARGIN_Y = 80;
+
     private static final int MAIN_PANEL_OFFSET_X = BOARD_WIDTH - 2*MARGIN_X - MAIN_PANEL_WIDTH;
     private static final int MAIN_PANEL_OFFSET_Y = BOARD_HEIGHT - 2*MARGIN_Y - MAIN_PANEL_HEIGHT;
+
+   // private static final int MAIN_PANEL_OFFSET_X = BOARD_WIDTH - MARGIN_X - MAIN_PANEL_WIDTH;
+   // private static final int MAIN_PANEL_OFFSET_Y = BOARD_HEIGHT - MARGIN_Y - MAIN_PANEL_HEIGHT;
+    private static VBox vBox;
+    private static HBox hBox;
+
 
     //    private static final int MAIN_PANEL_X = MARGIN_X + MAIN_PANEL_HEIGHT;
     private static final int PIECE_SPACE = 20;
@@ -64,6 +80,7 @@ public class Board extends Application {
     private final Group pieces = new Group();
     private final Group pegs = new Group();
     private final Group board = new Group();
+    private final Group challenge = new Group();
 
     /* message on success*/
     private final Text completionText = new Text("Well done!");
@@ -219,7 +236,7 @@ public class Board extends Application {
                 case 'f':
                     if (Integer.parseInt(String.valueOf(orientation)) % 2 == 1) {
                         setLayoutX(posX - SQUARE_SIZE / 2);
-                        setLayoutY(posY + SQUARE_SIZE / 2);
+                        setLayoutY(posY - SQUARE_SIZE / 2);
                         break;
                     } else {
                         setLayoutX(posX);
@@ -606,7 +623,7 @@ public class Board extends Application {
 
 
         /**
-         * Determine the grid-position of the origin of the tile
+         * Determine the grid-position of the origin of the piece
          * or -1 if it is off the grid, taking into account its rotation.
          */
         private void setPosition() {
@@ -786,6 +803,7 @@ public class Board extends Application {
         System.out.println("peg placement is: "+ pegPlacementString);
     }
 
+
     /**
      * Start a new game, resetting everything as necessary
      */
@@ -794,9 +812,84 @@ public class Board extends Application {
         for (int i = 0; i < pieceState.length; i ++){
             pieceState[i] = -1;
         }
-        makePlacement("c1A3d2A6e2C3f3C4g4A7h6D0i6B0j2B0j1C0k3C0l4B0l5C0");    // run placement
+        for (int i = 0; i < pieceOrientation.length; i ++){
+            pieceOrientation[i] = 0;
+        }
+        pegPlacementString = "";
+
+        TwistGame1 twistGame = new TwistGame1((int)difficulty.getValue());  // start a new game with selected difficulty
+        makePlacement(twistGame.getPlacement());  // put starting placement on the board
         makePieces();
     }
+
+    /**
+     * Put all of the pieces back in their home position
+     * Author: Hua Guo
+     */
+    private void resetPieces() {
+        pieces.toFront();
+        for (Node n : pieces.getChildren()) {
+            if (n instanceof DraggablePiece) {
+                ((DraggablePiece)n).snapToHome();
+        }}
+    }
+
+    /* the difficulty slider */
+    private final Slider difficulty = new Slider();
+
+    /**
+     * Create the controls that allow the game to be start with selected difficulty
+     * and reset pieces back in their home position
+     * Author: Hua Guo
+     */
+    private void makeControls() {
+        // start button
+        Button button = new Button("Start");
+        button.setLayoutX(30);
+        button.setLayoutY(35);
+        button.setTextFill(Color.RED);
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                newGame();          // start a new game with selected difficulty
+            }
+        });
+        controls.getChildren().add(button);
+
+        // reset button
+        Button button2 = new Button("Reset");
+        button2.setLayoutX(500);
+        button2.setLayoutY(35);
+        button2.setTextFill(Color.RED);
+        button2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                resetPieces();      // put pieces back in their home position
+            }
+        });
+        controls.getChildren().add(button2);
+
+        // difficulty level
+        difficulty.setMin(1);       // set the difficulty range
+        difficulty.setMax(4);
+        difficulty.setValue(2);     // set the initial default difficulty
+        difficulty.setShowTickLabels(true);
+        difficulty.setShowTickMarks(true);
+        difficulty.setMajorTickUnit(1);
+        difficulty.setMinorTickCount(1);
+        difficulty.setSnapToTicks(true);
+
+        difficulty.setLayoutX(140);
+        difficulty.setLayoutY(40);
+        controls.getChildren().add(difficulty);
+
+        final javafx.scene.control.Label difficultyCaption = new Label("Difficulty:");
+        difficultyCaption.setTextFill(Color.GREEN);
+        difficultyCaption.setLayoutX(140);
+        difficultyCaption.setLayoutY(20);
+        controls.getChildren().add(difficultyCaption);
+    }
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -807,12 +900,15 @@ public class Board extends Application {
         root.getChildren().add(gameBoard);
         root.getChildren().add(pieces);
         root.getChildren().add(pegs);
+        root.getChildren().add(controls);
 
         makeGameBoard();
-        //makeControls();
+        makeControls();
         makeCompletion();
+        //menu();
 
         newGame();
+
 
         primaryStage.setScene(scene);
         primaryStage.show();
