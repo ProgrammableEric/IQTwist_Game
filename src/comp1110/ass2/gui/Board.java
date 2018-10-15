@@ -45,7 +45,7 @@ public class Board extends Application {
     /*board layout*/
     private static final int BOARD_WIDTH = 933;
     private static final int BOARD_HEIGHT = 700;
-    private static final int SQUARE_SIZE = 50;
+    private static final int SQUARE_SIZE = 60;
     private static final int MAIN_PANEL_WIDTH = 8 * SQUARE_SIZE;
     private static final int MAIN_PANEL_HEIGHT = 4 * SQUARE_SIZE;
     private static final int MARGIN_X = 80;
@@ -896,7 +896,6 @@ public class Board extends Application {
         primaryStage.setTitle("TwistGame Board");
         Scene scene = new Scene(root, BOARD_WIDTH, BOARD_HEIGHT);
 
-//        root.getChildren().add(controls);
         root.getChildren().add(gameBoard);
         root.getChildren().add(pieces);
         root.getChildren().add(pegs);
@@ -905,10 +904,8 @@ public class Board extends Application {
         makeGameBoard();
         makeControls();
         makeCompletion();
-        //menu();
 
         newGame();
-
 
         primaryStage.setScene(scene);
         primaryStage.show();
