@@ -23,8 +23,7 @@ public class Peg {
         return (row - 'A')*8 + (col - '1') ;
     }
 
-
-
+    // decode peg color based on input placement string
     private static Colour colourDecode (char pieceID) {
         switch (pieceID) {
             case 'i':
