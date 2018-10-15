@@ -4,6 +4,14 @@ import java.util.*;
 public class test9 {
 
     public static void main(String[] args) {
+
+//        Challenges c = Challenges.newChallenge(1);
+//        System.out.println(c.getStatement());
+
+        TwitGame1 twisGame = new TwitGame1(1);
+        System.out.println(twisGame.getPlacement());
+
+
 //        ArrayList<String> s = new ArrayList<>();
 //        ArrayList<String> s2 = new ArrayList<>();
 //        ArrayList<String> s3 = new ArrayList<>();

@@ -237,7 +237,8 @@ public class TwistGame {
                 }
             }
             // put the peg onto the board
-          } else if (isPeg(temp)){
+          }
+          else if (isPeg(temp)){
               //System.out.println("got a peg");
               Peg newPeg = new Peg(temp);
               int id2 = newPeg.position;

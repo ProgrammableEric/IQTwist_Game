@@ -1,8 +1,6 @@
 package comp1110.ass2.gui;
 
-import comp1110.ass2.Colour;
-import comp1110.ass2.StartingState;
-import comp1110.ass2.TwistGame;
+import comp1110.ass2.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,6 +8,8 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -69,6 +69,7 @@ public class Board extends Application {
     private final Group pieces = new Group();
     private final Group pegs = new Group();
     private final Group board = new Group();
+    private final Group challenge = new Group();
 
     /* message on success*/
     private final Text completionText = new Text("Well done!");
@@ -646,16 +647,34 @@ public class Board extends Application {
         }
     }
 
-
+    /**
+     * Start a new game, resetting everything as necessary
+     */
     private void newGame() {
         hideCompletion();
         for (int i = 0; i < pieceState.length; i ++){
             pieceState[i] = -1;
         }
+        TwitGame1 twisGame = new TwitGame1((int)difficulty.getValue());
+        makePlacement(twisGame.getPlacement());
+
         //makePlacement(Wi);    // run placement
-        makePlacement("i6B0j2B0j1C0k3C0l4B0l5C0");    // run placement
+        //makePlacement("i6B0j2B0j1C0k3C0l4B0l5C0");    // run placement
+
+        //Challenges c = Challenges.newChallenge(2);
+
+        //makePlacement(c.getStatement());
         makePieces();
+
+        //resetPieces();
     }
+
+    /**
+     * Start a new game, resetting everything as necessary
+     */
+
+
+
 
 
     // calculate offset in Y direction
@@ -703,6 +722,8 @@ public class Board extends Application {
 
         }
     }
+
+
 
 
 
@@ -790,27 +811,96 @@ public class Board extends Application {
     // FIXME Task 11: Generate interesting starting placements
 
 
-    public void menu() {
-        hBox = new HBox();
-        hBox.setSpacing(15.0);
-        vBox = new VBox();
-        vBox.getChildren().add(hBox);
-        controls.getChildren().add(vBox);
-        root.getChildren().add(controls);
-        Button starter = new Button("Starter");
-        Button junior = new Button("Junior");
-        Button expert = new Button("Expert");
-        Button master = new Button("Master");
-        Button wizard = new Button("Wizard");
-        root.getChildren().addAll(starter,junior,expert,master,wizard);
-
-        starter.setOnAction(event -> makePlacement(StartingState.Starter()));
-        junior.setOnAction(event -> makePlacement(StartingState.Junior()));
-        expert.setOnAction(event -> makePlacement(StartingState.Expert()));
-        master.setOnAction(event -> makePlacement(StartingState.Master()));
-        wizard.setOnAction(event -> makePlacement(StartingState.Wizard()));
-
+    /**
+     * Put all of the pieces back in their home position
+     * Author: Hua Guo
+     */
+    private void resetPieces() {
+        pieces.toFront();
+        for (Node n : pieces.getChildren()) {
+            ((DraggablePiece) n).snapToHome();
+        }
     }
+
+
+
+    /* the difficulty slider */
+    private final Slider difficulty = new Slider();
+
+    /**
+     * Create the controls that allow the game to be restarted and the difficulty
+     * level set.
+     * Author: Hua Guo
+     */
+    private void makeControls() {
+        Button button = new Button("Start");
+        button.setLayoutX(30);
+        button.setLayoutY(35);
+        button.setTextFill(Color.RED);
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                newGame();
+            }
+        });
+        controls.getChildren().add(button);
+
+        Button button2 = new Button("Reset");
+        button2.setLayoutX(500);
+        button2.setLayoutY(35);
+        button2.setTextFill(Color.RED);
+        button2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                resetPieces();
+            }
+        });
+        controls.getChildren().add(button2);
+
+
+
+        difficulty.setMin(1);
+        difficulty.setMax(4);
+        difficulty.setValue(2);
+        difficulty.setShowTickLabels(true);
+        difficulty.setShowTickMarks(true);
+        difficulty.setMajorTickUnit(1);
+        difficulty.setMinorTickCount(1);
+        difficulty.setSnapToTicks(true);
+
+        difficulty.setLayoutX(140);
+        difficulty.setLayoutY(40);
+        controls.getChildren().add(difficulty);
+
+        final javafx.scene.control.Label difficultyCaption = new Label("Difficulty:");
+        difficultyCaption.setTextFill(Color.GREEN);
+        difficultyCaption.setLayoutX(140);
+        difficultyCaption.setLayoutY(20);
+        controls.getChildren().add(difficultyCaption);
+    }
+
+
+//    public void menu() {
+//        hBox = new HBox();
+//        hBox.setSpacing(15.0);
+//        vBox = new VBox();
+//        vBox.getChildren().add(hBox);
+//        controls.getChildren().add(vBox);
+//        root.getChildren().add(controls);
+//        Button starter = new Button("Starter");
+//        Button junior = new Button("Junior");
+//        Button expert = new Button("Expert");
+//        Button master = new Button("Master");
+//        Button wizard = new Button("Wizard");
+//        root.getChildren().addAll(starter,junior,expert,master,wizard);
+//
+//        starter.setOnAction(event -> makePlacement(StartingState.Starter()));
+//        junior.setOnAction(event -> makePlacement(StartingState.Junior()));
+//        expert.setOnAction(event -> makePlacement(StartingState.Expert()));
+//        master.setOnAction(event -> makePlacement(StartingState.Master()));
+//        wizard.setOnAction(event -> makePlacement(StartingState.Wizard()));
+//
+//    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -821,13 +911,15 @@ public class Board extends Application {
         root.getChildren().add(gameBoard);
         root.getChildren().add(pieces);
         root.getChildren().add(pegs);
+        root.getChildren().add(controls);
 
 
 
         makeGameBoard();
+        makeControls();
         //makeControls();
         makeCompletion();
-        menu();
+        //menu();
 
 
         newGame();
