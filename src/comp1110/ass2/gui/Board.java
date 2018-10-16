@@ -653,6 +653,7 @@ public class Board extends Application {
             pieceState[i] = -1;
         }
         //makePlacement(Wi);    // run placement
+        makePlacement("i6B0j2B0j1C0k3C0l4B0l5C0");    // run placement
         makePieces();
     }
 
