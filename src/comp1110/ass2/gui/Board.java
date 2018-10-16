@@ -48,14 +48,12 @@ public class Board extends Application {
     private static final int SQUARE_SIZE = 50;
     private static final int MAIN_PANEL_WIDTH = 8 * SQUARE_SIZE;
     private static final int MAIN_PANEL_HEIGHT = 4 * SQUARE_SIZE;
-    private static final int MARGIN_X = 80;
+    private static final int MARGIN_X = (BOARD_WIDTH - 13*SQUARE_SIZE - 60)/2;
     private static final int MARGIN_Y = 80;
 
-    private static final int MAIN_PANEL_OFFSET_X = BOARD_WIDTH - 2*MARGIN_X - MAIN_PANEL_WIDTH;
-    private static final int MAIN_PANEL_OFFSET_Y = BOARD_HEIGHT - 2*MARGIN_Y - MAIN_PANEL_HEIGHT;
+    private static final int MAIN_PANEL_OFFSET_X = BOARD_WIDTH - MARGIN_X - MAIN_PANEL_WIDTH;
+    private static final int MAIN_PANEL_OFFSET_Y = BOARD_HEIGHT - MARGIN_Y - MAIN_PANEL_HEIGHT;
 
-   // private static final int MAIN_PANEL_OFFSET_X = BOARD_WIDTH - MARGIN_X - MAIN_PANEL_WIDTH;
-   // private static final int MAIN_PANEL_OFFSET_Y = BOARD_HEIGHT - MARGIN_Y - MAIN_PANEL_HEIGHT;
     private static VBox vBox;
     private static HBox hBox;
 
@@ -332,7 +330,7 @@ public class Board extends Application {
                     setLayoutY(homeY);
                     break;
                 case 'b':
-                    homeX = MARGIN_X + PIECE_SPACE + 3 * SQUARE_SIZE;
+                    homeX = MARGIN_X;
                     setLayoutX(homeX);
                     homeY = MARGIN_Y;
                     setLayoutY(homeY);
@@ -344,15 +342,15 @@ public class Board extends Application {
                     setLayoutY(homeY);
                     break;
                 case 'd':
-                    homeX = MARGIN_X;
+                    homeX = MARGIN_X + 3 * PIECE_SPACE + 9 * SQUARE_SIZE;
                     setLayoutX(homeX);
-                    homeY = MARGIN_Y;
+                    homeY = MARGIN_Y + PIECE_SPACE + 2* SQUARE_SIZE;
                     setLayoutY(homeY);
                     break;
                 case 'e':
-                    homeX = MARGIN_X;
+                    homeX = MARGIN_X + 2 * PIECE_SPACE + 6 * SQUARE_SIZE;
                     setLayoutX(homeX);
-                    homeY = MARGIN_Y + 3 * PIECE_SPACE + 7 * SQUARE_SIZE;
+                    homeY = MARGIN_Y +  PIECE_SPACE + 2 * SQUARE_SIZE;
                     setLayoutY(homeY);
                     break;
                 case 'f':
@@ -362,15 +360,15 @@ public class Board extends Application {
                     setLayoutY(homeY);
                     break;
                 case 'g':
-                    homeX = MARGIN_X;
+                    homeX = MARGIN_X + PIECE_SPACE + 3*SQUARE_SIZE;
                     setLayoutX(homeX);
-                    homeY = MARGIN_Y + 2 * PIECE_SPACE + 4 * SQUARE_SIZE;
+                    homeY = MARGIN_Y +  PIECE_SPACE + 2 * SQUARE_SIZE;
                     setLayoutY(homeY);
                     break;
                 case 'h':
-                    homeX = MARGIN_X + 3 * PIECE_SPACE + 9 * SQUARE_SIZE;
+                    homeX = MARGIN_X + 1 * PIECE_SPACE + 3 * SQUARE_SIZE;
                     setLayoutX(homeX);
-                    homeY = MARGIN_Y + PIECE_SPACE + SQUARE_SIZE;
+                    homeY = MARGIN_Y ;
                     setLayoutY(homeY);
                     break;
             }
@@ -809,6 +807,8 @@ public class Board extends Application {
      */
     private void newGame() {
         hideCompletion();
+
+        // reset all information from the previous game
         for (int i = 0; i < pieceState.length; i ++){
             pieceState[i] = -1;
         }
@@ -845,8 +845,8 @@ public class Board extends Application {
     private void makeControls() {
         // start button
         Button button = new Button("Start");
-        button.setLayoutX(30);
-        button.setLayoutY(35);
+        button.setLayoutX(MARGIN_X +  SQUARE_SIZE);
+        button.setLayoutY(MAIN_PANEL_OFFSET_Y + SQUARE_SIZE);
         button.setTextFill(Color.RED);
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -858,8 +858,8 @@ public class Board extends Application {
 
         // reset button
         Button button2 = new Button("Reset");
-        button2.setLayoutX(500);
-        button2.setLayoutY(35);
+        button2.setLayoutX(MARGIN_X +  SQUARE_SIZE);
+        button2.setLayoutY(MAIN_PANEL_OFFSET_Y + 2* SQUARE_SIZE);
         button2.setTextFill(Color.RED);
         button2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -879,14 +879,14 @@ public class Board extends Application {
         difficulty.setMinorTickCount(1);
         difficulty.setSnapToTicks(true);
 
-        difficulty.setLayoutX(140);
-        difficulty.setLayoutY(40);
+        difficulty.setLayoutX(MARGIN_X + SQUARE_SIZE);
+        difficulty.setLayoutY(MAIN_PANEL_OFFSET_Y);
         controls.getChildren().add(difficulty);
 
         final javafx.scene.control.Label difficultyCaption = new Label("Difficulty:");
         difficultyCaption.setTextFill(Color.GREEN);
-        difficultyCaption.setLayoutX(140);
-        difficultyCaption.setLayoutY(20);
+        difficultyCaption.setLayoutX(MARGIN_X + SQUARE_SIZE);
+        difficultyCaption.setLayoutY(MAIN_PANEL_OFFSET_Y - 20);
         controls.getChildren().add(difficultyCaption);
     }
 
