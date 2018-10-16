@@ -4,6 +4,7 @@ import java.util.HashSet;
 
 public class testing {
     public static void main(String[] args) {
-        System.out.println(String.valueOf(3 + 1) + String.valueOf ((char)('A' + 2)));
+        String [] ans = TwistGame.getSolutions("f3C4i6B0j2B0j1C0k3C0l4B0l5C0");
+        System.out.println(ans);
     }
 }

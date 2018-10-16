@@ -8,6 +8,7 @@ import comp1110.ass2.TwistGame;
 import comp1110.ass2.*;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -19,6 +20,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -45,17 +47,15 @@ public class Board extends Application {
     /*board layout*/
     private static final int BOARD_WIDTH = 933;
     private static final int BOARD_HEIGHT = 700;
-    private static final int SQUARE_SIZE = 60;
+    private static final int SQUARE_SIZE = 55;
     private static final int MAIN_PANEL_WIDTH = 8 * SQUARE_SIZE;
     private static final int MAIN_PANEL_HEIGHT = 4 * SQUARE_SIZE;
-    private static final int MARGIN_X = 80;
+    private static final int MARGIN_X = (BOARD_WIDTH - 13*SQUARE_SIZE - 60)/2;
     private static final int MARGIN_Y = 80;
 
-    private static final int MAIN_PANEL_OFFSET_X = BOARD_WIDTH - 2*MARGIN_X - MAIN_PANEL_WIDTH;
-    private static final int MAIN_PANEL_OFFSET_Y = BOARD_HEIGHT - 2*MARGIN_Y - MAIN_PANEL_HEIGHT;
+    private static final int MAIN_PANEL_OFFSET_X = BOARD_WIDTH - MARGIN_X - MAIN_PANEL_WIDTH;
+    private static final int MAIN_PANEL_OFFSET_Y = BOARD_HEIGHT - MARGIN_Y - MAIN_PANEL_HEIGHT;
 
-   // private static final int MAIN_PANEL_OFFSET_X = BOARD_WIDTH - MARGIN_X - MAIN_PANEL_WIDTH;
-   // private static final int MAIN_PANEL_OFFSET_Y = BOARD_HEIGHT - MARGIN_Y - MAIN_PANEL_HEIGHT;
     private static VBox vBox;
     private static HBox hBox;
 
@@ -75,6 +75,7 @@ public class Board extends Application {
 
     /* node groups */
     private final Group root = new Group();
+    private final Group solution = new Group();
     private final Group gameBoard = new Group();
     private final Group controls = new Group();
     private final Group pieces = new Group();
@@ -92,6 +93,8 @@ public class Board extends Application {
     int[] pieceOrientation = new int[8];  //  denoted by integer 0 - 7
 
     String pegPlacementString = "";
+
+    String startingPlacement = "";
 
     /* the IQ-TWIST game*/
     TwistGame twistGame;
@@ -332,7 +335,7 @@ public class Board extends Application {
                     setLayoutY(homeY);
                     break;
                 case 'b':
-                    homeX = MARGIN_X + PIECE_SPACE + 3 * SQUARE_SIZE;
+                    homeX = MARGIN_X;
                     setLayoutX(homeX);
                     homeY = MARGIN_Y;
                     setLayoutY(homeY);
@@ -344,15 +347,15 @@ public class Board extends Application {
                     setLayoutY(homeY);
                     break;
                 case 'd':
-                    homeX = MARGIN_X;
+                    homeX = MARGIN_X + 3 * PIECE_SPACE + 9 * SQUARE_SIZE;
                     setLayoutX(homeX);
-                    homeY = MARGIN_Y;
+                    homeY = MARGIN_Y + PIECE_SPACE + 2* SQUARE_SIZE;
                     setLayoutY(homeY);
                     break;
                 case 'e':
-                    homeX = MARGIN_X;
+                    homeX = MARGIN_X + 2 * PIECE_SPACE + 6 * SQUARE_SIZE;
                     setLayoutX(homeX);
-                    homeY = MARGIN_Y + 3 * PIECE_SPACE + 7 * SQUARE_SIZE;
+                    homeY = MARGIN_Y +  PIECE_SPACE + 2 * SQUARE_SIZE;
                     setLayoutY(homeY);
                     break;
                 case 'f':
@@ -362,15 +365,15 @@ public class Board extends Application {
                     setLayoutY(homeY);
                     break;
                 case 'g':
-                    homeX = MARGIN_X;
+                    homeX = MARGIN_X + PIECE_SPACE + 3*SQUARE_SIZE;
                     setLayoutX(homeX);
-                    homeY = MARGIN_Y + 2 * PIECE_SPACE + 4 * SQUARE_SIZE;
+                    homeY = MARGIN_Y +  PIECE_SPACE + 2 * SQUARE_SIZE;
                     setLayoutY(homeY);
                     break;
                 case 'h':
-                    homeX = MARGIN_X + 3 * PIECE_SPACE + 9 * SQUARE_SIZE;
+                    homeX = MARGIN_X + 1 * PIECE_SPACE + 3 * SQUARE_SIZE;
                     setLayoutX(homeX);
-                    homeY = MARGIN_Y + PIECE_SPACE + SQUARE_SIZE;
+                    homeY = MARGIN_Y ;
                     setLayoutY(homeY);
                     break;
             }
@@ -757,7 +760,66 @@ public class Board extends Application {
         gameBoard.toBack();
     }
 
+    /**
+     * Set up the group that represents the solution (and make it transparent)
+     *
+     * @param solution The solution as an array of chars.
+     */
+    private void makeSolution(String solution) {
+        this.solution.getChildren().clear();
+        if (solution == null) return;
 
+        if (solution.length()/8 != 4) {
+            throw new IllegalArgumentException("Solution incorrect length: " + solution);
+        }
+        for (int i = 0; i < solution.length(); i+=4) {
+            char pieceid = solution.charAt(i);
+            char column = solution.charAt(i+1);
+            char row = solution.charAt(i+2);
+            char ori = solution.charAt(i+3);
+            Piece piece = new Piece(pieceid,column,row,ori);
+
+//            int x = (solution[i] / 4) % 3;
+//            int y = (solution[i] / 4) / 3;
+//            int rotation = solution[i] % 4;
+//
+//            tile.setLayoutX(BOARD_X + (x * SQUARE_SIZE));
+//            tile.setLayoutY(BOARD_Y + (y * SQUARE_SIZE));
+//            tile.setRotate(90 * rotation);
+
+            this.solution.getChildren().add(piece);
+        }
+        this.solution.setOpacity(0);
+    }
+
+    /**
+     * Set up event handlers for the main game
+     *
+     * @param scene The Scene used by the game.
+     */
+    private void setUpHandlers(Scene scene) {
+        /* create handlers for key press and release events */
+        scene.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.M) {
+                // toggleSoundLoop();
+                event.consume();
+            } else if (event.getCode() == KeyCode.Q) {
+                Platform.exit();
+                event.consume();
+            } else if (event.getCode() == KeyCode.SLASH) {
+                solution.setOpacity(1.0);
+                pieces.setOpacity(0);
+                event.consume();
+            }
+        });
+        scene.setOnKeyReleased(event -> {
+            if (event.getCode() == KeyCode.SLASH) {
+                solution.setOpacity(0);
+                pieces.setOpacity(1.0);
+                event.consume();
+            }
+        });
+    }
     // FIXME Task 7: Implement a basic playable Twist Game in JavaFX that only allows pieces to be placed in valid places
 
     // FIXME Task 8: Implement starting placements
@@ -809,6 +871,8 @@ public class Board extends Application {
      */
     private void newGame() {
         hideCompletion();
+
+        // reset all information from the previous game
         for (int i = 0; i < pieceState.length; i ++){
             pieceState[i] = -1;
         }
@@ -816,10 +880,18 @@ public class Board extends Application {
             pieceOrientation[i] = 0;
         }
         pegPlacementString = "";
+        startingPlacement = "";
 
         TwistGame1 twistGame = new TwistGame1((int)difficulty.getValue());  // start a new game with selected difficulty
+        startingPlacement = twistGame.getPlacement();
         makePlacement(twistGame.getPlacement());  // put starting placement on the board
         makePieces();
+        System.out.println("before computing solution");
+        System.out.println(startingPlacement);
+        String[] solu = TwistGame.getSolutions(startingPlacement);
+        System.out.println("after computing solution");
+        makeSolution(solu[1]);
+
     }
 
     /**
@@ -845,8 +917,8 @@ public class Board extends Application {
     private void makeControls() {
         // start button
         Button button = new Button("Start");
-        button.setLayoutX(30);
-        button.setLayoutY(35);
+        button.setLayoutX(MARGIN_X +  SQUARE_SIZE);
+        button.setLayoutY(MAIN_PANEL_OFFSET_Y + SQUARE_SIZE);
         button.setTextFill(Color.RED);
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -858,8 +930,8 @@ public class Board extends Application {
 
         // reset button
         Button button2 = new Button("Reset");
-        button2.setLayoutX(500);
-        button2.setLayoutY(35);
+        button2.setLayoutX(MARGIN_X +  SQUARE_SIZE);
+        button2.setLayoutY(MAIN_PANEL_OFFSET_Y + 2* SQUARE_SIZE);
         button2.setTextFill(Color.RED);
         button2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -879,14 +951,14 @@ public class Board extends Application {
         difficulty.setMinorTickCount(1);
         difficulty.setSnapToTicks(true);
 
-        difficulty.setLayoutX(140);
-        difficulty.setLayoutY(40);
+        difficulty.setLayoutX(MARGIN_X + SQUARE_SIZE);
+        difficulty.setLayoutY(MAIN_PANEL_OFFSET_Y);
         controls.getChildren().add(difficulty);
 
         final javafx.scene.control.Label difficultyCaption = new Label("Difficulty:");
         difficultyCaption.setTextFill(Color.GREEN);
-        difficultyCaption.setLayoutX(140);
-        difficultyCaption.setLayoutY(20);
+        difficultyCaption.setLayoutX(MARGIN_X + SQUARE_SIZE);
+        difficultyCaption.setLayoutY(MAIN_PANEL_OFFSET_Y - 20);
         controls.getChildren().add(difficultyCaption);
     }
 
@@ -900,7 +972,9 @@ public class Board extends Application {
         root.getChildren().add(pieces);
         root.getChildren().add(pegs);
         root.getChildren().add(controls);
+        root.getChildren().add(solution);
 
+        setUpHandlers(scene);
         makeGameBoard();
         makeControls();
         makeCompletion();

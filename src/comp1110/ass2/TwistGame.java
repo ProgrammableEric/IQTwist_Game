@@ -400,10 +400,33 @@ public class TwistGame {
   public static String[] getSolutions(String placement) {
 
       // find all solutions for this initial placement
-      String[] solu = Allsolution(placement);
+      Allsolution(placement);
+      // translate Arraylist to String[]
+      String[] solution = solutions.toArray(new String[0]);
+
+      System.out.println("here 2");
+      // eliminate duplicate solutions to get unique solution array
+      TreeSet<String> ans = new TreeSet<>();
+      for (int i = 0; i<solution.length; i++){
+
+          ans.add(solution[i]);
+
+      }
+
+      String[] uniqueSolution = new String[ans.size()];
+      for (int i = 0; i < uniqueSolution.length; i++) {
+
+          uniqueSolution[i] = ans.pollFirst();
+
+      }
+      System.out.println("here 3");
+      System.out.println("*************** solution size =" + solutions.size() + "******************");
 
       solutions.clear();
-      return solu;
+
+      System.out.println("here 4");
+
+      return uniqueSolution;
 
 
     // FIXME Task 9: determine all solutions to the game, given a particular starting placement
@@ -582,8 +605,61 @@ public class TwistGame {
      * unordered solution to the game given the starting point provided by placement.
      */
 
-    public static String[] Allsolution(String placement) {
+    public static void Allsolution(String placement) {
 
+        System.out.println("here1");
+        // check whether this solution is valid
+        if (IsSolution(placement)){
+            solutions.add(placement.substring(0,32));
+        }
+
+        // find all possible next steps and store them in a set
+        Set <String> next_step = getViablePiecePlacements(placement);
+        ArrayList<String> SolutionNextStep = new ArrayList<>();
+
+        // combine each next step piece with initial placement and store them as new placements
+        if (next_step != null){
+            for (String i: next_step){
+                SolutionNextStep.add(GetNewPlacement(placement,i));
+            }
+        } else return;
+
+        // recurse this method to get next step until there is no next step
+        for(String j: SolutionNextStep){
+            Allsolution(j);
+        }
+
+//        // translate Arraylist to String[]
+//        String[] solution = solutions.toArray(new String[0]);
+//
+//        System.out.println("here 2");
+//        // eliminate duplicate solutions to get unique solution array
+//        TreeSet<String> ans = new TreeSet<>();
+//        for (int i = 0; i<solution.length; i++){
+//
+//            ans.add(solution[i]);
+//
+//        }
+//
+//        String[] uniqueSolution = new String[ans.size()];
+//        for (int i = 0; i < uniqueSolution.length; i++) {
+//
+//            uniqueSolution[i] = ans.pollFirst();
+//
+//        }
+//        System.out.println("here 3");
+//        System.out.println("*************** solution size =" + solutions.size() + "******************");
+//        return uniqueSolution;
+
+    }
+
+
+    //
+    public static ArrayList<String>  hints = new ArrayList<>();
+
+    // computing a single solution for use in hint (task 10)
+    public static void computeHint (String placement){
+        System.out.println("here1");
         // check whether this solution is valid
         if (IsSolution(placement)){
             solutions.add(placement.substring(0,32));
@@ -602,29 +678,8 @@ public class TwistGame {
 
         // recurse this method to get next step until there is no next step
         for(String j: SolutionNextStep){
-            Allsolution(j);
+            computeHint(j);
         }
-
-        // translate Arraylist to String[]
-        String[] solution = solutions.toArray(new String[0]);
-
-        // eliminate duplicate solutions to get unique solution array
-        TreeSet<String> ans = new TreeSet<>();
-        for (int i = 0; i<solution.length; i++){
-
-            ans.add(solution[i]);
-
-        }
-
-        String[] uniqueSolution = new String[ans.size()];
-        for (int i = 0; i < uniqueSolution.length; i++) {
-
-            uniqueSolution[i] = ans.pollFirst();
-
-        }
-
-        return uniqueSolution;
-
     }
 
   }
