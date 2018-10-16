@@ -14,39 +14,38 @@ public class StartingState {
 
 
     public static String Starter() {
-        String[] scenes = {"26l27l28j29j30k31k", "2j9j10l11l12i18k", "2k4l6j10l12k14j", "12l13k20i21l", "9j13i18l19k20k25j29l", "5i13k21l29k"};
+        String[] scenes = {"h4B2l3D0l4D0j5D0j6D0k7D0k8D0","j3A0j2B0l3B0l4B0i5B0h8B7k3C0","k3A0l5A0j7A0l3B0k5B0j7B0b2C0"};
         Random i = new Random();
-        int rand = i.nextInt(6);
+        int rand = i.nextInt(3);
         return scenes[rand];
     }
 
     public static String Junior() {
-        String[] scenes = {"22j30i", "9i17l", "3i5l12l19j22k", "9k12i17l20j", "6l11k15k", "2j5i16j21l26k31l"};
+        String[] scenes = {"j7C0i7D0","i2B0l2C0","i4A0l6A0l5B0j4C0k7C0"};
         Random i = new Random();
-        int rand = i.nextInt(6);
+        int rand = i.nextInt(3);
         return scenes[rand];
     }
 
     public static String Expert() {
-        String[] scenes = {"10j12k25j29l30l", "9k11i22j28j", "4l7l18j26j29k", "0k3l21j23k26j", "10j11k18i19k", "5j9k10j"};
+        String[] scenes = {"j3B0k5B0j2D0l6D0l7D0","k2B0i4B0j7C0j5D0","l5A0l8A0j3C0j3D0k6D0"};
         Random i = new Random();
-        int rand = i.nextInt(6);
+        int rand = i.nextInt(3);
         return scenes[rand];
     }
 
     public static String Master() {
-        String[] scenes = {"15k20k21i", "5j8k14k18l21i27l", "3l9k13l19i", "6j13i14j16k20l24l", "2k5j26l28j", "3j9i14j18k26k", "4j14k21i25j", "2j7k12j18i24k"};
+        String[] scenes = {"k8B0k5C0i6C0","j6A0k1B0k7B0l3C0i6C0l4D0","l4A0k2B0l6B0i4C0"};
         Random i = new Random();
-        int rand = i.nextInt(6);
+        int rand = i.nextInt(3);
         return scenes[rand];
 
     }
 
     public static String Wizard() {
-        String[] scenes = {"l5C0"};
-        //String[] scenes = {"19j23k28k", "10j17j22l", "3k14l17l", "12j18l22i28k", "6i8k23k", "2k4l26i28j", "0l9j13l22k30k", "17l20j21k", "11l13k28i", "4i18j21l", "12k20j28j", "4k20j29i"};
+        String[] scenes = {"j4C0k8C0k5D0","j3B0j2C0l7C0","k4A0l7B0l2C0"};
         Random i = new Random();
-        int rand = i.nextInt(1);
+        int rand = i.nextInt(3);
         return scenes[rand];
     }
 
