@@ -60,7 +60,7 @@ public class Board extends Application {
 
     /* where to find media assets*/
     private static final String URI_BASE = "assets/";
-    //private static final String BASEBOARD_URI = Board.class.getResource(URI_BASE + "baseboard.png").toString();
+    private static final String WELLDONE_URI = Board.class.getResource(URI_BASE + "welldone.jpeg").toString();
 
 
     /* make for unplaced piece*/
@@ -695,14 +695,11 @@ public class Board extends Application {
      * Create the message to be displayed when the player completes the puzzle.
      */
     private void makeCompletion() {
-        completionText.setFill(Color.BLACK);
-        completionText.setEffect(dropShadow);
-        completionText.setCache(true);
-        completionText.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 80));
-        completionText.setLayoutX(MAIN_PANEL_OFFSET_X);
-        completionText.setLayoutY(MAIN_PANEL_OFFSET_Y - 100);
-        completionText.setTextAlignment(TextAlignment.CENTER);
-        completion.getChildren().add(completionText);
+
+        ImageView welldone = new ImageView();
+        welldone.setImage(new Image(WELLDONE_URI));
+
+        completion.getChildren().add(welldone);
 
         // Replay button
         Button button3 = new Button("Replay");
