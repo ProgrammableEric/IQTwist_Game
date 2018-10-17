@@ -22,8 +22,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -52,6 +50,10 @@ public class Board extends Application {
     private static final int MAIN_PANEL_HEIGHT = 4 * SQUARE_SIZE;
     private static final int MARGIN_X = (BOARD_WIDTH - 13*SQUARE_SIZE - 60)/2;
     private static final int MARGIN_Y = 80;
+    private static final int WELLDONE_WIDTH = 658;
+    private static final int WELLDONE_HEIGHT = 240;
+    private static final int BUTTON_WIDTH = 240;
+    private static final int BUTTON_HEIGHT = 180;
 
     private static final int MAIN_PANEL_OFFSET_X = BOARD_WIDTH - MARGIN_X - MAIN_PANEL_WIDTH;
     private static final int MAIN_PANEL_OFFSET_Y = BOARD_HEIGHT - MARGIN_Y - MAIN_PANEL_HEIGHT;
@@ -61,11 +63,15 @@ public class Board extends Application {
     /* where to find media assets*/
     private static final String URI_BASE = "assets/";
     private static final String WELLDONE_URI = Board.class.getResource(URI_BASE + "welldone.jpeg").toString();
-
-
-    /* make for unplaced piece*/
-    public static final char NOT_PLACED = 255;
-
+    private static final String GAMEBOARD_URI = Board.class.getResource(URI_BASE + "gameboard.jpeg").toString();
+    private static final String START_URI = Board.class.getResource(URI_BASE + "start.jpeg").toString();
+    private static final String RESET_URI = Board.class.getResource(URI_BASE + "reset.jpeg").toString();
+    private static final String REPLAY_URI = Board.class.getResource(URI_BASE + "replay.jpeg").toString();
+    private static final String BACKTOGAME_URI = Board.class.getResource(URI_BASE + "backtogame.jpeg").toString();
+    private static final String DIFFICULTY_URI = Board.class.getResource(URI_BASE + "difficulty.jpeg").toString();
+    private static final String EXIT_URI = Board.class.getResource(URI_BASE + "exit.jpeg").toString();
+    private static final String HELP_URI = Board.class.getResource(URI_BASE + "help.jpeg").toString();
+    private static final String BACKGROUND_URI = Board.class.getResource(URI_BASE + "background.png").toString();
 
     /* node groups */
     private final Group root = new Group();
@@ -76,6 +82,7 @@ public class Board extends Application {
     private final Group pegs = new Group();
     private final Group completion = new Group();
     private final Group helperPage = new Group();
+    private final Group background = new Group();
 
 
 
@@ -698,6 +705,8 @@ public class Board extends Application {
 
         ImageView welldone = new ImageView();
         welldone.setImage(new Image(WELLDONE_URI));
+        welldone.setLayoutX((BOARD_WIDTH - WELLDONE_WIDTH)/2);
+        welldone.setLayoutY(100);
 
         completion.getChildren().add(welldone);
 
@@ -758,31 +767,30 @@ public class Board extends Application {
     private void makeGameBoard() {
         gameBoard.getChildren().clear();
 
-        // baseboard as a triangle with colour GRAY
-        Rectangle background = new Rectangle(MAIN_PANEL_OFFSET_X, MAIN_PANEL_OFFSET_Y, MAIN_PANEL_WIDTH, MAIN_PANEL_HEIGHT);
-        background.setFill(Color.LIGHTGRAY);
-        gameBoard.getChildren().add(background);
+        ImageView gameboard = new ImageView();
+        gameboard.setImage(new Image(GAMEBOARD_URI));
+        gameboard.setFitHeight(4*SQUARE_SIZE);
+        gameboard.setFitWidth(8*SQUARE_SIZE);
+        gameboard.setLayoutX(MAIN_PANEL_OFFSET_X);
+        gameboard.setLayoutY(MAIN_PANEL_OFFSET_Y);
 
-        // grids
-        for (int i = 1; i < MAIN_PANEL_WIDTH/SQUARE_SIZE; i++){
-            Line line = new Line();
-            line.setStartX(MAIN_PANEL_OFFSET_X + i * SQUARE_SIZE);
-            line.setEndX(MAIN_PANEL_OFFSET_X + i * SQUARE_SIZE);
-            line.setStartY(MAIN_PANEL_OFFSET_Y);
-            line.setEndY(MAIN_PANEL_OFFSET_Y + MAIN_PANEL_HEIGHT);
-            gameBoard.getChildren().add(line);
-        }
+        gameBoard.getChildren().add(gameboard);
 
-        for (int i = 1; i < MAIN_PANEL_HEIGHT/SQUARE_SIZE; i++){
-            Line line = new Line();
-            line.setStartX(MAIN_PANEL_OFFSET_X);
-            line.setEndX(MAIN_PANEL_OFFSET_X +  MAIN_PANEL_WIDTH);
-            line.setStartY(MAIN_PANEL_OFFSET_Y + i * SQUARE_SIZE);
-            line.setEndY(MAIN_PANEL_OFFSET_Y + i * SQUARE_SIZE);
-            gameBoard.getChildren().add(line);
-        }
+    }
 
-        gameBoard.toBack();
+    private void makeBackground (){
+
+        background.getChildren().clear();
+
+        ImageView Background = new ImageView();
+        Background.setImage(new Image(BACKGROUND_URI));
+        Background.setFitHeight(BOARD_HEIGHT);
+        Background.setFitWidth(BOARD_WIDTH);
+
+        background.getChildren().add(Background);
+
+        background.toBack();
+
     }
 
     /**
@@ -929,9 +937,6 @@ public class Board extends Application {
         helperPage.setOpacity(0);
     }
 
-
-
-
     /**
      * Start a new game, resetting everything as necessary
      */
@@ -981,10 +986,19 @@ public class Board extends Application {
      * Author: Hua Guo
      */
     private void makeControls() {
+        controls.getChildren().clear();
+
+        // picture for start button
+        ImageView start = new ImageView();
+        start.setImage(new Image(START_URI));
+        start.setFitHeight(BUTTON_HEIGHT);
+        start.setFitWidth(BUTTON_WIDTH);
+        start.setLayoutX(MARGIN_X +  SQUARE_SIZE);
+        start.setLayoutY(MAIN_PANEL_OFFSET_Y + SQUARE_SIZE);
+        controls.getChildren().add(start);
+
         // start button
         Button button = new Button("Start");
-//        button.setScaleX(1.5);
-//        button.setScaleY(1.5);
         button.setLayoutX(MARGIN_X +  SQUARE_SIZE);
         button.setLayoutY(MAIN_PANEL_OFFSET_Y + SQUARE_SIZE);
         button.setScaleX(1.5);
@@ -996,6 +1010,7 @@ public class Board extends Application {
                 newGame();          // start a new game with selected difficulty
             }
         });
+        button.setOpacity(0);
         controls.getChildren().add(button);
 
         // reset button
@@ -1067,8 +1082,10 @@ public class Board extends Application {
         root.getChildren().add(solution);
         root.getChildren().add(helperPage);
         root.getChildren().add(completion);
+        root.getChildren().add(background);
 
         setUpHandlers(scene);
+        makeBackground();
         makeGameBoard();
         makeControls();
         makeCompletion();
