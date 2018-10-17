@@ -59,19 +59,20 @@ public class Board extends Application {
     private static final int MAIN_PANEL_OFFSET_Y = BOARD_HEIGHT - MARGIN_Y - MAIN_PANEL_HEIGHT;
     private static final int PIECE_SPACE = 20;
 
-
     /* where to find media assets*/
     private static final String URI_BASE = "assets/";
     private static final String WELLDONE_URI = Board.class.getResource(URI_BASE + "welldone.jpeg").toString();
     private static final String GAMEBOARD_URI = Board.class.getResource(URI_BASE + "gameboard.jpeg").toString();
-    private static final String START_URI = Board.class.getResource(URI_BASE + "start.jpeg").toString();
-    private static final String RESET_URI = Board.class.getResource(URI_BASE + "reset.jpeg").toString();
-    private static final String REPLAY_URI = Board.class.getResource(URI_BASE + "replay.jpeg").toString();
-    private static final String BACKTOGAME_URI = Board.class.getResource(URI_BASE + "backtogame.jpeg").toString();
-    private static final String DIFFICULTY_URI = Board.class.getResource(URI_BASE + "difficulty.jpeg").toString();
-    private static final String EXIT_URI = Board.class.getResource(URI_BASE + "exit.jpeg").toString();
-    private static final String HELP_URI = Board.class.getResource(URI_BASE + "help.jpeg").toString();
+    private static final String START_URI = Board.class.getResource(URI_BASE + "start.png").toString();
+    private static final String RESET_URI = Board.class.getResource(URI_BASE + "reset.png").toString();
+    private static final String REPLAY_URI = Board.class.getResource(URI_BASE + "replay.png").toString();
+    private static final String BACKTOGAME_URI = Board.class.getResource(URI_BASE + "backtogame.png").toString();
+    private static final String DIFFICULTY_URI = Board.class.getResource(URI_BASE + "difficulty.png").toString();
+    private static final String EXIT_URI = Board.class.getResource(URI_BASE + "exit.png").toString();
+    private static final String HELP_URI = Board.class.getResource(URI_BASE + "help.png").toString();
     private static final String BACKGROUND_URI = Board.class.getResource(URI_BASE + "background.png").toString();
+
+
 
     /* node groups */
     private final Group root = new Group();
