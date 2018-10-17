@@ -104,9 +104,9 @@ public class Challenges {
          new Challenges("h8B7i5B0j3A0j2B0k3C0l3B0l4B0",2),
          new Challenges("b2C0j7A0j7B0k3A0k5B0l3B0l5A0",3),
 
-         new Challenges("j3B0j2D0k5B0l6D0l7D0",4),
-         new Challenges("i4B0j7C0j5D0k2B0",5),
-         new Challenges("j3C0j3D0k6D0l5A0l8A0",6),
+         new Challenges("i6D0j3A0j1B0k3C0k8C0",4),
+         new Challenges("i4B0j7C0j7D0k3D0",5),
+         new Challenges("j3C0j3D0k7B0k5C0l1A0l2A0",6),
 
          new Challenges("i6C0k8B0k5C0",7),
          new Challenges("i6C0j6A0k1B0k7B0l3C0l4D0",8),
@@ -123,9 +123,9 @@ public class Challenges {
             case 1: return "a1B5b7A1c4A0d4C0e7C1f1A0g2B7h4B2";
             case 2: return "a5C4b5A7c1A2d1B3e2C4f6A0g3B5h8B7";
             case 3: return "a1B5b2C0c5D0d7A7e5A1f1A0g3A1h5C0";
-            case 4: return "";
-            case 5: return "";
-            case 6: return "";
+            case 4: return "a4C2b6C0c1A1d2A3e2C4f7A1g4A0h5A2";
+            case 5: return "a1B3b3A6c5D2d7A1e2C5f3C0g5A1h1A0";
+            case 6: return "a1B5b5A6c8A1d3B1e5C2f6B7g1A5h3A0";
             default: return "";
 
 

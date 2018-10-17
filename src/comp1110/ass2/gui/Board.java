@@ -55,12 +55,6 @@ public class Board extends Application {
 
     private static final int MAIN_PANEL_OFFSET_X = BOARD_WIDTH - MARGIN_X - MAIN_PANEL_WIDTH;
     private static final int MAIN_PANEL_OFFSET_Y = BOARD_HEIGHT - MARGIN_Y - MAIN_PANEL_HEIGHT;
-
-    private static VBox vBox;
-    private static HBox hBox;
-
-
-    //    private static final int MAIN_PANEL_X = MARGIN_X + MAIN_PANEL_HEIGHT;
     private static final int PIECE_SPACE = 20;
 
 
@@ -80,10 +74,9 @@ public class Board extends Application {
     private final Group controls = new Group();
     private final Group pieces = new Group();
     private final Group pegs = new Group();
-    private final Group board = new Group();
     private final Group completion = new Group();
     private final Group helperPage = new Group();
-    private final Group challenge = new Group();
+
 
 
     private final Text helperText = new Text("Helper");
@@ -93,16 +86,11 @@ public class Board extends Application {
 
     /* the state of the pieces */
     int[] pieceState = new int[8];        // state of each piece, if not on the board, -1, if on the board, it stores the
-                                         // key pos index of the piece, which is an integer from 0 - 31.
+                                          // key pos index of the piece, which is an integer from 0 - 31.
     /* the orientation of the pieces */
     int[] pieceOrientation = new int[8];  //  denoted by integer 0 - 7
 
-    String pegPlacementString = "";
-
-    String startingPlacement = "";
-
-    /* the IQ-TWIST game*/
-    TwistGame twistGame;
+    private String pegPlacementString = "";
 
     /* Define a drop shadow effect that we will apply to tiles */
     private static DropShadow dropShadow;
@@ -755,7 +743,6 @@ public class Board extends Application {
         completion.toFront();
         completion.setOpacity(1);
     }
-
     /**
      * Hide the completion message
      */
@@ -962,16 +949,16 @@ public class Board extends Application {
             pieceOrientation[i] = 0;
         }
         pegPlacementString = "";
-        startingPlacement = "";
+        String startingPlacement = "";
 
-        TwistGame1 twistGame = new TwistGame1((int)difficulty.getValue());  // start a new game with selected difficulty
-        startingPlacement = twistGame.getPlacement();
-        makePlacement(twistGame.getPlacement());  // put starting placement on the board
+        Challenges newChallenge =  Challenges.newChallenge((int)difficulty.getValue());
+
+        startingPlacement = newChallenge.getStatement();
+        makePlacement(startingPlacement);  // put starting placement on the board
         makePieces();
-        System.out.println("before computing solution");
-        System.out.println(startingPlacement);
-        String solu = twistGame.challenges.getSolution();
-        System.out.println("after computing solution");
+
+        String solu = newChallenge.getSolution();
+
         makeSolution(solu);
 
     }
@@ -999,8 +986,12 @@ public class Board extends Application {
     private void makeControls() {
         // start button
         Button button = new Button("Start");
+//        button.setScaleX(1.5);
+//        button.setScaleY(1.5);
         button.setLayoutX(MARGIN_X +  SQUARE_SIZE);
         button.setLayoutY(MAIN_PANEL_OFFSET_Y + SQUARE_SIZE);
+        button.setScaleX(1.5);
+        button.setScaleY(1.5);
         button.setTextFill(Color.RED);
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -1012,8 +1003,12 @@ public class Board extends Application {
 
         // reset button
         Button button2 = new Button("Reset");
+//        button2.setScaleX(1.5);
+//        button2.setScaleY(1.5);
         button2.setLayoutX(MARGIN_X +  SQUARE_SIZE);
         button2.setLayoutY(MAIN_PANEL_OFFSET_Y + 2* SQUARE_SIZE);
+        button2.setScaleX(1.5);
+        button2.setScaleY(1.5);
         button2.setTextFill(Color.RED);
         button2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -1023,10 +1018,13 @@ public class Board extends Application {
         });
         controls.getChildren().add(button2);
 
-        // reset button
+        // Helper button
         Button button5 = new Button("Helper");
+
         button5.setLayoutX(MARGIN_X +  SQUARE_SIZE);
         button5.setLayoutY(MAIN_PANEL_OFFSET_Y + 3 * SQUARE_SIZE);
+        button5.setScaleX(1.5);
+        button5.setScaleY(1.5);
         button5.setTextFill(Color.RED);
         button5.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -1035,8 +1033,6 @@ public class Board extends Application {
             }
         });
         controls.getChildren().add(button5);
-
-
 
         // difficulty level
         difficulty.setMin(1);       // set the difficulty range
@@ -1048,6 +1044,8 @@ public class Board extends Application {
         difficulty.setMinorTickCount(1);
         difficulty.setSnapToTicks(true);
 
+        difficulty.setScaleX(1.2);
+        difficulty.setScaleY(1.2);
         difficulty.setLayoutX(MARGIN_X + SQUARE_SIZE);
         difficulty.setLayoutY(MAIN_PANEL_OFFSET_Y);
         controls.getChildren().add(difficulty);
