@@ -81,7 +81,12 @@ public class Board extends Application {
     private final Group pieces = new Group();
     private final Group pegs = new Group();
     private final Group board = new Group();
+    private final Group completion = new Group();
+    private final Group helperPage = new Group();
     private final Group challenge = new Group();
+
+
+    private final Text helperText = new Text("Helper");
 
     /* message on success*/
     private final Text completionText = new Text("Well done!");
@@ -709,22 +714,58 @@ public class Board extends Application {
         completionText.setLayoutX(MAIN_PANEL_OFFSET_X);
         completionText.setLayoutY(MAIN_PANEL_OFFSET_Y - 100);
         completionText.setTextAlignment(TextAlignment.CENTER);
-        root.getChildren().add(completionText);
+        completion.getChildren().add(completionText);
+
+        // Replay button
+        Button button3 = new Button("Replay");
+        button3.setLayoutX(MARGIN_X +  SQUARE_SIZE);
+        button3.setLayoutY(MAIN_PANEL_OFFSET_Y + SQUARE_SIZE);
+        button3.setTextFill(Color.RED);
+        button3.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                newGame();          // start a new game with selected difficulty
+            }
+        });
+        completion.getChildren().add(button3);
+
+        // start button
+        Button button4 = new Button("Exit");
+        button4.setLayoutX(MARGIN_X +  SQUARE_SIZE + 200);
+        button4.setLayoutY(MAIN_PANEL_OFFSET_Y + SQUARE_SIZE);
+        button4.setTextFill(Color.RED);
+        button4.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                Platform.exit();         // end the game
+            }
+        });
+        completion.getChildren().add(button4);
+
+
     }
     /**
      * Show the completion message
      */
     private void showCompletion() {
-        completionText.toFront();
-        completionText.setOpacity(1);
+        gameBoard.setOpacity(0);
+        pieces.setOpacity(0);
+        pegs.setOpacity(0);
+        controls.setOpacity(0);
+        completion.toFront();
+        completion.setOpacity(1);
     }
 
     /**
      * Hide the completion message
      */
     private void hideCompletion() {
-        completionText.toBack();
-        completionText.setOpacity(0);
+        gameBoard.setOpacity(1);
+        pieces.setOpacity(1);
+        pegs.setOpacity(1);
+        controls.setOpacity(1);
+        completion.toBack();
+        completion.setOpacity(0);
     }
 
     /**
@@ -778,14 +819,6 @@ public class Board extends Application {
             char row = solution.charAt(i+2);
             char ori = solution.charAt(i+3);
             Piece piece = new Piece(pieceid,column,row,ori);
-
-//            int x = (solution[i] / 4) % 3;
-//            int y = (solution[i] / 4) / 3;
-//            int rotation = solution[i] % 4;
-//
-//            tile.setLayoutX(BOARD_X + (x * SQUARE_SIZE));
-//            tile.setLayoutY(BOARD_Y + (y * SQUARE_SIZE));
-//            tile.setRotate(90 * rotation);
 
             this.solution.getChildren().add(piece);
         }
@@ -865,6 +898,55 @@ public class Board extends Application {
         System.out.println("peg placement is: "+ pegPlacementString);
     }
 
+    private void makeHelperPage (){
+
+        helperPage.setOpacity(0);
+
+        helperText.setFill(Color.BLACK);
+        helperText.setEffect(dropShadow);
+        helperText.setCache(true);
+        helperText.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 80));
+        helperText.setLayoutX(MAIN_PANEL_OFFSET_X);
+        helperText.setLayoutY(MAIN_PANEL_OFFSET_Y - 100);
+        helperText.setTextAlignment(TextAlignment.CENTER);
+        helperPage.getChildren().add(helperText);
+
+        // reset button
+        Button button6 = new Button("Back to Game");
+        button6.setLayoutX(MARGIN_X +  SQUARE_SIZE);
+        button6.setLayoutY(MAIN_PANEL_OFFSET_Y + 2* SQUARE_SIZE);
+        button6.setTextFill(Color.RED);
+        button6.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                hideHelperPage();
+
+            }
+        });
+        helperPage.getChildren().add(button6);
+
+    }
+
+    private void showHelperPage(){
+        gameBoard.setOpacity(0);
+        pieces.setOpacity(0);
+        pegs.setOpacity(0);
+        controls.setOpacity(0);
+        helperPage.toFront();
+        helperPage.setOpacity(1);
+    }
+
+    private void hideHelperPage(){
+        gameBoard.setOpacity(1);
+        pieces.setOpacity(1);
+        pegs.setOpacity(1);
+        controls.setOpacity(1);
+        helperPage.toFront();
+        helperPage.setOpacity(0);
+    }
+
+
+
 
     /**
      * Start a new game, resetting everything as necessary
@@ -941,6 +1023,21 @@ public class Board extends Application {
         });
         controls.getChildren().add(button2);
 
+        // reset button
+        Button button5 = new Button("Helper");
+        button5.setLayoutX(MARGIN_X +  SQUARE_SIZE);
+        button5.setLayoutY(MAIN_PANEL_OFFSET_Y + 3 * SQUARE_SIZE);
+        button5.setTextFill(Color.RED);
+        button5.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                showHelperPage();      // put pieces back in their home position
+            }
+        });
+        controls.getChildren().add(button5);
+
+
+
         // difficulty level
         difficulty.setMin(1);       // set the difficulty range
         difficulty.setMax(4);
@@ -973,11 +1070,14 @@ public class Board extends Application {
         root.getChildren().add(pegs);
         root.getChildren().add(controls);
         root.getChildren().add(solution);
+        root.getChildren().add(helperPage);
+        root.getChildren().add(completion);
 
         setUpHandlers(scene);
         makeGameBoard();
         makeControls();
         makeCompletion();
+        makeHelperPage();
 
         newGame();
 
