@@ -299,6 +299,7 @@ public class TwistGame {
 
           String temp = placement.substring(j*4,(j+1)*4);
           if (isPiece(temp)){
+
               pieceIDs.remove(String.valueOf(temp.charAt(0)));
           }
     }
@@ -312,12 +313,17 @@ public class TwistGame {
 
                     String putPiece = k + col + row + ori;
 
+                    //System.out.println(putPiece);
+
                     // combine the selected piece into the original piece placement string
 
                     temp2 = GetNewPlacement(placement,putPiece);
 
+                    //System.out.println(temp2);
+
                     // check symmetry
                     if (isPlacementStringValid(temp2)) {
+
                         switch (putPiece.charAt(0)){
 
                             case 'a': case 'd': case 'g':
@@ -401,6 +407,7 @@ public class TwistGame {
 
       // find all solutions for this initial placement
       Allsolution(placement);
+
       // translate Arraylist to String[]
       String[] solution = solutions.toArray(new String[0]);
 
@@ -613,10 +620,11 @@ public class TwistGame {
 
         // combine each next step piece with initial placement and store them as new placements
         if (next_step != null){
+
             for (String i: next_step){
                 SolutionNextStep.add(GetNewPlacement(placement,i));
             }
-        } else return;
+        }
 
         // recurse this method to get next step until there is no next step
         for(String j: SolutionNextStep){
@@ -647,6 +655,8 @@ public class TwistGame {
 
     }
 
+
+
     // storing all possible solutions used in giving hint
     public static ArrayList<String>  hints = new ArrayList<>();
 
@@ -659,7 +669,6 @@ public class TwistGame {
                 );
 
         System.out.println("here 3");
-        System.out.println(hints);
         String ans = "";
         for (String ss:hints){ans += ss;}
 
@@ -673,6 +682,7 @@ public class TwistGame {
         System.out.println("here1");
         // check whether this solution is valid
         if (IsSolution(placement)){
+            System.out.println("here 2");
             hints.add(placement.substring(0,32));
         }
 

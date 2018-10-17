@@ -11,7 +11,7 @@ package comp1110.ass2;
  * OBJECTIVES array that is level 4 difficulty.
 
  *
- * @param difficulty The difficulty of the game (1 - starter, 2 - junior, 3 - expert, 4 - master)
+ *  The difficulty of the game (1 - starter, 2 - junior, 3 - expert, 4 - master)
  * @return A challenge at the appropriate level of difficulty.
  *
  * Author: Hua Guo
@@ -55,18 +55,18 @@ public class Challenges {
         int r = 0;
         switch (difficulty) {
             case 1:
-                r = (int) (Math.random() * 12);
+                r = (int) (Math.random() * 3);
                 break;
             case 2:
-                r = (int) (Math.random() * 12 + 12);
+                r = (int) (Math.random() * 3 + 3);
                 break;
 
             case 3:
-                r = (int) (Math.random() * 12 + 24);
+                r = (int) (Math.random() * 3 + 6);
                 break;
 
             case 4:
-                r = (int) (Math.random() * 12 + 36);
+                r = (int) (Math.random() * 3 + 9);
                 break;
         }
 
@@ -100,54 +100,37 @@ public class Challenges {
      */
 
     static Challenges[] CHALLENGES = {
-         new Challenges("f3C4i6B0j2B0j1C0k3C0l4B0l5C0",1),
-         new Challenges("f3C4i6B0j2B0j1C0k3C0l4B0l5C0",2),
-         new Challenges("f3C4i6B0j2B0j1C0k3C0l4B0l5C0",3),
-         new Challenges("f3C4i6B0j2B0j1C0k3C0l4B0l5C0",4),
-         new Challenges("f3C4i6B0j2B0j1C0k3C0l4B0l5C0",5),
-         new Challenges("f3C4i6B0j2B0j1C0k3C0l4B0l5C0",6),
-         new Challenges("f3C4i6B0j2B0j1C0k3C0l4B0l5C0",7),
-         new Challenges("f3C4i6B0j2B0j1C0k3C0l4B0l5C0",8),
-         new Challenges("f3C4i6B0j2B0j1C0k3C0l4B0l5C0",9),
-         new Challenges("f3C4i6B0j2B0j1C0k3C0l4B0l5C0",10),
-         new Challenges("f3C4i6B0j2B0j1C0k3C0l4B0l5C0",11),
-         new Challenges("f3C4i6B0j2B0j1C0k3C0l4B0l5C0",12),
-         new Challenges("i6B0j2B0j1C0k3C0l4B0l5C0",13),
-         new Challenges("i6B0j2B0j1C0k3C0l4B0l5C0",14),
-         new Challenges("i6B0j2B0j1C0k3C0l4B0l5C0",15),
-         new Challenges("i6B0j2B0j1C0k3C0l4B0l5C0",16),
-         new Challenges("i6B0j2B0j1C0k3C0l4B0l5C0",17),
-         new Challenges("i6B0j2B0j1C0k3C0l4B0l5C0",18),
-         new Challenges("i6B0j2B0j1C0k3C0l4B0l5C0",19),
-         new Challenges("i6B0j2B0j1C0k3C0l4B0l5C0",20),
-         new Challenges("i6B0j2B0j1C0k3C0l4B0l5C0",21),
-         new Challenges("i6B0j2B0j1C0k3C0l4B0l5C0",22),
-         new Challenges("i6B0j2B0j1C0k3C0l4B0l5C0",23),
-         new Challenges("i6B0j2B0j1C0k3C0l4B0l5C0",24),
-         new Challenges("j2B0j1C0k3C0l4B0l5C0",25),
-         new Challenges("j2B0j1C0k3C0l4B0l5C0",26),
-         new Challenges("j2B0j1C0k3C0l4B0l5C0",27),
-         new Challenges("j2B0j1C0k3C0l4B0l5C0",28),
-         new Challenges("j2B0j1C0k3C0l4B0l5C0",29),
-         new Challenges("j2B0j1C0k3C0l4B0l5C0",30),
-         new Challenges("j2B0j1C0k3C0l4B0l5C0",31),
-         new Challenges("j2B0j1C0k3C0l4B0l5C0",32),
-         new Challenges("j2B0j1C0k3C0l4B0l5C0",33),
-         new Challenges("j2B0j1C0k3C0l4B0l5C0",34),
-         new Challenges("j2B0j1C0k3C0l4B0l5C0",35),
-         new Challenges("j2B0j1C0k3C0l4B0l5C0",36),
-         new Challenges("j1C0k3C0l4B0l5C0",37),
-         new Challenges("j1C0k3C0l4B0l5C0",38),
-         new Challenges("j1C0k3C0l4B0l5C0",39),
-         new Challenges("j1C0k3C0l4B0l5C0",40),
-         new Challenges("j1C0k3C0l4B0l5C0",41),
-         new Challenges("j1C0k3C0l4B0l5C0",42),
-         new Challenges("j1C0k3C0l4B0l5C0",43),
-         new Challenges("j1C0k3C0l4B0l5C0",44),
-         new Challenges("j1C0k3C0l4B0l5C0",45),
-         new Challenges("j1C0k3C0l4B0l5C0",46),
-         new Challenges("j1C0k3C0l4B0l5C0",47),
-         new Challenges("j1C0k3C0l4B0l5C0",48),
+         new Challenges("h4B2j5D0j6D0k7D0k8D0l3D0l4D0",1),
+         new Challenges("h8B7i5B0j3A0j2B0k3C0l3B0l4B0",2),
+         new Challenges("b2C0j7A0j7B0k3A0k5B0l3B0l5A0",3),
+
+         new Challenges("j3B0j2D0k5B0l6D0l7D0",4),
+         new Challenges("i4B0j7C0j5D0k2B0",5),
+         new Challenges("j3C0j3D0k6D0l5A0l8A0",6),
+
+         new Challenges("i6C0k8B0k5C0",7),
+         new Challenges("i6C0j6A0k1B0k7B0l3C0l4D0",8),
+         new Challenges("i4C0k2B0l4A0l6B0",9),
+
+         new Challenges("k8B0k5C0i6C0",10),
+         new Challenges("j6A0k1B0k7B0l3C0i6C0l4D0",11),
+         new Challenges("l4A0k2B0l6B0i4C0",12),
+
  };
+
+    public  String getSolution (){
+        switch (this.Number) {
+            case 1: return "a1B5b7A1c4A0d4C0e7C1f1A0g2B7h4B2";
+            case 2: return "a5C4b5A7c1A2d1B3e2C4f6A0g3B5h8B7";
+            case 3: return "a1B5b2C0c5D0d7A7e5A1f1A0g3A1h5C0";
+            case 4: return "";
+            case 5: return "";
+            case 6: return "";
+            default: return "";
+
+
+        }
+
+    }
 
 }

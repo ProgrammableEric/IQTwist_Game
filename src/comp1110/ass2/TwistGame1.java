@@ -15,7 +15,7 @@ public class TwistGame1 {
     Node[] nodes;
 
     /* The challenges represents the problem to be solved in this instance of the game. */
-    private Challenges challenges;
+    public Challenges challenges;
 
     /**
      * Construct a game with a given difficulty, and initialize the node graph.

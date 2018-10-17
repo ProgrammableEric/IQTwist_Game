@@ -239,7 +239,7 @@ public class Board extends Application {
                 case 'f':
                     if (Integer.parseInt(String.valueOf(orientation)) % 2 == 1) {
                         setLayoutX(posX - SQUARE_SIZE / 2);
-                        setLayoutY(posY - SQUARE_SIZE / 2);
+                        setLayoutY(posY + SQUARE_SIZE / 2);
                         break;
                     } else {
                         setLayoutX(posX);
@@ -769,7 +769,7 @@ public class Board extends Application {
         this.solution.getChildren().clear();
         if (solution == null) return;
 
-        if (solution.length()/8 != 4) {
+        if (solution.length()%4 != 0) {
             throw new IllegalArgumentException("Solution incorrect length: " + solution);
         }
         for (int i = 0; i < solution.length(); i+=4) {
@@ -886,11 +886,11 @@ public class Board extends Application {
         startingPlacement = twistGame.getPlacement();
         makePlacement(twistGame.getPlacement());  // put starting placement on the board
         makePieces();
-//        System.out.println("before computing solution");
-//        System.out.println(startingPlacement);
-//        String solu = TwistGame.getHint(startingPlacement);
-//        System.out.println("after computing solution");
-//        makeSolution(solu);
+        System.out.println("before computing solution");
+        System.out.println(startingPlacement);
+        String solu = twistGame.challenges.getSolution();
+        System.out.println("after computing solution");
+        makeSolution(solu);
 
     }
 
@@ -972,9 +972,9 @@ public class Board extends Application {
         root.getChildren().add(pieces);
         root.getChildren().add(pegs);
         root.getChildren().add(controls);
-        //root.getChildren().add(solution);
+        root.getChildren().add(solution);
 
-        //setUpHandlers(scene);
+        setUpHandlers(scene);
         makeGameBoard();
         makeControls();
         makeCompletion();
