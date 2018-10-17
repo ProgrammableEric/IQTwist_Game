@@ -886,11 +886,11 @@ public class Board extends Application {
         startingPlacement = twistGame.getPlacement();
         makePlacement(twistGame.getPlacement());  // put starting placement on the board
         makePieces();
-        System.out.println("before computing solution");
-        System.out.println(startingPlacement);
-        String[] solu = TwistGame.getSolutions(startingPlacement);
-        System.out.println("after computing solution");
-        makeSolution(solu[1]);
+//        System.out.println("before computing solution");
+//        System.out.println(startingPlacement);
+//        String solu = TwistGame.getHint(startingPlacement);
+//        System.out.println("after computing solution");
+//        makeSolution(solu);
 
     }
 
@@ -972,9 +972,9 @@ public class Board extends Application {
         root.getChildren().add(pieces);
         root.getChildren().add(pegs);
         root.getChildren().add(controls);
-        root.getChildren().add(solution);
+        //root.getChildren().add(solution);
 
-        setUpHandlers(scene);
+        //setUpHandlers(scene);
         makeGameBoard();
         makeControls();
         makeCompletion();

@@ -404,7 +404,6 @@ public class TwistGame {
       // translate Arraylist to String[]
       String[] solution = solutions.toArray(new String[0]);
 
-      System.out.println("here 2");
       // eliminate duplicate solutions to get unique solution array
       TreeSet<String> ans = new TreeSet<>();
       for (int i = 0; i<solution.length; i++){
@@ -419,12 +418,8 @@ public class TwistGame {
           uniqueSolution[i] = ans.pollFirst();
 
       }
-      System.out.println("here 3");
-      System.out.println("*************** solution size =" + solutions.size() + "******************");
 
       solutions.clear();
-
-      System.out.println("here 4");
 
       return uniqueSolution;
 
@@ -607,7 +602,6 @@ public class TwistGame {
 
     public static void Allsolution(String placement) {
 
-        System.out.println("here1");
         // check whether this solution is valid
         if (IsSolution(placement)){
             solutions.add(placement.substring(0,32));
@@ -653,16 +647,33 @@ public class TwistGame {
 
     }
 
-
-    //
+    // storing all possible solutions used in giving hint
     public static ArrayList<String>  hints = new ArrayList<>();
+
+    public static String getHint (String placement){
+
+        do {
+            computeHint(placement);
+        }while (
+                hints.size() == 0
+                );
+
+        System.out.println("here 3");
+        System.out.println(hints);
+        String ans = "";
+        for (String ss:hints){ans += ss;}
+
+        hints.clear();
+
+        return ans;
+    }
 
     // computing a single solution for use in hint (task 10)
     public static void computeHint (String placement){
         System.out.println("here1");
         // check whether this solution is valid
         if (IsSolution(placement)){
-            solutions.add(placement.substring(0,32));
+            hints.add(placement.substring(0,32));
         }
 
         // find all possible next steps and store them in a set
@@ -680,6 +691,9 @@ public class TwistGame {
         for(String j: SolutionNextStep){
             computeHint(j);
         }
+
+        System.out.println("here 2");
+        System.out.println("*************** hint size =" + hints.size() + "******************");
     }
 
   }
