@@ -770,10 +770,10 @@ public class Board extends Application {
 
         ImageView gameboard = new ImageView();
         gameboard.setImage(new Image(GAMEBOARD_URI));
-        gameboard.setFitHeight(4*SQUARE_SIZE);
-        gameboard.setFitWidth(8*SQUARE_SIZE);
-        gameboard.setLayoutX(MAIN_PANEL_OFFSET_X);
-        gameboard.setLayoutY(MAIN_PANEL_OFFSET_Y);
+        gameboard.setFitHeight(4*SQUARE_SIZE + 10);
+        gameboard.setFitWidth(8*SQUARE_SIZE + 15);
+        gameboard.setLayoutX(MAIN_PANEL_OFFSET_X - 7.5);
+        gameboard.setLayoutY(MAIN_PANEL_OFFSET_Y - 5);
 
         gameBoard.getChildren().add(gameboard);
 
