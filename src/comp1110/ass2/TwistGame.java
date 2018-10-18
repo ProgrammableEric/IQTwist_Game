@@ -631,27 +631,6 @@ public class TwistGame {
             Allsolution(j);
         }
 
-//        // translate Arraylist to String[]
-//        String[] solution = solutions.toArray(new String[0]);
-//
-//        System.out.println("here 2");
-//        // eliminate duplicate solutions to get unique solution array
-//        TreeSet<String> ans = new TreeSet<>();
-//        for (int i = 0; i<solution.length; i++){
-//
-//            ans.add(solution[i]);
-//
-//        }
-//
-//        String[] uniqueSolution = new String[ans.size()];
-//        for (int i = 0; i < uniqueSolution.length; i++) {
-//
-//            uniqueSolution[i] = ans.pollFirst();
-//
-//        }
-//        System.out.println("here 3");
-//        System.out.println("*************** solution size =" + solutions.size() + "******************");
-//        return uniqueSolution;
 
     }
 
@@ -702,7 +681,6 @@ public class TwistGame {
             computeHint(j);
         }
 
-        System.out.println("here 2");
         System.out.println("*************** hint size =" + hints.size() + "******************");
     }
 
