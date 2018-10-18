@@ -891,6 +891,10 @@ public class Board extends Application {
         System.out.println("peg placement is: "+ pegPlacementString);
     }
 
+    private void makeStartPage (){
+
+    }
+
     private void makeHelperPage (){
 
         helperPage.setOpacity(0);
