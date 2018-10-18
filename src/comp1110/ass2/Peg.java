@@ -1,5 +1,6 @@
 package comp1110.ass2;
 
+
 public class Peg {
 
     char pegID;           // used to uniquely identify each peg, denoted as P1,P2 ... P7, each with its own colour

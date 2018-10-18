@@ -829,18 +829,9 @@ public class Board extends Application {
         startpage.setScaleY(0.5);
         startpage.setLayoutX(-270);
         startPage.getChildren().add(startpage);
-
-//        chooseDifficulty.setEffect(dropShadow);
-//        chooseDifficulty.setCache(true);
-//        chooseDifficulty.setFill(Color.ORANGE);
-//        chooseDifficulty.setFont(Font.font("Calibre", FontWeight.EXTRA_BOLD,60));
-//        chooseDifficulty.setLayoutX(MAIN_PANEL_OFFSET_X - 250);
-//        chooseDifficulty.setLayoutY(MAIN_PANEL_OFFSET_Y - 250);
-//        chooseDifficulty.setTextAlignment(TextAlignment.CENTER);
-//        startPage.getChildren().add(chooseDifficulty);
-
-
     }
+
+
 
     /* Author: Mei Yee Chin*/
     private void showStartPage() {
@@ -859,6 +850,7 @@ public class Board extends Application {
 
     }
 
+
     /* Author: Mei Yee Chin*/
     private void hideStartPage () {
         background.setOpacity(1);
@@ -874,6 +866,7 @@ public class Board extends Application {
         startPage.toBack();
         startPage.setOpacity(0);
     }
+
 
     /**
      * Create the message to be displayed when the player completes the puzzle.
@@ -1231,9 +1224,6 @@ public class Board extends Application {
         }}
     }
 
-//    /* the difficulty slider */
-//    private final Slider difficulty = new Slider();
-//
 
     /**
      * Create the controls that allow the game to be start with selected difficulty
@@ -1380,10 +1370,3 @@ public class Board extends Application {
     }
 
 }
-
-
-
-
-
-
-
