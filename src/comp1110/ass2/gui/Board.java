@@ -94,7 +94,6 @@ public class Board extends Application {
     private final Group startPage = new Group();
 
 
-
     //title and instructions in helper page
     private final Text helperText = new Text("Helper");
     private final Text instructions = new Text("The aim of this game is to fit all the pieces onto the board." + "\n"
@@ -1112,7 +1111,7 @@ public class Board extends Application {
         instructions.setFill(Color.ORANGE);
         //instructions.setEffect(dropShadow);
         instructions.setCache(true);
-        instructions.setFont(Font.font("Calibre", FontWeight.EXTRA_BOLD,25));
+        instructions.setFont(Font.font("Calibre", FontWeight.EXTRA_BOLD,22));
         instructions.setLayoutX(MAIN_PANEL_OFFSET_X - 350);
         instructions.setLayoutY(MAIN_PANEL_OFFSET_Y - 200);
         instructions.setTextAlignment(TextAlignment.LEFT);
