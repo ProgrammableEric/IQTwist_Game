@@ -1111,14 +1111,14 @@ public class Board extends Application {
         helperText.setEffect(dropShadow);
         helperText.setCache(true);
         helperText.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 60));
-        helperText.setLayoutX(MAIN_PANEL_OFFSET_X - 400);
+        helperText.setLayoutX(MAIN_PANEL_OFFSET_X - 350);
         helperText.setLayoutY(MAIN_PANEL_OFFSET_Y - 300);
         helperText.setTextAlignment(TextAlignment.CENTER);
         instructions.setFill(Color.ORANGE);
         //instructions.setEffect(dropShadow);
         instructions.setCache(true);
         instructions.setFont(Font.font("Calibre", FontWeight.EXTRA_BOLD,25));
-        instructions.setLayoutX(MAIN_PANEL_OFFSET_X - 400);
+        instructions.setLayoutX(MAIN_PANEL_OFFSET_X - 350);
         instructions.setLayoutY(MAIN_PANEL_OFFSET_Y - 200);
         instructions.setTextAlignment(TextAlignment.LEFT);
         helperPage.getChildren().add(helperText);
