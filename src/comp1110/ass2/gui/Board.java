@@ -41,6 +41,7 @@ import javafx.geometry.Bounds;
 
 import java.awt.*;
 
+//Author: Chunze Fu, Mei Yee, Hua Guo
 public class Board extends Application {
     /*board layout*/
     private static final int BOARD_WIDTH = 933;
@@ -77,6 +78,7 @@ public class Board extends Application {
     private static final String MASTER_URI = Board.class.getResource(URI_BASE + "master.png").toString();
     private static final String DOG_URI = Board.class.getResource(URI_BASE + "dog.png").toString();
     private static final String STARTPAGE_URI = Board.class.getResource(URI_BASE + "startpage.png").toString();
+    private static final String YELLOWBACKGROUND_URI = Board.class.getResource(URI_BASE + "yellowbackground.jpeg").toString();
 
 
 
@@ -92,6 +94,7 @@ public class Board extends Application {
     private final Group helperPage = new Group();
     private final Group background = new Group();
     private final Group startPage = new Group();
+    private final Group yellowbackground = new Group();
 
 
     //title and instructions in helper page
@@ -727,6 +730,7 @@ public class Board extends Application {
     private void makeStartPage () {
         startPage.getChildren().clear();
 
+
         // btn 1 - starter
         ImageView starter = new ImageView();
         starter.setImage(new Image(STARTER_URI));
@@ -833,9 +837,11 @@ public class Board extends Application {
     }
 
 
-
     /* Author: Mei Yee Chin*/
+    //show game page
     private void showStartPage() {
+        yellowbackground.setOpacity(1);
+        yellowbackground.toFront();
         background.setOpacity(0);
         background.toBack();
         gameBoard.setOpacity(0);
@@ -853,7 +859,10 @@ public class Board extends Application {
 
 
     /* Author: Mei Yee Chin*/
+    //hide game page
     private void hideStartPage () {
+        yellowbackground.setOpacity(0);
+        yellowbackground.toBack();
         background.setOpacity(1);
         background.toFront();
         gameBoard.setOpacity(1);
@@ -932,6 +941,23 @@ public class Board extends Application {
 
 
     }
+
+    /* Author: Mei Yee Chin*/
+    //creates yellow background for main page
+    private void makeYellowBackground(){
+
+        yellowbackground.getChildren().clear();
+
+        ImageView YellowBackground = new ImageView();
+        YellowBackground.setImage(new Image(YELLOWBACKGROUND_URI));
+        YellowBackground.setFitHeight(BOARD_HEIGHT);
+        YellowBackground.setFitWidth(BOARD_WIDTH);
+
+        yellowbackground.getChildren().add(YellowBackground);
+
+        yellowbackground.toBack();
+
+    }
     /**
      * Show the completion message
      */
@@ -996,6 +1022,7 @@ public class Board extends Application {
         background.toBack();
 
     }
+
 
     /**
      * Set up the group that represents the solution (and make it transparent)
@@ -1097,6 +1124,8 @@ public class Board extends Application {
     }
 
 
+    /* Author: Mei Yee Chin and Hua Guo*/
+    //this method makes a helper page which consists of instructions and back button
     private void makeHelperPage (){
 
         helperPage.setOpacity(0);
@@ -1109,7 +1138,6 @@ public class Board extends Application {
         helperText.setLayoutY(MAIN_PANEL_OFFSET_Y - 300);
         helperText.setTextAlignment(TextAlignment.CENTER);
         instructions.setFill(Color.ORANGE);
-        //instructions.setEffect(dropShadow);
         instructions.setCache(true);
         instructions.setFont(Font.font("Calibre", FontWeight.EXTRA_BOLD,22));
         instructions.setLayoutX(MAIN_PANEL_OFFSET_X - 350);
@@ -1351,9 +1379,11 @@ public class Board extends Application {
         root.getChildren().add(completion);
         root.getChildren().add(background);
         root.getChildren().add(startPage);
+        root.getChildren().add(yellowbackground);
 
         setUpHandlers(scene);
         makeBackground();
+        makeYellowBackground();
         makeGameBoard();
         makeControls();
         makeCompletion();

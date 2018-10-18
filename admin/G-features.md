@@ -9,16 +9,23 @@ of our project implements the following features:
  - Generate a valid move (task 6)
 
 
-
-
-
 additional features...
- - Generate a challenges according to users selected difficulty level
- - Reset the game board ("reset" button)
- - Help players to know how to play this game ("help" button and help page)
- - Start a new challenge in the same difficulty level ("start" button )
- - Give players the hints (press "/")
- - Left click the center of piece and scroll the mouse to change the orientation of piece
- - Right click to flip the piece
- - Choose another difficulty level ("difficulty" button )
+ - Four pages: Main page (choose difficulty),
+               Game page (where player plays the game),
+               Helper page (where instructions are),
+               Completion page (when player completes the game)
+ - Generate 4 level of challenges according to users selected difficulty level: starter, junior, expert, master
+ - Starter button: Generate Starter level of placements on board
+ - Junior button: Generate Junior level of placements on board
+ - Expert button: Generate Expert level of placements on board
+ - Master button: Generate Master level of placements on board
+ - Reset button: Remove all pieces from board
+ - Help button: Opens helper page with instructions
+ - Start button: Computes new starting placements with same difficulty level
+ - Difficulty button: Brings player back to Main page
+ - "/" key hold: Provide hint
+ - Left click: Select piece to drag and to change orientation
+ - Mouse scroll: Change orientation of pieces
+ - Right click: Flip pieces
+
 

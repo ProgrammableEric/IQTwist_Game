@@ -3,6 +3,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
 
+//Author: Mei Yee Chin
 public class TestNeighbour {
     @Rule
     public Timeout globalTimeout = Timeout.millis(20000);

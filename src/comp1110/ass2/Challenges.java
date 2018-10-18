@@ -14,7 +14,7 @@ package comp1110.ass2;
  *  The difficulty of the game (1 - starter, 2 - junior, 3 - expert, 4 - master)
  * @return A challenge at the appropriate level of difficulty.
  *
- * Author: Hua Guo
+ * Author: Hua Guo, ideas and statements are contributed by Mei Yee (refer to StartingState).
  */
 
 public class Challenges {

@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * 1. all nodes are occupied with one and only piece;
  * 2. all pegs are placed in the right place, of the color-matched piece
  *
- * Author: Chunze Fu (u5885811)
+ * Author: Chunze Fu (u5885811) and Mei Yee (for getNeighbours method)
 */
 
 
@@ -74,7 +74,8 @@ public class Node {
     }
 
 
-    // get all positions of all neighbours that are on the game board
+    //Author: Mei Yee Chin
+    // get all positions of all node neighbours that are on the game board
     public static int[] getNeighbours (int positionID) {
         int[] neighbours = new int[8];
 
