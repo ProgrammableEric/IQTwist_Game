@@ -98,6 +98,8 @@ public class Board extends Application {
     //title and instructions in helper page
     private final Text helperText = new Text("Helper");
     private final Text instructions = new Text("The aim of this game is to fit all the pieces onto the board." + "\n"
+            + "To finish the game, all the 8 pieces should be put on the pink board. " + "\n"
+            + "All pegs should fit into the hole position of the piece of the same colour." + "\n"
             + "\n"
             + "Scroll to change orientation." + "\n"
             + "Drag to place pieces." + "\n"
@@ -964,7 +966,6 @@ public class Board extends Application {
         completion.toBack();
         completion.setOpacity(0);
     }
-
     /**
      * Set up the group that represents the places that make the board
      */
@@ -1105,14 +1106,14 @@ public class Board extends Application {
         helperText.setEffect(dropShadow);
         helperText.setCache(true);
         helperText.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 60));
-        helperText.setLayoutX(MAIN_PANEL_OFFSET_X - 400);
+        helperText.setLayoutX(MAIN_PANEL_OFFSET_X - 350);
         helperText.setLayoutY(MAIN_PANEL_OFFSET_Y - 300);
         helperText.setTextAlignment(TextAlignment.CENTER);
         instructions.setFill(Color.ORANGE);
         //instructions.setEffect(dropShadow);
         instructions.setCache(true);
         instructions.setFont(Font.font("Calibre", FontWeight.EXTRA_BOLD,25));
-        instructions.setLayoutX(MAIN_PANEL_OFFSET_X - 400);
+        instructions.setLayoutX(MAIN_PANEL_OFFSET_X - 350);
         instructions.setLayoutY(MAIN_PANEL_OFFSET_Y - 200);
         instructions.setTextAlignment(TextAlignment.LEFT);
         helperPage.getChildren().add(helperText);
@@ -1129,7 +1130,7 @@ public class Board extends Application {
         ImageView dog = new ImageView();
         dog.setImage(new Image(DOG_URI));
         dog.setLayoutX(500);
-        dog.setLayoutY(250);
+        dog.setLayoutY(280);
 
         // reset button
         Button button6 = new Button("Back to Game");
@@ -1143,7 +1144,6 @@ public class Board extends Application {
             @Override
             public void handle(ActionEvent e) {
                 hideHelperPage();
-
             }
         });
         button6.setOpacity(0);
