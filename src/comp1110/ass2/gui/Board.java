@@ -719,14 +719,14 @@ public class Board extends Application {
         starter.setImage(new Image(STARTER_URI));
         starter.setFitWidth(BUTTON_WIDTH);
         starter.setFitHeight(BUTTON_HEIGHT);
-        starter.setLayoutX(60);
+        starter.setLayoutX(30);
         starter.setLayoutY(300);
         startPage.getChildren().add(starter);
 
         Button btnStarter = new Button("Starter");
         btnStarter.setScaleY(2);
         btnStarter.setScaleX(2);
-        btnStarter.setLayoutX(110);
+        btnStarter.setLayoutX(80);
         btnStarter.setLayoutY(380);
         btnStarter.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -743,14 +743,14 @@ public class Board extends Application {
         junior.setImage(new Image(JUNIOR_URI));
         junior.setFitWidth(BUTTON_WIDTH);
         junior.setFitHeight(BUTTON_HEIGHT);
-        junior.setLayoutX(280);
+        junior.setLayoutX(250);
         junior.setLayoutY(300);
         startPage.getChildren().add(junior);
 
         Button btnJunior = new Button("Junior");
         btnJunior.setScaleY(2);
         btnJunior.setScaleX(2);
-        btnJunior.setLayoutX(330);
+        btnJunior.setLayoutX(300);
         btnJunior.setLayoutY(380);
         btnJunior.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -759,7 +759,7 @@ public class Board extends Application {
                 newGame(difficulty);          // start a new game with selected difficulty
             }
         });
-        btnJunior.setOpacity(1);
+        btnJunior.setOpacity(0);
         startPage.getChildren().add(btnJunior);
 
         // btn 3 - expert
@@ -767,14 +767,14 @@ public class Board extends Application {
         expert.setImage(new Image(EXPERT_URI));
         expert.setFitWidth(BUTTON_WIDTH);
         expert.setFitHeight(BUTTON_HEIGHT);
-        expert.setLayoutX(500);
+        expert.setLayoutX(470);
         expert.setLayoutY(300);
         startPage.getChildren().add(expert);
 
         Button btnExpert = new Button("Expert");
         btnExpert.setScaleY(2);
         btnExpert.setScaleX(2);
-        btnExpert.setLayoutX(550);
+        btnExpert.setLayoutX(520);
         btnExpert.setLayoutY(380);
         btnExpert.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -783,23 +783,23 @@ public class Board extends Application {
                 newGame(difficulty);          // start a new game with selected difficulty
             }
         });
-        btnExpert.setOpacity(1);
+        btnExpert.setOpacity(0);
         startPage.getChildren().add(btnExpert);
 
         // btn 4 - master
         ImageView master = new ImageView();
         master.setImage(new Image(MASTER_URI));
-        master.setFitWidth(BUTTON_WIDTH/1.5);
-        master.setFitHeight(BUTTON_HEIGHT/1.5);
-        master.setLayoutX(620);
-        master.setLayoutY(350);
+        master.setFitWidth(BUTTON_WIDTH);
+        master.setFitHeight(BUTTON_HEIGHT);
+        master.setLayoutX(690);
+        master.setLayoutY(300);
         startPage.getChildren().add(master);
 
         Button btnMaster = new Button("Master");
-        btnMaster.setScaleY(1.5);
-        btnMaster.setScaleX(1.5);
-        btnMaster.setLayoutX(620);
-        btnMaster.setLayoutY(350);
+        btnMaster.setScaleY(2);
+        btnMaster.setScaleX(2);
+        btnMaster.setLayoutX(740);
+        btnMaster.setLayoutY(380);
         btnMaster.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -807,7 +807,7 @@ public class Board extends Application {
                 newGame(difficulty);          // start a new game with selected difficulty
             }
         });
-        btnMaster.setOpacity(1);
+        btnMaster.setOpacity(0);
         startPage.getChildren().add(btnMaster);
 
 
@@ -857,9 +857,19 @@ public class Board extends Application {
 
         completion.getChildren().add(welldone);
 
+        ImageView replay = new ImageView();
+        replay.setImage(new Image(REPLAY_URI));
+        replay.setFitHeight(BUTTON_HEIGHT);
+        replay.setFitWidth(BUTTON_WIDTH);
+        replay.setLayoutX(MARGIN_X + SQUARE_SIZE - 50);
+        replay.setLayoutY(MAIN_PANEL_OFFSET_Y + SQUARE_SIZE - 80);
+        completion.getChildren().add(replay);
+
         // Replay button
         Button button3 = new Button("Replay");
 
+        button3.setScaleX(2);
+        button3.setScaleY(2);
         button3.setLayoutX(MARGIN_X +  SQUARE_SIZE);
         button3.setLayoutY(MAIN_PANEL_OFFSET_Y + SQUARE_SIZE);
         button3.setTextFill(Color.RED);
@@ -869,11 +879,22 @@ public class Board extends Application {
                 newGame(difficulty);          // start a new game with selected difficulty
             }
         });
+        button3.setOpacity(0);
         completion.getChildren().add(button3);
 
-        // start button
+        ImageView exit = new ImageView();
+        exit.setImage(new Image(EXIT_URI));
+        exit.setFitHeight(BUTTON_HEIGHT);
+        exit.setFitWidth(BUTTON_WIDTH);
+        exit.setLayoutX(MARGIN_X + SQUARE_SIZE +  450);
+        exit.setLayoutY(MAIN_PANEL_OFFSET_Y + SQUARE_SIZE - 80);
+        completion.getChildren().add(exit);
+
+        // exit button
         Button button4 = new Button("Exit");
-        button4.setLayoutX(MARGIN_X +  SQUARE_SIZE + 200);
+        button4.setScaleX(2);
+        button4.setScaleY(2);
+        button4.setLayoutX(MARGIN_X +  SQUARE_SIZE + 500);
         button4.setLayoutY(MAIN_PANEL_OFFSET_Y + SQUARE_SIZE);
         button4.setTextFill(Color.RED);
         button4.setOnAction(new EventHandler<ActionEvent>() {
@@ -882,6 +903,7 @@ public class Board extends Application {
                 Platform.exit();         // end the game
             }
         });
+        button4.setOpacity(0);
         completion.getChildren().add(button4);
 
 
@@ -890,6 +912,8 @@ public class Board extends Application {
      * Show the completion message
      */
     private void showCompletion() {
+        background.setOpacity(0);
+        background.toBack();
         gameBoard.setOpacity(0);
         gameBoard.toBack();
         pieces.setOpacity(0);
@@ -905,6 +929,7 @@ public class Board extends Application {
      * Hide the completion message
      */
     private void hideCompletion() {
+        background.setOpacity(1);
         gameBoard.setOpacity(1);
         gameBoard.toFront();
         pieces.setOpacity(1);
@@ -988,7 +1013,9 @@ public class Board extends Application {
                 Platform.exit();
                 event.consume();
             } else if (event.getCode() == KeyCode.SLASH) {
+
                 solution.setOpacity(1.0);
+                solution.toFront();
                 pieces.setOpacity(0);
                 event.consume();
             }
@@ -1068,8 +1095,18 @@ public class Board extends Application {
         helperPage.getChildren().add(helperText);
         helperPage.getChildren().add(intructions);
 
+        ImageView helper = new ImageView();
+        helper.setImage(new Image(BACKTOGAME_URI));
+        helper.setFitHeight(BUTTON_HEIGHT);
+        helper.setFitWidth(BUTTON_WIDTH);
+        helper.setLayoutX(MARGIN_X + SQUARE_SIZE - 50);
+        helper.setLayoutY(MAIN_PANEL_OFFSET_Y + 2* SQUARE_SIZE - 80);
+        helperPage.getChildren().add(helper);
+
         // reset button
         Button button6 = new Button("Back to Game");
+        button6.setScaleX(2);
+        button6.setScaleY(2);
         button6.setLayoutX(MARGIN_X +  SQUARE_SIZE);
         button6.setLayoutY(MAIN_PANEL_OFFSET_Y + 2* SQUARE_SIZE);
         button6.setTextFill(Color.RED);
@@ -1080,11 +1117,14 @@ public class Board extends Application {
 
             }
         });
+        button6.setOpacity(0);
         helperPage.getChildren().add(button6);
 
     }
 
     private void showHelperPage(){
+        background.setOpacity(0);
+        background.toBack();
         gameBoard.setOpacity(0);
         gameBoard.toBack();
         pieces.setOpacity(0);
@@ -1098,6 +1138,7 @@ public class Board extends Application {
     }
 
     private void hideHelperPage(){
+        background.setOpacity(1);
         gameBoard.setOpacity(1);
         gameBoard.toFront();
         pieces.setOpacity(1);
