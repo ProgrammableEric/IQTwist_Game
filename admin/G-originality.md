@@ -8,6 +8,8 @@ We declare that the work we have submitted for Stage G of this assignment and al
  
 * all pictures for the buttons were photoshoped by Hua Guo
 
+* In the Challenges class, the questions were encoded categorized manually from the game manual, and the solutions were computed by using task 9 getSolution method. 
+
 * The idea of the general structure of Board class comes from assignment Game class.
 
 Signed: Hua Guo (u6419283), Mei Yee Chin (u6700948), and Chunze Fu (u5885811)

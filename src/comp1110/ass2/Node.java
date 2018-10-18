@@ -56,13 +56,6 @@ public class Node {
     }
 
 
-//    // Decoding placement string into position ID.
-//    public static int getPositionID (String placementString){
-//        // ...
-//        return -1 ;
-//    }
-
-
     // method determine if there's either a peg or piece occupying this node
     public boolean isEmpty (){
         return pieceValue == 0 && peg == null;

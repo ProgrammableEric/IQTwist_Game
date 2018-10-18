@@ -18,17 +18,6 @@ import java.lang.String;
 public class TwistGame {
 
 
-//    Node[] nodes = new Node[32];
-//
-//    private static void initializeNodes (Node[] nodes){
-//        for (int i =0; i < nodes.length; i++){
-//            nodes[i].pieceValue = 0;             // all nodes are set to be empty at the start of the game
-//            nodes[i].piece = null;
-//            nodes[i].peg = null;
-//        }
-//    }
-
-
     /**
    * Determine whether a piece or peg placement is well-formed according to the following:
    * - it consists of exactly four characters
@@ -264,7 +253,6 @@ public class TwistGame {
           }
         }
 
-
         return true;
 
     // FIXME Task 5: determine whether a placement string is valid
@@ -402,6 +390,7 @@ public class TwistGame {
 
 
   public static ArrayList<String> solutions = new ArrayList<>();
+
 
   public static String[] getSolutions(String placement) {
 
@@ -630,28 +619,6 @@ public class TwistGame {
         for(String j: SolutionNextStep){
             Allsolution(j);
         }
-
-//        // translate Arraylist to String[]
-//        String[] solution = solutions.toArray(new String[0]);
-//
-//        System.out.println("here 2");
-//        // eliminate duplicate solutions to get unique solution array
-//        TreeSet<String> ans = new TreeSet<>();
-//        for (int i = 0; i<solution.length; i++){
-//
-//            ans.add(solution[i]);
-//
-//        }
-//
-//        String[] uniqueSolution = new String[ans.size()];
-//        for (int i = 0; i < uniqueSolution.length; i++) {
-//
-//            uniqueSolution[i] = ans.pollFirst();
-//
-//        }
-//        System.out.println("here 3");
-//        System.out.println("*************** solution size =" + solutions.size() + "******************");
-//        return uniqueSolution;
 
     }
 
