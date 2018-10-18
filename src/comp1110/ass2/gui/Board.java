@@ -92,6 +92,11 @@ public class Board extends Application {
 
 
     private final Text helperText = new Text("Helper");
+    private final Text intructions = new Text("The aim of this game is to fit all the pieces onto the board." + "\n"
+            + "\n"
+            + "Scroll to change orientation." + "\n"
+            + "Drag to place pieces." + "\n"
+            + "Right click to flip pieces");
 
     /* message on success*/
     private final Text completionText = new Text("Well done!");
@@ -1049,11 +1054,19 @@ public class Board extends Application {
         helperText.setFill(Color.BLACK);
         helperText.setEffect(dropShadow);
         helperText.setCache(true);
-        helperText.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 80));
-        helperText.setLayoutX(MAIN_PANEL_OFFSET_X);
-        helperText.setLayoutY(MAIN_PANEL_OFFSET_Y - 100);
+        helperText.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 60));
+        helperText.setLayoutX(MAIN_PANEL_OFFSET_X - 400);
+        helperText.setLayoutY(MAIN_PANEL_OFFSET_Y - 300);
         helperText.setTextAlignment(TextAlignment.CENTER);
+        intructions.setFill(Color.BLACK);
+        intructions.setEffect(dropShadow);
+        intructions.setCache(true);
+        intructions.setFont(Font.font("Comic Sans", 30));
+        intructions.setLayoutX(MAIN_PANEL_OFFSET_X - 400);
+        intructions.setLayoutY(MAIN_PANEL_OFFSET_Y - 200);
+        intructions.setTextAlignment(TextAlignment.LEFT);
         helperPage.getChildren().add(helperText);
+        helperPage.getChildren().add(intructions);
 
         // reset button
         Button button6 = new Button("Back to Game");
