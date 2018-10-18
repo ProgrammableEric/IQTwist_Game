@@ -22,8 +22,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -52,25 +50,28 @@ public class Board extends Application {
     private static final int MAIN_PANEL_HEIGHT = 4 * SQUARE_SIZE;
     private static final int MARGIN_X = (BOARD_WIDTH - 13*SQUARE_SIZE - 60)/2;
     private static final int MARGIN_Y = 80;
+    private static final int WELLDONE_WIDTH = 658;
+    private static final int WELLDONE_HEIGHT = 240;
+    private static final int BUTTON_WIDTH = 240;
+    private static final int BUTTON_HEIGHT = 180;
 
     private static final int MAIN_PANEL_OFFSET_X = BOARD_WIDTH - MARGIN_X - MAIN_PANEL_WIDTH;
     private static final int MAIN_PANEL_OFFSET_Y = BOARD_HEIGHT - MARGIN_Y - MAIN_PANEL_HEIGHT;
-
-    private static VBox vBox;
-    private static HBox hBox;
-
-
-    //    private static final int MAIN_PANEL_X = MARGIN_X + MAIN_PANEL_HEIGHT;
     private static final int PIECE_SPACE = 20;
-
 
     /* where to find media assets*/
     private static final String URI_BASE = "assets/";
-    //private static final String BASEBOARD_URI = Board.class.getResource(URI_BASE + "baseboard.png").toString();
+    private static final String WELLDONE_URI = Board.class.getResource(URI_BASE + "welldone.jpeg").toString();
+    private static final String GAMEBOARD_URI = Board.class.getResource(URI_BASE + "gameboard.jpeg").toString();
+    private static final String START_URI = Board.class.getResource(URI_BASE + "start.png").toString();
+    private static final String RESET_URI = Board.class.getResource(URI_BASE + "reset.png").toString();
+    private static final String REPLAY_URI = Board.class.getResource(URI_BASE + "replay.png").toString();
+    private static final String BACKTOGAME_URI = Board.class.getResource(URI_BASE + "backtogame.png").toString();
+    private static final String DIFFICULTY_URI = Board.class.getResource(URI_BASE + "difficulty.png").toString();
+    private static final String EXIT_URI = Board.class.getResource(URI_BASE + "exit.png").toString();
+    private static final String HELP_URI = Board.class.getResource(URI_BASE + "help.png").toString();
+    private static final String BACKGROUND_URI = Board.class.getResource(URI_BASE + "background.png").toString();
 
-
-    /* make for unplaced piece*/
-    public static final char NOT_PLACED = 255;
 
 
     /* node groups */
@@ -80,24 +81,24 @@ public class Board extends Application {
     private final Group controls = new Group();
     private final Group pieces = new Group();
     private final Group pegs = new Group();
-    private final Group board = new Group();
-    private final Group challenge = new Group();
+    private final Group completion = new Group();
+    private final Group helperPage = new Group();
+    private final Group background = new Group();
+
+
+
+    private final Text helperText = new Text("Helper");
 
     /* message on success*/
     private final Text completionText = new Text("Well done!");
 
     /* the state of the pieces */
     int[] pieceState = new int[8];        // state of each piece, if not on the board, -1, if on the board, it stores the
-                                         // key pos index of the piece, which is an integer from 0 - 31.
+                                          // key pos index of the piece, which is an integer from 0 - 31.
     /* the orientation of the pieces */
     int[] pieceOrientation = new int[8];  //  denoted by integer 0 - 7
 
-    String pegPlacementString = "";
-
-    String startingPlacement = "";
-
-    /* the IQ-TWIST game*/
-    TwistGame twistGame;
+    private String pegPlacementString = "";
 
     /* Define a drop shadow effect that we will apply to tiles */
     private static DropShadow dropShadow;
@@ -702,29 +703,63 @@ public class Board extends Application {
      * Create the message to be displayed when the player completes the puzzle.
      */
     private void makeCompletion() {
-        completionText.setFill(Color.BLACK);
-        completionText.setEffect(dropShadow);
-        completionText.setCache(true);
-        completionText.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 80));
-        completionText.setLayoutX(MAIN_PANEL_OFFSET_X);
-        completionText.setLayoutY(MAIN_PANEL_OFFSET_Y - 100);
-        completionText.setTextAlignment(TextAlignment.CENTER);
-        root.getChildren().add(completionText);
+
+        ImageView welldone = new ImageView();
+        welldone.setImage(new Image(WELLDONE_URI));
+        welldone.setLayoutX((BOARD_WIDTH - WELLDONE_WIDTH)/2);
+        welldone.setLayoutY(100);
+
+        completion.getChildren().add(welldone);
+
+        // Replay button
+        Button button3 = new Button("Replay");
+        button3.setLayoutX(MARGIN_X +  SQUARE_SIZE);
+        button3.setLayoutY(MAIN_PANEL_OFFSET_Y + SQUARE_SIZE);
+        button3.setTextFill(Color.RED);
+        button3.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                newGame();          // start a new game with selected difficulty
+            }
+        });
+        completion.getChildren().add(button3);
+
+        // start button
+        Button button4 = new Button("Exit");
+        button4.setLayoutX(MARGIN_X +  SQUARE_SIZE + 200);
+        button4.setLayoutY(MAIN_PANEL_OFFSET_Y + SQUARE_SIZE);
+        button4.setTextFill(Color.RED);
+        button4.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                Platform.exit();         // end the game
+            }
+        });
+        completion.getChildren().add(button4);
+
+
     }
     /**
      * Show the completion message
      */
     private void showCompletion() {
-        completionText.toFront();
-        completionText.setOpacity(1);
+        gameBoard.setOpacity(0);
+        pieces.setOpacity(0);
+        pegs.setOpacity(0);
+        controls.setOpacity(0);
+        completion.toFront();
+        completion.setOpacity(1);
     }
-
     /**
      * Hide the completion message
      */
     private void hideCompletion() {
-        completionText.toBack();
-        completionText.setOpacity(0);
+        gameBoard.setOpacity(1);
+        pieces.setOpacity(1);
+        pegs.setOpacity(1);
+        controls.setOpacity(1);
+        completion.toBack();
+        completion.setOpacity(0);
     }
 
     /**
@@ -733,31 +768,30 @@ public class Board extends Application {
     private void makeGameBoard() {
         gameBoard.getChildren().clear();
 
-        // baseboard as a triangle with colour GRAY
-        Rectangle background = new Rectangle(MAIN_PANEL_OFFSET_X, MAIN_PANEL_OFFSET_Y, MAIN_PANEL_WIDTH, MAIN_PANEL_HEIGHT);
-        background.setFill(Color.LIGHTGRAY);
-        gameBoard.getChildren().add(background);
+        ImageView gameboard = new ImageView();
+        gameboard.setImage(new Image(GAMEBOARD_URI));
+        gameboard.setFitHeight(4*SQUARE_SIZE + 10);
+        gameboard.setFitWidth(8*SQUARE_SIZE + 15);
+        gameboard.setLayoutX(MAIN_PANEL_OFFSET_X - 7.5);
+        gameboard.setLayoutY(MAIN_PANEL_OFFSET_Y - 5);
 
-        // grids
-        for (int i = 1; i < MAIN_PANEL_WIDTH/SQUARE_SIZE; i++){
-            Line line = new Line();
-            line.setStartX(MAIN_PANEL_OFFSET_X + i * SQUARE_SIZE);
-            line.setEndX(MAIN_PANEL_OFFSET_X + i * SQUARE_SIZE);
-            line.setStartY(MAIN_PANEL_OFFSET_Y);
-            line.setEndY(MAIN_PANEL_OFFSET_Y + MAIN_PANEL_HEIGHT);
-            gameBoard.getChildren().add(line);
-        }
+        gameBoard.getChildren().add(gameboard);
 
-        for (int i = 1; i < MAIN_PANEL_HEIGHT/SQUARE_SIZE; i++){
-            Line line = new Line();
-            line.setStartX(MAIN_PANEL_OFFSET_X);
-            line.setEndX(MAIN_PANEL_OFFSET_X +  MAIN_PANEL_WIDTH);
-            line.setStartY(MAIN_PANEL_OFFSET_Y + i * SQUARE_SIZE);
-            line.setEndY(MAIN_PANEL_OFFSET_Y + i * SQUARE_SIZE);
-            gameBoard.getChildren().add(line);
-        }
+    }
 
-        gameBoard.toBack();
+    private void makeBackground (){
+
+        background.getChildren().clear();
+
+        ImageView Background = new ImageView();
+        Background.setImage(new Image(BACKGROUND_URI));
+        Background.setFitHeight(BOARD_HEIGHT);
+        Background.setFitWidth(BOARD_WIDTH);
+
+        background.getChildren().add(Background);
+
+        background.toBack();
+
     }
 
     /**
@@ -778,14 +812,6 @@ public class Board extends Application {
             char row = solution.charAt(i+2);
             char ori = solution.charAt(i+3);
             Piece piece = new Piece(pieceid,column,row,ori);
-
-//            int x = (solution[i] / 4) % 3;
-//            int y = (solution[i] / 4) / 3;
-//            int rotation = solution[i] % 4;
-//
-//            tile.setLayoutX(BOARD_X + (x * SQUARE_SIZE));
-//            tile.setLayoutY(BOARD_Y + (y * SQUARE_SIZE));
-//            tile.setRotate(90 * rotation);
 
             this.solution.getChildren().add(piece);
         }
@@ -865,6 +891,52 @@ public class Board extends Application {
         System.out.println("peg placement is: "+ pegPlacementString);
     }
 
+    private void makeHelperPage (){
+
+        helperPage.setOpacity(0);
+
+        helperText.setFill(Color.BLACK);
+        helperText.setEffect(dropShadow);
+        helperText.setCache(true);
+        helperText.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 80));
+        helperText.setLayoutX(MAIN_PANEL_OFFSET_X);
+        helperText.setLayoutY(MAIN_PANEL_OFFSET_Y - 100);
+        helperText.setTextAlignment(TextAlignment.CENTER);
+        helperPage.getChildren().add(helperText);
+
+        // reset button
+        Button button6 = new Button("Back to Game");
+        button6.setLayoutX(MARGIN_X +  SQUARE_SIZE);
+        button6.setLayoutY(MAIN_PANEL_OFFSET_Y + 2* SQUARE_SIZE);
+        button6.setTextFill(Color.RED);
+        button6.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                hideHelperPage();
+
+            }
+        });
+        helperPage.getChildren().add(button6);
+
+    }
+
+    private void showHelperPage(){
+        gameBoard.setOpacity(0);
+        pieces.setOpacity(0);
+        pegs.setOpacity(0);
+        controls.setOpacity(0);
+        helperPage.toFront();
+        helperPage.setOpacity(1);
+    }
+
+    private void hideHelperPage(){
+        gameBoard.setOpacity(1);
+        pieces.setOpacity(1);
+        pegs.setOpacity(1);
+        controls.setOpacity(1);
+        helperPage.toFront();
+        helperPage.setOpacity(0);
+    }
 
     /**
      * Start a new game, resetting everything as necessary
@@ -880,16 +952,16 @@ public class Board extends Application {
             pieceOrientation[i] = 0;
         }
         pegPlacementString = "";
-        startingPlacement = "";
+        String startingPlacement = "";
 
-        TwistGame1 twistGame = new TwistGame1((int)difficulty.getValue());  // start a new game with selected difficulty
-        startingPlacement = twistGame.getPlacement();
-        makePlacement(twistGame.getPlacement());  // put starting placement on the board
+        Challenges newChallenge =  Challenges.newChallenge((int)difficulty.getValue());
+
+        startingPlacement = newChallenge.getStatement();
+        makePlacement(startingPlacement);  // put starting placement on the board
         makePieces();
-        System.out.println("before computing solution");
-        System.out.println(startingPlacement);
-        String solu = twistGame.challenges.getSolution();
-        System.out.println("after computing solution");
+
+        String solu = newChallenge.getSolution();
+
         makeSolution(solu);
 
     }
@@ -915,10 +987,23 @@ public class Board extends Application {
      * Author: Hua Guo
      */
     private void makeControls() {
+        controls.getChildren().clear();
+
+        // picture for start button
+        ImageView start = new ImageView();
+        start.setImage(new Image(START_URI));
+        start.setFitHeight(BUTTON_HEIGHT);
+        start.setFitWidth(BUTTON_WIDTH);
+        start.setLayoutX(MARGIN_X +  SQUARE_SIZE);
+        start.setLayoutY(MAIN_PANEL_OFFSET_Y + SQUARE_SIZE);
+        controls.getChildren().add(start);
+
         // start button
         Button button = new Button("Start");
         button.setLayoutX(MARGIN_X +  SQUARE_SIZE);
         button.setLayoutY(MAIN_PANEL_OFFSET_Y + SQUARE_SIZE);
+        button.setScaleX(1.5);
+        button.setScaleY(1.5);
         button.setTextFill(Color.RED);
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -926,12 +1011,17 @@ public class Board extends Application {
                 newGame();          // start a new game with selected difficulty
             }
         });
+        button.setOpacity(0);
         controls.getChildren().add(button);
 
         // reset button
         Button button2 = new Button("Reset");
+//        button2.setScaleX(1.5);
+//        button2.setScaleY(1.5);
         button2.setLayoutX(MARGIN_X +  SQUARE_SIZE);
         button2.setLayoutY(MAIN_PANEL_OFFSET_Y + 2* SQUARE_SIZE);
+        button2.setScaleX(1.5);
+        button2.setScaleY(1.5);
         button2.setTextFill(Color.RED);
         button2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -940,6 +1030,22 @@ public class Board extends Application {
             }
         });
         controls.getChildren().add(button2);
+
+        // Helper button
+        Button button5 = new Button("Helper");
+
+        button5.setLayoutX(MARGIN_X +  SQUARE_SIZE);
+        button5.setLayoutY(MAIN_PANEL_OFFSET_Y + 3 * SQUARE_SIZE);
+        button5.setScaleX(1.5);
+        button5.setScaleY(1.5);
+        button5.setTextFill(Color.RED);
+        button5.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                showHelperPage();      // put pieces back in their home position
+            }
+        });
+        controls.getChildren().add(button5);
 
         // difficulty level
         difficulty.setMin(1);       // set the difficulty range
@@ -951,6 +1057,8 @@ public class Board extends Application {
         difficulty.setMinorTickCount(1);
         difficulty.setSnapToTicks(true);
 
+        difficulty.setScaleX(1.2);
+        difficulty.setScaleY(1.2);
         difficulty.setLayoutX(MARGIN_X + SQUARE_SIZE);
         difficulty.setLayoutY(MAIN_PANEL_OFFSET_Y);
         controls.getChildren().add(difficulty);
@@ -973,11 +1081,16 @@ public class Board extends Application {
         root.getChildren().add(pegs);
         root.getChildren().add(controls);
         root.getChildren().add(solution);
+        root.getChildren().add(helperPage);
+        root.getChildren().add(completion);
+        root.getChildren().add(background);
 
         setUpHandlers(scene);
+        makeBackground();
         makeGameBoard();
         makeControls();
         makeCompletion();
+        makeHelperPage();
 
         newGame();
 

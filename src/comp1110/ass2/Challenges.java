@@ -100,21 +100,21 @@ public class Challenges {
      */
 
     static Challenges[] CHALLENGES = {
-         new Challenges("h4B2j5D0j6D0k7D0k8D0l3D0l4D0",1),
+         new Challenges("b7A1c4A0d4C0e7C1f1A0g2B7h4B2j5D0j6D0k7D0k8D0l3D0l4D0",1),
          new Challenges("h8B7i5B0j3A0j2B0k3C0l3B0l4B0",2),
          new Challenges("b2C0j7A0j7B0k3A0k5B0l3B0l5A0",3),
 
-         new Challenges("j3B0j2D0k5B0l6D0l7D0",4),
-         new Challenges("i4B0j7C0j5D0k2B0",5),
-         new Challenges("j3C0j3D0k6D0l5A0l8A0",6),
+         new Challenges("i6D0j3A0j1B0k3C0k8C0",4),
+         new Challenges("i4B0j7C0j7D0k3D0",5),
+         new Challenges("j3C0j3D0k7B0k5C0l1A0l2A0",6),
 
-         new Challenges("i6C0k8B0k5C0",7),
-         new Challenges("i6C0j6A0k1B0k7B0l3C0l4D0",8),
-         new Challenges("i4C0k2B0l4A0l6B0",9),
+         new Challenges("i6C0j6A0j8C0k8B0k3D0",7),
+         new Challenges("i6C0j6A0j3B0k6D0k7D0l5B0",8),
+         new Challenges("i4C0k2B0k3B0l3A0l7D0",9),
 
-         new Challenges("k8B0k5C0i6C0",10),
-         new Challenges("j6A0k1B0k7B0l3C0i6C0l4D0",11),
-         new Challenges("l4A0k2B0l6B0i4C0",12),
+         new Challenges("i1C0k5B0k8B0",10),
+         new Challenges("j6A0j8C0k1A0",11),
+         new Challenges("i4C0l4A0l5A0",12),
 
  };
 
@@ -123,9 +123,17 @@ public class Challenges {
             case 1: return "a1B5b7A1c4A0d4C0e7C1f1A0g2B7h4B2";
             case 2: return "a5C4b5A7c1A2d1B3e2C4f6A0g3B5h8B7";
             case 3: return "a1B5b2C0c5D0d7A7e5A1f1A0g3A1h5C0";
-            case 4: return "";
-            case 5: return "";
-            case 6: return "";
+            case 4: return "a4C2b6C0c1A1d2A3e2C4f7A1g4A0h5A2";
+            case 5: return "a1B3b3A6c5D2d7A1e2C5f3C0g5A1h1A0";
+            case 6: return "a1B5b5A6c8A1d3B1e5C2f6B7g1A5h3A0";
+
+            case 7: return "a1B6b5B3c4A2d6C4e7A1f1C4g3B1h1A0";
+            case 8: return "a7B7b5B3c5A0d1A0e6C1f1B3g3A3h2D0";
+            case 9: return "a1C2b3C2c5A0d7B7e1B0f3A2g5B7h1A2";
+
+            case 10: return "a1A3b2A1c1D2d7B5e7A0f4A0g3B2h6B1";
+            case 11: return "a6A4b4C6c4A2d6C4e1A3f1B2g3A0h1D0";
+            case 12: return "a6A0b3C2c1A3d2A2e2C5f6B4g4A5h6D0";
             default: return "";
 
 
