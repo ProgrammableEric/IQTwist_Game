@@ -98,7 +98,7 @@ public class Board extends Application {
     private final Text helperText = new Text("Helper");
     private final Text instructions = new Text("The aim of this game is to fit all the pieces onto the board." + "\n"
             + "To finish the game, all the 8 pieces should be put on the pink board. " + "\n"
-            + "All pegs should fit into the hole position of the piece of the same colour." + "\n"
+            + "All pegs should fit into the hole position of a piece of the same colour." + "\n"
             + "\n"
             + "Scroll to change orientation." + "\n"
             + "Drag to place pieces." + "\n"
@@ -1122,7 +1122,7 @@ public class Board extends Application {
         helper.setImage(new Image(BACKTOGAME_URI));
         helper.setFitHeight(BUTTON_HEIGHT);
         helper.setFitWidth(BUTTON_WIDTH);
-        helper.setLayoutX(20);
+        helper.setLayoutX(15);
         helper.setLayoutY(500);
         helperPage.getChildren().add(helper);
 
