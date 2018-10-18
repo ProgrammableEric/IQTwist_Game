@@ -9,7 +9,7 @@ import java.util.Random;
 // there will be 5 difficulty levels: starter, junior, expert, master, wizard
 // also include restart and back button in game board
 
-
+//Author: Mei Yee Chin
 public class StartingState {
 
 
@@ -50,6 +50,5 @@ public class StartingState {
     }
 
 }
-
 
 

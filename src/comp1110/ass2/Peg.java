@@ -1,5 +1,11 @@
 package comp1110.ass2;
 
+
+/** This class represents each peg from the game. It contains the characteristics
+ *  of the peg, and some relevant implementations.
+ *
+ *  Author: Chunze Fu (u5885811)      **/
+
 public class Peg {
 
     char pegID;           // used to uniquely identify each peg, denoted as P1,P2 ... P7, each with its own colour
@@ -23,8 +29,7 @@ public class Peg {
         return (row - 'A')*8 + (col - '1') ;
     }
 
-
-
+    // decode peg color based on input placement string
     private static Colour colourDecode (char pieceID) {
         switch (pieceID) {
             case 'i':

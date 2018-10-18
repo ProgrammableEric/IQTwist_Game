@@ -18,6 +18,8 @@ import java.util.ArrayList;
  * Finished state is determined by :
  * 1. all nodes are occupied with one and only piece;
  * 2. all pegs are placed in the right place, of the color-matched piece
+ *
+ * Author: Chunze Fu (u5885811) and Mei Yee (for getNeighbours method)
 */
 
 
@@ -54,13 +56,6 @@ public class Node {
     }
 
 
-//    // Decoding placement string into position ID.
-//    public static int getPositionID (String placementString){
-//        // ...
-//        return -1 ;
-//    }
-
-
     // method determine if there's either a peg or piece occupying this node
     public boolean isEmpty (){
         return pieceValue == 0 && peg == null;
@@ -79,7 +74,8 @@ public class Node {
     }
 
 
-    // get all positions of all neighbours that are on the game board
+    //Author: Mei Yee Chin
+    // get all positions of all node neighbours that are on the game board
     public static int[] getNeighbours (int positionID) {
         int[] neighbours = new int[8];
 

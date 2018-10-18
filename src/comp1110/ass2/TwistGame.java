@@ -18,17 +18,6 @@ import java.lang.String;
 public class TwistGame {
 
 
-//    Node[] nodes = new Node[32];
-//
-//    private static void initializeNodes (Node[] nodes){
-//        for (int i =0; i < nodes.length; i++){
-//            nodes[i].pieceValue = 0;             // all nodes are set to be empty at the start of the game
-//            nodes[i].piece = null;
-//            nodes[i].peg = null;
-//        }
-//    }
-
-
     /**
    * Determine whether a piece or peg placement is well-formed according to the following:
    * - it consists of exactly four characters
@@ -237,7 +226,8 @@ public class TwistGame {
                 }
             }
             // put the peg onto the board
-          } else if (isPeg(temp)){
+          }
+          else if (isPeg(temp)){
               //System.out.println("got a peg");
               Peg newPeg = new Peg(temp);
               int id2 = newPeg.position;
@@ -262,7 +252,6 @@ public class TwistGame {
               }
           }
         }
-
 
         return true;
 
@@ -298,6 +287,7 @@ public class TwistGame {
 
           String temp = placement.substring(j*4,(j+1)*4);
           if (isPiece(temp)){
+
               pieceIDs.remove(String.valueOf(temp.charAt(0)));
           }
     }
@@ -311,12 +301,17 @@ public class TwistGame {
 
                     String putPiece = k + col + row + ori;
 
+                    //System.out.println(putPiece);
+
                     // combine the selected piece into the original piece placement string
 
                     temp2 = GetNewPlacement(placement,putPiece);
 
+                    //System.out.println(temp2);
+
                     // check symmetry
                     if (isPlacementStringValid(temp2)) {
+
                         switch (putPiece.charAt(0)){
 
                             case 'a': case 'd': case 'g':
@@ -396,13 +391,33 @@ public class TwistGame {
 
   public static ArrayList<String> solutions = new ArrayList<>();
 
+
   public static String[] getSolutions(String placement) {
 
       // find all solutions for this initial placement
-      String[] solu = Allsolution(placement);
+      Allsolution(placement);
+
+      // translate Arraylist to String[]
+      String[] solution = solutions.toArray(new String[0]);
+
+      // eliminate duplicate solutions to get unique solution array
+      TreeSet<String> ans = new TreeSet<>();
+      for (int i = 0; i<solution.length; i++){
+
+          ans.add(solution[i]);
+
+      }
+
+      String[] uniqueSolution = new String[ans.size()];
+      for (int i = 0; i < uniqueSolution.length; i++) {
+
+          uniqueSolution[i] = ans.pollFirst();
+
+      }
 
       solutions.clear();
-      return solu;
+
+      return uniqueSolution;
 
 
     // FIXME Task 9: determine all solutions to the game, given a particular starting placement
@@ -417,6 +432,8 @@ public class TwistGame {
    * @param pegPlacementString  String representing all the peg placements from initial placement.
    *
    * @return  true if the game if complete.
+   *
+   *  author: Chunze Fu (u5885811)
    */
   public static boolean updateAndCheck (int[] pieceState, int[] pieceOrientation, String pegPlacementString){
 
@@ -579,11 +596,61 @@ public class TwistGame {
      * unordered solution to the game given the starting point provided by placement.
      */
 
-    public static String[] Allsolution(String placement) {
+    public static void Allsolution(String placement) {
 
         // check whether this solution is valid
         if (IsSolution(placement)){
             solutions.add(placement.substring(0,32));
+        }
+
+        // find all possible next steps and store them in a set
+        Set <String> next_step = getViablePiecePlacements(placement);
+        ArrayList<String> SolutionNextStep = new ArrayList<>();
+
+        // combine each next step piece with initial placement and store them as new placements
+        if (next_step != null){
+
+            for (String i: next_step){
+                SolutionNextStep.add(GetNewPlacement(placement,i));
+            }
+        }
+
+        // recurse this method to get next step until there is no next step
+        for(String j: SolutionNextStep){
+            Allsolution(j);
+        }
+
+    }
+
+
+
+    // storing all possible solutions used in giving hint
+    public static ArrayList<String>  hints = new ArrayList<>();
+
+    public static String getHint (String placement){
+
+        do {
+            computeHint(placement);
+        }while (
+                hints.size() == 0
+                );
+
+        System.out.println("here 3");
+        String ans = "";
+        for (String ss:hints){ans += ss;}
+
+        hints.clear();
+
+        return ans;
+    }
+
+    // computing a single solution for use in hint (task 10)
+    public static void computeHint (String placement){
+        System.out.println("here1");
+        // check whether this solution is valid
+        if (IsSolution(placement)){
+            System.out.println("here 2");
+            hints.add(placement.substring(0,32));
         }
 
         // find all possible next steps and store them in a set
@@ -599,29 +666,11 @@ public class TwistGame {
 
         // recurse this method to get next step until there is no next step
         for(String j: SolutionNextStep){
-            Allsolution(j);
+            computeHint(j);
         }
 
-        // translate Arraylist to String[]
-        String[] solution = solutions.toArray(new String[0]);
-
-        // eliminate duplicate solutions to get unique solution array
-        TreeSet<String> ans = new TreeSet<>();
-        for (int i = 0; i<solution.length; i++){
-
-            ans.add(solution[i]);
-
-        }
-
-        String[] uniqueSolution = new String[ans.size()];
-        for (int i = 0; i < uniqueSolution.length; i++) {
-
-            uniqueSolution[i] = ans.pollFirst();
-
-        }
-
-        return uniqueSolution;
-
+        System.out.println("here 2");
+        System.out.println("*************** hint size =" + hints.size() + "******************");
     }
 
   }

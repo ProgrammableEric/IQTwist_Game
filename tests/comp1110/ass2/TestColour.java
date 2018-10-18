@@ -5,6 +5,7 @@ import org.junit.Test;
 import static junit.framework.TestCase.assertTrue;
 import org.junit.rules.Timeout;
 
+//Author: Mei Yee Chin
 public class TestColour {
 
     @Rule

@@ -25,6 +25,8 @@ import javafx.scene.transform.Rotate;
  * NOTE: This class is separate from your main game class.  This
  * class does not play a game, it just illustrates various piece
  * placements.
+ *
+ * Author: Chunze Fu (u5885811)
  */
 public class Viewer extends Application {
 
@@ -95,7 +97,7 @@ public class Viewer extends Application {
                     setEffect(dropShadow);break;
             }
 
-            // ???????????????? rotation of the image ?????????????????
+            //  rotation of the image
             if ( orientation<='3'){
                 setRotate((orientation - '0')*90);
             }else if ( orientation<='7'){

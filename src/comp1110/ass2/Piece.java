@@ -30,10 +30,8 @@ import java.util.ArrayList;
  *  0 0 1      ->      { 2,1,2,0,0,1,0,0,0 }
  *  0 0 0
  *
- *
+ * Author: Chunze Fu (u5885811), with the help of Hua Guo in decoding position and pieceValues.
 */
-
-// ?????????  might create another enum named pieceType that stores Squareboard placement, given pieceID and orientation ?????????
 
 
 public class Piece {
@@ -437,6 +435,79 @@ public class Piece {
                 } break;
         }
         return test;
+    }
+
+
+    /**
+     * This method stores the lookup table for flipping a piece.
+     *
+     * @param piece piece id (0 - 7, as specified in Board class)
+     * @param ori   orientation id (0 - 7, as specified in Board class)
+     * @return  id representing the flipped orientation.
+     */
+    public static int flip (int piece, int ori){
+
+        int temp = ori;
+
+        switch (piece) {
+
+            case 0: case 1: case 3: case 4: case 5: case 6:
+
+                switch (ori){
+                    case 0: temp = 4; break;
+                    case 1: temp = 7; break;
+                    case 2: temp = 6; break;
+                    case 3: temp = 5; break;
+                    case 4: temp = 0; break;
+                    case 5: temp = 3; break;
+                    case 6: temp = 2; break;
+                    case 7: temp = 1; break;
+                } break;
+
+            case 2: case 7:
+
+                switch (ori){
+                    case 0: temp = 4; break;
+                    case 1: temp = 3; break;
+                    case 2: temp = 6; break;
+                    case 3: temp = 1; break;
+                    case 4: temp = 0; break;
+                    case 5: temp = 7; break;
+                    case 6: temp = 2; break;
+                    case 7: temp = 5; break;
+                } break;
+
+            default: temp = ori;
+        }
+
+        return temp;
+
+    }
+
+    /**
+     * This method stores the lookup table for rotating a piece.
+     *
+     * @param ori   orientation id (0 - 7, as specified in Board class)
+     * @return  id representing the orientation after rotation.
+     */
+    public static int rotate ( int ori){
+
+        int temp = ori;
+
+                switch (ori){
+                    case 0: temp = 1; break;
+                    case 1: temp = 2; break;
+                    case 2: temp = 3; break;
+                    case 3: temp = 0; break;
+                    case 4: temp = 5; break;
+                    case 5: temp = 6; break;
+                    case 6: temp = 7; break;
+                    case 7: temp = 4; break;
+                    default: temp = ori;
+                }
+
+        return temp;
+
     }
 
 
