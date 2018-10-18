@@ -713,6 +713,7 @@ public class Board extends Application {
 
         // Replay button
         Button button3 = new Button("Replay");
+
         button3.setLayoutX(MARGIN_X +  SQUARE_SIZE);
         button3.setLayoutY(MAIN_PANEL_OFFSET_Y + SQUARE_SIZE);
         button3.setTextFill(Color.RED);
@@ -992,10 +993,10 @@ public class Board extends Application {
         // picture for start button
         ImageView start = new ImageView();
         start.setImage(new Image(START_URI));
-        start.setFitHeight(BUTTON_HEIGHT);
-        start.setFitWidth(BUTTON_WIDTH);
-        start.setLayoutX(MARGIN_X +  SQUARE_SIZE);
-        start.setLayoutY(MAIN_PANEL_OFFSET_Y + SQUARE_SIZE);
+        start.setFitHeight(BUTTON_HEIGHT/1.5);
+        start.setFitWidth(BUTTON_WIDTH/1.5);
+        start.setLayoutX(MARGIN_X + SQUARE_SIZE-35);
+        start.setLayoutY(MAIN_PANEL_OFFSET_Y + SQUARE_SIZE-50);
         controls.getChildren().add(start);
 
         // start button
@@ -1014,12 +1015,21 @@ public class Board extends Application {
         button.setOpacity(0);
         controls.getChildren().add(button);
 
+        // picture for reset button
+        ImageView reset = new ImageView();
+        reset.setImage(new Image(RESET_URI));
+        reset.setFitHeight(BUTTON_HEIGHT/1.5);
+        reset.setFitWidth(BUTTON_WIDTH/1.5);
+        reset.setLayoutX(MARGIN_X + SQUARE_SIZE-35);
+        reset.setLayoutY(MAIN_PANEL_OFFSET_Y + SQUARE_SIZE+35);
+        controls.getChildren().add(reset);
+
         // reset button
         Button button2 = new Button("Reset");
 //        button2.setScaleX(1.5);
 //        button2.setScaleY(1.5);
         button2.setLayoutX(MARGIN_X +  SQUARE_SIZE);
-        button2.setLayoutY(MAIN_PANEL_OFFSET_Y + 2* SQUARE_SIZE);
+        button2.setLayoutY(MAIN_PANEL_OFFSET_Y + 2.5* SQUARE_SIZE);
         button2.setScaleX(1.5);
         button2.setScaleY(1.5);
         button2.setTextFill(Color.RED);
@@ -1029,13 +1039,23 @@ public class Board extends Application {
                 resetPieces();      // put pieces back in their home position
             }
         });
+        button2.setOpacity(0);
         controls.getChildren().add(button2);
+
+        // picture for help button
+        ImageView help = new ImageView();
+        help.setImage(new Image(HELP_URI));
+        help.setFitHeight(BUTTON_HEIGHT/1.5);
+        help.setFitWidth(BUTTON_WIDTH/1.5);
+        help.setLayoutX(MARGIN_X + SQUARE_SIZE-35);
+        help.setLayoutY(MAIN_PANEL_OFFSET_Y + SQUARE_SIZE+115);
+        controls.getChildren().add(help);
 
         // Helper button
         Button button5 = new Button("Helper");
 
         button5.setLayoutX(MARGIN_X +  SQUARE_SIZE);
-        button5.setLayoutY(MAIN_PANEL_OFFSET_Y + 3 * SQUARE_SIZE);
+        button5.setLayoutY(MAIN_PANEL_OFFSET_Y + 4 * SQUARE_SIZE);
         button5.setScaleX(1.5);
         button5.setScaleY(1.5);
         button5.setTextFill(Color.RED);
@@ -1045,6 +1065,7 @@ public class Board extends Application {
                 showHelperPage();      // put pieces back in their home position
             }
         });
+        button5.setOpacity(0);
         controls.getChildren().add(button5);
 
         // difficulty level
@@ -1063,11 +1084,22 @@ public class Board extends Application {
         difficulty.setLayoutY(MAIN_PANEL_OFFSET_Y);
         controls.getChildren().add(difficulty);
 
-        final javafx.scene.control.Label difficultyCaption = new Label("Difficulty:");
-        difficultyCaption.setTextFill(Color.GREEN);
-        difficultyCaption.setLayoutX(MARGIN_X + SQUARE_SIZE);
-        difficultyCaption.setLayoutY(MAIN_PANEL_OFFSET_Y - 20);
-        controls.getChildren().add(difficultyCaption);
+
+        // picture for difficulty label
+        ImageView difficulty = new ImageView();
+        difficulty.setImage(new Image(DIFFICULTY_URI));
+        difficulty.setFitHeight(BUTTON_HEIGHT/1.5);
+        difficulty.setFitWidth(BUTTON_WIDTH/1.5);
+        difficulty.setLayoutX(MARGIN_X + SQUARE_SIZE-20);
+        difficulty.setLayoutY(MAIN_PANEL_OFFSET_Y + SQUARE_SIZE-145);
+        controls.getChildren().add(difficulty);
+
+//        final javafx.scene.control.Label difficultyCaption = new Label("Difficulty:");
+//        difficultyCaption.setTextFill(Color.GREEN);
+//        difficultyCaption.setLayoutX(MARGIN_X + SQUARE_SIZE);
+//        difficultyCaption.setLayoutY(MAIN_PANEL_OFFSET_Y - 40);
+//        controls.getChildren().add(difficultyCaption);
+        //ggg
     }
 
 
