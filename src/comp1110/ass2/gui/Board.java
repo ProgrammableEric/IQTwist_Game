@@ -936,7 +936,6 @@ public class Board extends Application {
         completion.toBack();
         completion.setOpacity(0);
     }
-
     /**
      * Set up the group that represents the places that make the board
      */
@@ -1101,7 +1100,6 @@ public class Board extends Application {
             @Override
             public void handle(ActionEvent e) {
                 hideHelperPage();
-
             }
         });
         button6.setOpacity(0);

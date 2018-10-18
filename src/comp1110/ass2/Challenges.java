@@ -93,10 +93,10 @@ public class Challenges {
      *
      * There are four categories of challenge, according to four difficulty levels, with
      * 12 objectives per difficulty level, organized within the array as follows:
-     * Starter: 0-11
-     * Junior: 12-23
-     * Expert: 24-35
-     * Master: 36-47
+     * Starter: 1-3
+     * Junior:  4-6
+     * Expert:  7-9
+     * Master:  10-12
      */
 
     static Challenges[] CHALLENGES = {
