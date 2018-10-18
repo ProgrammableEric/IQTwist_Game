@@ -94,10 +94,11 @@ public class Board extends Application {
     private final Group startPage = new Group();
 
 
-
     //title and instructions in helper page
     private final Text helperText = new Text("Helper");
     private final Text instructions = new Text("The aim of this game is to fit all the pieces onto the board." + "\n"
+            + "To finish the game, all the 8 pieces should be put on the pink board. " + "\n"
+            + "All pegs should fit into the hole position of a piece of the same colour." + "\n"
             + "\n"
             + "Scroll to change orientation." + "\n"
             + "Drag to place pieces." + "\n"
@@ -829,18 +830,9 @@ public class Board extends Application {
         startpage.setScaleY(0.5);
         startpage.setLayoutX(-270);
         startPage.getChildren().add(startpage);
-
-//        chooseDifficulty.setEffect(dropShadow);
-//        chooseDifficulty.setCache(true);
-//        chooseDifficulty.setFill(Color.ORANGE);
-//        chooseDifficulty.setFont(Font.font("Calibre", FontWeight.EXTRA_BOLD,60));
-//        chooseDifficulty.setLayoutX(MAIN_PANEL_OFFSET_X - 250);
-//        chooseDifficulty.setLayoutY(MAIN_PANEL_OFFSET_Y - 250);
-//        chooseDifficulty.setTextAlignment(TextAlignment.CENTER);
-//        startPage.getChildren().add(chooseDifficulty);
-
-
     }
+
+
 
     /* Author: Mei Yee Chin*/
     private void showStartPage() {
@@ -859,6 +851,7 @@ public class Board extends Application {
 
     }
 
+
     /* Author: Mei Yee Chin*/
     private void hideStartPage () {
         background.setOpacity(1);
@@ -874,6 +867,7 @@ public class Board extends Application {
         startPage.toBack();
         startPage.setOpacity(0);
     }
+
 
     /**
      * Create the message to be displayed when the player completes the puzzle.
@@ -971,7 +965,6 @@ public class Board extends Application {
         completion.toBack();
         completion.setOpacity(0);
     }
-
     /**
      * Set up the group that represents the places that make the board
      */
@@ -1112,14 +1105,14 @@ public class Board extends Application {
         helperText.setEffect(dropShadow);
         helperText.setCache(true);
         helperText.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 60));
-        helperText.setLayoutX(MAIN_PANEL_OFFSET_X - 400);
+        helperText.setLayoutX(MAIN_PANEL_OFFSET_X - 350);
         helperText.setLayoutY(MAIN_PANEL_OFFSET_Y - 300);
         helperText.setTextAlignment(TextAlignment.CENTER);
         instructions.setFill(Color.ORANGE);
         //instructions.setEffect(dropShadow);
         instructions.setCache(true);
-        instructions.setFont(Font.font("Calibre", FontWeight.EXTRA_BOLD,25));
-        instructions.setLayoutX(MAIN_PANEL_OFFSET_X - 400);
+        instructions.setFont(Font.font("Calibre", FontWeight.EXTRA_BOLD,22));
+        instructions.setLayoutX(MAIN_PANEL_OFFSET_X - 350);
         instructions.setLayoutY(MAIN_PANEL_OFFSET_Y - 200);
         instructions.setTextAlignment(TextAlignment.LEFT);
         helperPage.getChildren().add(helperText);
@@ -1129,14 +1122,14 @@ public class Board extends Application {
         helper.setImage(new Image(BACKTOGAME_URI));
         helper.setFitHeight(BUTTON_HEIGHT);
         helper.setFitWidth(BUTTON_WIDTH);
-        helper.setLayoutX(20);
+        helper.setLayoutX(15);
         helper.setLayoutY(500);
         helperPage.getChildren().add(helper);
 
         ImageView dog = new ImageView();
         dog.setImage(new Image(DOG_URI));
         dog.setLayoutX(500);
-        dog.setLayoutY(250);
+        dog.setLayoutY(280);
 
         // reset button
         Button button6 = new Button("Back to Game");
@@ -1150,7 +1143,6 @@ public class Board extends Application {
             @Override
             public void handle(ActionEvent e) {
                 hideHelperPage();
-
             }
         });
         button6.setOpacity(0);
@@ -1231,9 +1223,6 @@ public class Board extends Application {
         }}
     }
 
-//    /* the difficulty slider */
-//    private final Slider difficulty = new Slider();
-//
 
     /**
      * Create the controls that allow the game to be start with selected difficulty
@@ -1380,10 +1369,3 @@ public class Board extends Application {
     }
 
 }
-
-
-
-
-
-
-
