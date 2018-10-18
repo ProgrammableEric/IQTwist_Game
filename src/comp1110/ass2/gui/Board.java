@@ -75,6 +75,10 @@ public class Board extends Application {
     private static final String JUNIOR_URI = Board.class.getResource(URI_BASE + "junior.png").toString();
     private static final String EXPERT_URI = Board.class.getResource(URI_BASE + "expert.png").toString();
     private static final String MASTER_URI = Board.class.getResource(URI_BASE + "master.png").toString();
+    private static final String DOG_URI = Board.class.getResource(URI_BASE + "dog.png").toString();
+    private static final String STARTPAGE_URI = Board.class.getResource(URI_BASE + "startpage.png").toString();
+
+
 
 
     /* node groups */
@@ -91,15 +95,23 @@ public class Board extends Application {
 
 
 
+    //title and instructions in helper page
     private final Text helperText = new Text("Helper");
-    private final Text intructions = new Text("The aim of this game is to fit all the pieces onto the board." + "\n"
+    private final Text instructions = new Text("The aim of this game is to fit all the pieces onto the board." + "\n"
             + "\n"
             + "Scroll to change orientation." + "\n"
             + "Drag to place pieces." + "\n"
-            + "Right click to flip pieces");
+            + "Right click to flip pieces" + "\n"
+            + "Hold '/' for hint." + "\n" + "\n"
+            + "Good luck!");
 
     /* message on success*/
     private final Text completionText = new Text("Well done!");
+
+    //message in main page
+    private final Text chooseDifficulty = new Text ("Choose difficulty:");
+    private final Text title = new Text ("IQ Twist Game");
+
 
     /* the state of the pieces */
     int[] pieceState = new int[8];        // state of each piece, if not on the board, -1, if on the board, it stores the
@@ -723,9 +735,10 @@ public class Board extends Application {
         starter.setLayoutY(300);
         startPage.getChildren().add(starter);
 
+
         Button btnStarter = new Button("Starter");
-        btnStarter.setScaleY(2);
-        btnStarter.setScaleX(2);
+        btnStarter.setScaleY(5);
+        btnStarter.setScaleX(5);
         btnStarter.setLayoutX(80);
         btnStarter.setLayoutY(380);
         btnStarter.setOnAction(new EventHandler<ActionEvent>() {
@@ -748,8 +761,8 @@ public class Board extends Application {
         startPage.getChildren().add(junior);
 
         Button btnJunior = new Button("Junior");
-        btnJunior.setScaleY(2);
-        btnJunior.setScaleX(2);
+        btnJunior.setScaleY(5);
+        btnJunior.setScaleX(5);
         btnJunior.setLayoutX(300);
         btnJunior.setLayoutY(380);
         btnJunior.setOnAction(new EventHandler<ActionEvent>() {
@@ -772,8 +785,8 @@ public class Board extends Application {
         startPage.getChildren().add(expert);
 
         Button btnExpert = new Button("Expert");
-        btnExpert.setScaleY(2);
-        btnExpert.setScaleX(2);
+        btnExpert.setScaleY(5);
+        btnExpert.setScaleX(5);
         btnExpert.setLayoutX(520);
         btnExpert.setLayoutY(380);
         btnExpert.setOnAction(new EventHandler<ActionEvent>() {
@@ -796,8 +809,8 @@ public class Board extends Application {
         startPage.getChildren().add(master);
 
         Button btnMaster = new Button("Master");
-        btnMaster.setScaleY(2);
-        btnMaster.setScaleX(2);
+        btnMaster.setScaleY(5);
+        btnMaster.setScaleX(5);
         btnMaster.setLayoutX(740);
         btnMaster.setLayoutY(380);
         btnMaster.setOnAction(new EventHandler<ActionEvent>() {
@@ -809,6 +822,22 @@ public class Board extends Application {
         });
         btnMaster.setOpacity(0);
         startPage.getChildren().add(btnMaster);
+
+        ImageView startpage = new ImageView();
+        startpage.setImage(new Image(STARTPAGE_URI));
+        startpage.setScaleX(0.5);
+        startpage.setScaleY(0.5);
+        startpage.setLayoutX(-270);
+        startPage.getChildren().add(startpage);
+
+//        chooseDifficulty.setEffect(dropShadow);
+//        chooseDifficulty.setCache(true);
+//        chooseDifficulty.setFill(Color.ORANGE);
+//        chooseDifficulty.setFont(Font.font("Calibre", FontWeight.EXTRA_BOLD,60));
+//        chooseDifficulty.setLayoutX(MAIN_PANEL_OFFSET_X - 250);
+//        chooseDifficulty.setLayoutY(MAIN_PANEL_OFFSET_Y - 250);
+//        chooseDifficulty.setTextAlignment(TextAlignment.CENTER);
+//        startPage.getChildren().add(chooseDifficulty);
 
 
     }
@@ -827,6 +856,7 @@ public class Board extends Application {
         controls.toBack();
         startPage.toFront();
         startPage.setOpacity(1);
+
     }
 
     /* Author: Mei Yee Chin*/
@@ -1078,37 +1108,43 @@ public class Board extends Application {
 
         helperPage.setOpacity(0);
 
-        helperText.setFill(Color.BLACK);
+        helperText.setFill(Color.DARKSALMON);
         helperText.setEffect(dropShadow);
         helperText.setCache(true);
         helperText.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 60));
         helperText.setLayoutX(MAIN_PANEL_OFFSET_X - 400);
         helperText.setLayoutY(MAIN_PANEL_OFFSET_Y - 300);
         helperText.setTextAlignment(TextAlignment.CENTER);
-        intructions.setFill(Color.BLACK);
-        intructions.setEffect(dropShadow);
-        intructions.setCache(true);
-        intructions.setFont(Font.font("Comic Sans", 30));
-        intructions.setLayoutX(MAIN_PANEL_OFFSET_X - 400);
-        intructions.setLayoutY(MAIN_PANEL_OFFSET_Y - 200);
-        intructions.setTextAlignment(TextAlignment.LEFT);
+        instructions.setFill(Color.ORANGE);
+        //instructions.setEffect(dropShadow);
+        instructions.setCache(true);
+        instructions.setFont(Font.font("Calibre", FontWeight.EXTRA_BOLD,25));
+        instructions.setLayoutX(MAIN_PANEL_OFFSET_X - 400);
+        instructions.setLayoutY(MAIN_PANEL_OFFSET_Y - 200);
+        instructions.setTextAlignment(TextAlignment.LEFT);
         helperPage.getChildren().add(helperText);
-        helperPage.getChildren().add(intructions);
+        helperPage.getChildren().add(instructions);
 
         ImageView helper = new ImageView();
         helper.setImage(new Image(BACKTOGAME_URI));
         helper.setFitHeight(BUTTON_HEIGHT);
         helper.setFitWidth(BUTTON_WIDTH);
-        helper.setLayoutX(MARGIN_X + SQUARE_SIZE - 50);
-        helper.setLayoutY(MAIN_PANEL_OFFSET_Y + 2* SQUARE_SIZE - 80);
+        helper.setLayoutX(20);
+        helper.setLayoutY(500);
         helperPage.getChildren().add(helper);
+
+        ImageView dog = new ImageView();
+        dog.setImage(new Image(DOG_URI));
+        dog.setLayoutX(500);
+        dog.setLayoutY(250);
 
         // reset button
         Button button6 = new Button("Back to Game");
+        button6.toFront();
         button6.setScaleX(2);
         button6.setScaleY(2);
-        button6.setLayoutX(MARGIN_X +  SQUARE_SIZE);
-        button6.setLayoutY(MAIN_PANEL_OFFSET_Y + 2* SQUARE_SIZE);
+        button6.setLayoutX(50);
+        button6.setLayoutY(600);
         button6.setTextFill(Color.RED);
         button6.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -1118,7 +1154,7 @@ public class Board extends Application {
             }
         });
         button6.setOpacity(0);
-        helperPage.getChildren().add(button6);
+        helperPage.getChildren().addAll(button6,dog);
 
     }
 
@@ -1180,6 +1216,7 @@ public class Board extends Application {
 
         makeSolution(solu);
 
+
     }
 
     /**
@@ -1219,8 +1256,8 @@ public class Board extends Application {
         Button button = new Button("Start");
         button.setLayoutX(MARGIN_X +  SQUARE_SIZE);
         button.setLayoutY(MAIN_PANEL_OFFSET_Y + SQUARE_SIZE);
-        button.setScaleX(1.5);
-        button.setScaleY(1.5);
+        button.setScaleX(3);
+        button.setScaleY(3);
         button.setTextFill(Color.RED);
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -1244,8 +1281,8 @@ public class Board extends Application {
         Button button2 = new Button("Reset");
         button2.setLayoutX(MARGIN_X +  SQUARE_SIZE);
         button2.setLayoutY(MAIN_PANEL_OFFSET_Y + 2.5* SQUARE_SIZE);
-        button2.setScaleX(1.5);
-        button2.setScaleY(1.5);
+        button2.setScaleX(3);
+        button2.setScaleY(3);
         button2.setTextFill(Color.RED);
         button2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -1270,8 +1307,8 @@ public class Board extends Application {
 
         button5.setLayoutX(MARGIN_X +  SQUARE_SIZE);
         button5.setLayoutY(MAIN_PANEL_OFFSET_Y + 4 * SQUARE_SIZE);
-        button5.setScaleX(1.5);
-        button5.setScaleY(1.5);
+        button5.setScaleX(3);
+        button5.setScaleY(3);
         button5.setTextFill(Color.RED);
         button5.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -1296,8 +1333,8 @@ public class Board extends Application {
 
         button6.setLayoutX(MARGIN_X +  SQUARE_SIZE + 15);
         button6.setLayoutY(MAIN_PANEL_OFFSET_Y + SQUARE_SIZE - 95);
-        button6.setScaleX(1.5);
-        button6.setScaleY(1.5);
+        button6.setScaleX(3);
+        button6.setScaleY(3);
         button6.setTextFill(Color.RED);
         button6.setOnAction(new EventHandler<ActionEvent>() {
             @Override
